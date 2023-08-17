@@ -5,13 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.jdbcfighters.renthub.models.cpk.EstateAttributeValueId;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @AllArgsConstructor
@@ -22,21 +22,23 @@ import javax.persistence.Table;
 @Table(name = "estate_attribute_value")
 public class EstateAttributeValue {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private EstateAttributeValueId id;
 
     @ManyToOne
+    @MapsId("attributeId")
     @JoinColumn(name = "attribute_id")
     @JsonBackReference
     private Attribute attribute;
 
     @ManyToOne
+    @MapsId("estateId")
     @JoinColumn(name = "estate_id")
     @JsonBackReference
     private Estate estate;
 
     @ManyToOne
+    @MapsId("attributeId")
     @JoinColumn(name = "value_id")
     @JsonBackReference
     private AttributeValue attributeValue;

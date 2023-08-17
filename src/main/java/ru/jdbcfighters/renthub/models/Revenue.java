@@ -5,35 +5,39 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.jdbcfighters.renthub.models.cpk.EmployeeRoleId;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "employee_roles")
-public class EmployeeRole {
+@Table(name = "revenues")
+public class Revenue {
 
-    @EmbeddedId
-    private EmployeeRoleId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
-    @MapsId("employeeId")
     @JoinColumn(name = "client_id")
     @JsonBackReference
-    private Employee employee;
+    private Client client;
 
-    @MapsId("role")
-    @Column(name = "role")
-    private String role;
+    @Column(name = "date")
+    private LocalDate date;
+
+    @Column(name = "money")
+    private BigDecimal money;
 
 }
