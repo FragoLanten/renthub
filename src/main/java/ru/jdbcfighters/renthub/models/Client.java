@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -54,18 +53,18 @@ public class Client {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Estate> estates = new HashSet<>();
+    private Set<Estate> estates;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Wishlist> wishlistSet = new HashSet<>();
+    private Set<Wishlist> wishlistSet;
 
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Deal> deals = new HashSet<>();
+    private Set<Deal> deals;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<ClientRole> clientRoles = new HashSet<>();
+    private Set<ClientRole> clientRoles;
 
 }

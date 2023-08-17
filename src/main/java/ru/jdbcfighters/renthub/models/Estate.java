@@ -19,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -67,14 +66,14 @@ public class Estate {
 
     @OneToMany(mappedBy = "estate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Wishlist> wishlistSet = new HashSet<>();
+    private Set<Wishlist> wishlistSet;
 
     @OneToMany(mappedBy = "estate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<EstateAttributeValue> estateAttributeValues = new HashSet<>();
+    private Set<EstateAttributeValue> estateAttributeValues;
 
     @OneToMany(mappedBy = "estate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Deal> deals = new HashSet<>();
+    private Set<Deal> deals;
 
 }

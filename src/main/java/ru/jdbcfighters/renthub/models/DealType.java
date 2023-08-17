@@ -15,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -35,6 +34,6 @@ public class DealType {
 
     @OneToMany(mappedBy = "type", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Deal> deals = new HashSet<>();
+    private Set<Deal> deals;
 
 }

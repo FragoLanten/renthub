@@ -15,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -35,6 +34,6 @@ public class Attribute {
 
     @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<EstateAttributeValue> estateAttributeValues = new HashSet<>();
+    private Set<EstateAttributeValue> estateAttributeValues;
 
 }
