@@ -2,12 +2,9 @@ package ru.jdbcfighters.renthub.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,17 +16,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {
-        "estates", "wishlistSet", "deals", "clientRoles"
-})
 @Entity
 @Table(name = "clients")
 public class Client {
@@ -44,10 +37,10 @@ public class Client {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column
+    @Column(name = "login")
     private String login;
 
-    @Column
+    @Column(name = "password")
     private String password;
 
     @Column(name = "phone")
@@ -56,27 +49,23 @@ public class Client {
     @Column(name = "is_deleted")
     private Boolean deleted;
 
-    @Column
+    @Column(name = "money")
     private BigDecimal money;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    @ToString.Exclude
-    private Set<Estate> estates = Collections.emptySet();
+    private Set<Estate> estates = new HashSet<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    @ToString.Exclude
-    private Set<Wishlist> wishlistSet = Collections.emptySet();
+    private Set<Wishlist> wishlistSet = new HashSet<>();
 
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    @ToString.Exclude
-    private Set<Deal> deals = Collections.emptySet();
+    private Set<Deal> deals = new HashSet<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    @ToString.Exclude
-    private Set<ClientRole> clientRoles = Collections.emptySet();
+    private Set<ClientRole> clientRoles = new HashSet<>();
 
 }

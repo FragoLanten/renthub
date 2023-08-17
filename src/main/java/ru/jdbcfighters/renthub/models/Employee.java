@@ -3,12 +3,9 @@ package ru.jdbcfighters.renthub.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,17 +18,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {
-        "deals", "employeeRoles", "position"
-})
 @Entity
 @Table(name = "employees")
 public class Employee {
@@ -55,17 +48,14 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "position_id")
     @JsonBackReference
-    @ToString.Exclude
     private Position position;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    @ToString.Exclude
-    private Set<Deal> deals = Collections.emptySet();
+    private Set<Deal> deals = new HashSet<>();
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    @ToString.Exclude
-    private Set<EmployeeRole> employeeRoles = Collections.emptySet();
+    private Set<EmployeeRole> employeeRoles = new HashSet<>();
 
 }
