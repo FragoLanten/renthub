@@ -37,7 +37,7 @@ public class Revenue {
     @Column(name = "date")
     private LocalDate date;
 
-    @Column(name = "money")
+    @Column(name = "sum")
     private BigDecimal sum;
 
 }
