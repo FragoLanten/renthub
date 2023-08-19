@@ -1,47 +1,42 @@
-package ru.jdbcfighters.renthub.models;
+package ru.jdbcfighters.renthub.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.jdbcfighters.renthub.domain.models.enums.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "advertisements")
-public class Advertisement {
+@Table(name = "type_deal")
+public class DealType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "end_date")
-    private LocalDate endDate;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private Type type;
 
-    @Column(name = "visible")
-    private Boolean visible;
-
-    @Column(name = "rank")
-    private Integer rank;
-
-    @Column(name = "moderated")
-    private Boolean moderated;
-
-    @OneToOne(mappedBy = "advertisement", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "dealType", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Estate estate;
+    private Deal deal;
+
 }

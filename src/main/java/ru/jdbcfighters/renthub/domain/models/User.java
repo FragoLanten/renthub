@@ -1,11 +1,11 @@
-package ru.jdbcfighters.renthub.models;
+package ru.jdbcfighters.renthub.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.jdbcfighters.renthub.models.enums.Role;
+import ru.jdbcfighters.renthub.domain.models.enums.Role;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;

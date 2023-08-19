@@ -1,6 +1,5 @@
-package ru.jdbcfighters.renthub.models;
+package ru.jdbcfighters.renthub.domain.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,32 +11,32 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "revenues")
-public class Revenue {
+@Table(name = "attribute_value")
+public class AttributeValue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    @JsonBackReference
-    private User user;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "date")
-    private LocalDate date;
-
-    @Column(name = "money")
-    private BigDecimal money;
+    @ManyToMany
+    @JoinTable(
+            name = "estate_attribute_value",
+            joinColumns = @JoinColumn(name = "value_id"),
+            inverseJoinColumns = @JoinColumn(name = "attribute_id")
+    )
+    private Set<Attribute> attributes;
 
 }

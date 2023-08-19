@@ -1,4 +1,4 @@
-package ru.jdbcfighters.renthub.models;
+package ru.jdbcfighters.renthub.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -13,27 +13,35 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.Set;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "streets")
-public class Street {
+@Table(name = "advertisements")
+public class Advertisement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
-    @OneToMany(mappedBy = "street", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column(name = "visible")
+    private Boolean visible;
+
+    @Column(name = "rank")
+    private Integer rank;
+
+    @Column(name = "moderated")
+    private Boolean moderated;
+
+    @OneToOne(mappedBy = "advertisement", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Estate> estates;
-
+    private Estate estate;
 }

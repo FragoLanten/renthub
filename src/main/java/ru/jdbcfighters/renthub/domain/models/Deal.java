@@ -1,4 +1,4 @@
-package ru.jdbcfighters.renthub.models;
+package ru.jdbcfighters.renthub.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;

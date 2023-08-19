@@ -1,4 +1,4 @@
-package ru.jdbcfighters.renthub.models;
+package ru.jdbcfighters.renthub.domain.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,8 +21,8 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@Table(name = "attribute_value")
-public class AttributeValue {
+@Table(name = "attributes")
+public class Attribute {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +34,17 @@ public class AttributeValue {
     @ManyToMany
     @JoinTable(
             name = "estate_attribute_value",
-            joinColumns = @JoinColumn(name = "value_id"),
-            inverseJoinColumns = @JoinColumn(name = "attribute_id")
+            joinColumns = @JoinColumn(name = "attribute_id"),
+            inverseJoinColumns = @JoinColumn(name = "estate_id")
     )
-    private Set<Attribute> attributes;
+    private Set<Estate> estates;
+
+    @ManyToMany
+    @JoinTable(
+            name = "estate_attribute_value",
+            joinColumns = @JoinColumn(name = "attribute_id"),
+            inverseJoinColumns = @JoinColumn(name = "value_id")
+    )
+    private Set<AttributeValue> attributeValues;
 
 }

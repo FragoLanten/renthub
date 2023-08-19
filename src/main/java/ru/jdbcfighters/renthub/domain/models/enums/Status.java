@@ -1,4 +1,4 @@
-package ru.jdbcfighters.renthub.models.enums;
+package ru.jdbcfighters.renthub.domain.models.enums;
 
 public enum Status {
     PROCESSING,
