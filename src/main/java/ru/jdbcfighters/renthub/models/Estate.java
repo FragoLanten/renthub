@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -41,7 +42,7 @@ public class Estate {
     private Float square;
 
     @Column(name = "price")
-    private Float price;
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "owner_user_id")
