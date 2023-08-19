@@ -35,8 +35,8 @@ public class DealType {
     @Column(name = "type")
     private Type type;
 
-    @OneToOne(mappedBy = "dealType", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private Deal deal;
+//    @OneToOne(mappedBy = "dealType", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JsonManagedReference
+//    private Deal deal;
 
 }

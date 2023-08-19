@@ -30,7 +30,7 @@ public class Revenue {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
 
@@ -38,6 +38,6 @@ public class Revenue {
     private LocalDate date;
 
     @Column(name = "money")
-    private BigDecimal money;
+    private BigDecimal sum;
 
 }

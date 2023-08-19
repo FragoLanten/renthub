@@ -50,12 +50,12 @@ public class Estate {
     private User owner;
 
     @ManyToOne
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "street_id")
     @JsonBackReference
     private Street street;
 
     @OneToOne
-    @JoinColumn(name = "advertisement_id")
+    @JoinColumn(name = "advertisment_id")
     @JsonBackReference
     private Advertisement advertisement;
 

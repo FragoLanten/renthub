@@ -38,7 +38,7 @@ public class Advertisement {
     @Column(name = "rank")
     private Integer rank;
 
-    @Column(name = "moderated")
+    @Column(name = "is_moderated")
     private Boolean moderated;
 
     @OneToOne(mappedBy = "advertisement", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

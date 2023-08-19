@@ -35,9 +35,9 @@ public class DealStatus {
     @Column(name = "status")
     private Status status;
 
-    @OneToOne(mappedBy = "dealStatus", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private Deal deal;
+//    @OneToOne(mappedBy = "dealStatus", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JsonManagedReference
+//    private Deal deal;
 
 }
 
