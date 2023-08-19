@@ -1,19 +1,18 @@
 package ru.jdbcfighters.renthub.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
@@ -29,11 +28,15 @@ public class AttributeValue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "value")
-    private String value;
+    @Column(name = "name")
+    private String name;
 
-    @OneToMany(mappedBy = "attributeValue", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private Set<EstateAttributeValue> estateAttributeValues;
+    @ManyToMany
+    @JoinTable(
+            name = "estate_attribute_value",
+            joinColumns = @JoinColumn(name = "value_id"),
+            inverseJoinColumns = @JoinColumn(name = "attribute_id")
+    )
+    private Set<Attribute> attributes;
 
 }

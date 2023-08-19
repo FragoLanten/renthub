@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
@@ -28,38 +29,32 @@ public class Deal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cost")
-    private Float cost;
-
     @Column(name = "start_date")
     private LocalDate startDate;
 
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "estate_id")
     @JsonBackReference
     private Estate estate;
 
-    @ManyToOne
-    @JoinColumn(name = "type_id")
-    @JsonBackReference
-    private DealType type;
+    // TODO: 8/19/2023 Статус и Тип попробовать сделать без сущностей
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "status_id")
     @JsonBackReference
-    private DealStatus status;
+    private DealStatus dealStatus;
+
+    @OneToOne
+    @JoinColumn(name = "type_id")
+    @JsonBackReference
+    private DealType dealType;
 
     @ManyToOne
-    @JoinColumn(name = "buyer_client_id")
+    @JoinColumn(name = "buyer_user_id")
     @JsonBackReference
-    private Client buyer;
-
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    @JsonBackReference
-    private Employee employee;
+    private User buyer;
 
 }

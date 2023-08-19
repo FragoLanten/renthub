@@ -14,14 +14,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "client_role")
-public class ClientRole {
+@Table(name = "revenues")
+public class Revenue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +32,12 @@ public class ClientRole {
     @ManyToOne
     @JoinColumn(name = "client_id")
     @JsonBackReference
-    private Client client;
+    private User user;
 
-    @Column(name = "role")
-    private String role;
+    @Column(name = "date")
+    private LocalDate date;
+
+    @Column(name = "money")
+    private BigDecimal money;
 
 }
