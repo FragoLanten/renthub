@@ -32,7 +32,7 @@ public class Revenue {
     @ManyToOne
     @JoinColumn(name = "client_id")
     @JsonBackReference
-    private Client client;
+    private User user;
 
     @Column(name = "date")
     private LocalDate date;

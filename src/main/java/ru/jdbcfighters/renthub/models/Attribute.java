@@ -13,6 +13,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
@@ -29,11 +32,23 @@ public class Attribute {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "name")
+    private String name;
 
-    @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private Set<EstateAttributeValue> estateAttributeValues;
+    @ManyToMany
+    @JoinTable(
+            name = "estate_attribute_value",
+            joinColumns = @JoinColumn(name = "attribute_id"),
+            inverseJoinColumns = @JoinColumn(name = "estate_id")
+    )
+    private Set<Estate> estates;
+
+    @ManyToMany
+    @JoinTable(
+            name = "estate_attribute_value",
+            joinColumns = @JoinColumn(name = "attribute_id"),
+            inverseJoinColumns = @JoinColumn(name = "value_id")
+    )
+    private Set<AttributeValue> attributeValues;
 
 }

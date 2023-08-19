@@ -1,5 +1,6 @@
 package ru.jdbcfighters.renthub.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,27 +14,36 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.Set;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "c_positions")
-public class Position {
+@Table(name = "advertisements")
+public class Advertisement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "position")
-    private String position;
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
-    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column(name = "visible")
+    private Boolean visible;
+
+    @Column(name = "rank")
+    private Integer rank;
+
+    @Column(name = "moderated")
+    private Boolean moderated;
+
+    @OneToOne(mappedBy = "advertisement", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Employee> employees;
-
+    private Estate estate;
 }

@@ -45,35 +45,25 @@ public class Estate {
     @Column(name = "price")
     private Float price;
 
-    @Column(name = "end_date")
-    private LocalDate endDate;
-
-    @Column(name = "visible")
-    private Boolean visible;
-
-    @Column(name = "rank")
-    private Integer rank;
-
-    @Column(name = "is_moderated")
-    private Boolean moderated;
-
     @ManyToOne
-    @JoinColumn(name = "owner_client_id")
+    @JoinColumn(name = "owner_user_id")
     @JsonBackReference
-    private Client owner;
+    private User owner;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
     @JsonBackReference
-    private Address address;
+    private Street street;
 
-    @OneToMany(mappedBy = "estate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private Set<Wishlist> wishlistSet;
+    @OneToOne
+    @JoinColumn(name = "advertisement_id")
+    @JsonBackReference
+    private Advertisement advertisement;
 
-    @OneToMany(mappedBy = "estate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private Set<EstateAttributeValue> estateAttributeValues;
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    @JsonBackReference
+    private City city;
 
     @OneToOne(mappedBy = "estate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
@@ -82,9 +72,17 @@ public class Estate {
     @ManyToMany
     @JoinTable(
             name = "wishlist",
-            joinColumns = @JoinColumn(name = "client_id"),
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "estate_id")
     )
-    private Set<Client> clients;
+    private Set<User> users;
+
+    @ManyToMany
+    @JoinTable(
+            name = "estate_attribute_value",
+            joinColumns = @JoinColumn(name = "estate_id"),
+            inverseJoinColumns = @JoinColumn(name = "attribute_id")
+    )
+    private Set<Attribute> attributes;
 
 }

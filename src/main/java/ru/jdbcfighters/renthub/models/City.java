@@ -22,20 +22,17 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@Table(name = "c_addresses")
-public class Address {
+@Table(name = "cities")
+public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "city")
-    private String city;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "street")
-    private String street;
-
-    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private Set<Estate> estates;
 
