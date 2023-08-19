@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.jdbcfighters.renthub.models.enums.Status;
 import ru.jdbcfighters.renthub.models.enums.Type;
 
 import javax.persistence.CascadeType;
