@@ -22,7 +22,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @Entity
-@Table(name = "advertisements")
+@Table(name = "advertisments")
 public class Advertisement {
 
     @Id
@@ -38,7 +38,7 @@ public class Advertisement {
     @Column(name = "rank")
     private Integer rank;
 
-    @Column(name = "moderated")
+    @Column(name = "is_moderated")
     private Boolean moderated;
 
     @OneToOne(mappedBy = "advertisement", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

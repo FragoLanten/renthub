@@ -42,15 +42,15 @@ public class Deal {
 
     // TODO: 8/19/2023 Статус и Тип попробовать сделать без сущностей
 
-    @OneToOne
-    @JoinColumn(name = "status_id")
-    @JsonBackReference
-    private DealStatus dealStatus;
+//    @OneToOne
+//    @JoinColumn(name = "status_id")
+//    @JsonBackReference
+//    private DealStatus dealStatus;
 
-    @OneToOne
-    @JoinColumn(name = "type_id")
-    @JsonBackReference
-    private DealType dealType;
+//    @OneToOne
+//    @JoinColumn(name = "type_id")
+//    @JsonBackReference
+//    private DealType dealType;
 
     @ManyToOne
     @JoinColumn(name = "buyer_user_id")
