@@ -44,4 +44,5 @@ public class Advertisement {
     @OneToOne(mappedBy = "advertisement", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private Estate estate;
+
 }
