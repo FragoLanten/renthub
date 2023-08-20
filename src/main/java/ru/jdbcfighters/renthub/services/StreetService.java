@@ -5,11 +5,11 @@ import ru.jdbcfighters.renthub.domain.models.Street;
 import java.util.List;
 
 public interface StreetService {
-    public Street saveStreet(Street street);
+    public Street save(Street street);
 
     public Street getStreet(Long streetId);
 
-    public void deleteStreet(Long streetID);
+    public void delete(Long streetID);
 
     public List<Street> findAll();
 
