@@ -4,23 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.jdbcfighters.renthub.domain.models.City;
 import ru.jdbcfighters.renthub.repositories.CityRepository;
+import ru.jdbcfighters.renthub.services.CityService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class CityServiceImpl {
+public class CityServiceImpl implements CityService {
     @Autowired
     CityRepository cityRepository;
 
-    public City saveCity(City city) {
+    public City save(City city) {
         return cityRepository.save(city);
     }
 
     public City getCity(Long cityId) {
-        return cityRepository.getReferenceById(cityId);
+        return cityRepository.findById(cityId).orElseThrow(() -> new EntityNotFoundException("Город не найден!"));
     }
 
-    public void deleteCity(Long cityID) {
+    public void delete(Long cityID) {
         cityRepository.deleteById(cityID);
     }
 

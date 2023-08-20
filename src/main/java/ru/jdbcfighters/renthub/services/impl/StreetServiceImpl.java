@@ -3,24 +3,26 @@ package ru.jdbcfighters.renthub.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.jdbcfighters.renthub.domain.models.Street;
-import ru.jdbcfighters.renthub.repositories.StreetReository;
+import ru.jdbcfighters.renthub.repositories.StreetRepository;
+import ru.jdbcfighters.renthub.services.StreetService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class StreetServiceImpl {
+public class StreetServiceImpl implements StreetService {
     @Autowired
-    StreetReository streetReository;
+    StreetRepository streetReository;
 
-    public Street saveStreet(Street street) {
+    public Street save(Street street) {
         return streetReository.save(street);
     }
 
     public Street getStreet(Long streetId) {
-        return streetReository.getReferenceById(streetId);
+        return streetReository.findById(streetId).orElseThrow(() -> new EntityNotFoundException("Город не найден!"));
     }
 
-    public void deleteStreet(Long streetID) {
+    public void delete(Long streetID) {
         streetReository.deleteById(streetID);
     }
 
