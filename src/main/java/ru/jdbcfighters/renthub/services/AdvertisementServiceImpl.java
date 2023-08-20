@@ -24,12 +24,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     @Override
-    public Advertisement read(Long id) {
+    public Advertisement get(Long id) {
         return advertisementRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Объявление не найдено!"));
     }
 
     @Override
-    public List<Advertisement> readAll() {
+    public List<Advertisement> getAll() {
         return advertisementRepository.findAll();
     }
 
@@ -42,7 +42,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public Advertisement delete(Long id) {
         existCheck(id);
-        Advertisement advertisement = read(id);
+        Advertisement advertisement = get(id);
         advertisement.setVisible(false);
         return advertisementRepository.save(advertisement);
     }

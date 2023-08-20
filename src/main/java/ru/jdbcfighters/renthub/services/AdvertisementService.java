@@ -9,9 +9,9 @@ public interface AdvertisementService {
 
     Advertisement create(Advertisement advertisement);
 
-    Advertisement read(Long id);
+    Advertisement get(Long id);
 
-    List<Advertisement> readAll();
+    List<Advertisement> getAll();
 
     Advertisement update(Advertisement advertisement);
 
