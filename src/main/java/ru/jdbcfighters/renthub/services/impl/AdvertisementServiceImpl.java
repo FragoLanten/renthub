@@ -1,10 +1,11 @@
-package ru.jdbcfighters.renthub.services;
+package ru.jdbcfighters.renthub.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.jdbcfighters.renthub.domain.models.Advertisement;
 import ru.jdbcfighters.renthub.domain.models.Estate;
 import ru.jdbcfighters.renthub.repositories.AdvertisementRepository;
+import ru.jdbcfighters.renthub.services.AdvertisementService;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
@@ -15,8 +16,6 @@ import java.util.List;
 public class AdvertisementServiceImpl implements AdvertisementService {
 
     private final AdvertisementRepository advertisementRepository;
-
-    // private final EstateRepository estateRepository;
 
     @Override
     public Advertisement create(Advertisement advertisement) {
@@ -60,8 +59,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public Advertisement getAdvertisementByEstate(Estate estate) {
-//        if (!estateRepository.existsById(estate.getId()))
-//            throw new EntityNotFoundException("Объект не найден");
         return advertisementRepository.getAdvertisementByEstate(estate);
     }
 
