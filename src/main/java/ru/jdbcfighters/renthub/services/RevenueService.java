@@ -1,26 +1,20 @@
 package ru.jdbcfighters.renthub.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import ru.jdbcfighters.renthub.domain.models.Revenue;
-import ru.jdbcfighters.renthub.repositories.RevenueRepository;
 
-import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
-@Service
-public class RevenueService {
-    @Autowired
-    RevenueRepository revenueRepository;
+public interface RevenueService {
+    public Revenue saveRevenue(Revenue revenue);
 
-    @Transactional
-    public List<Revenue> findRevenueByUserId(Long userID) {
-        return revenueRepository.findRevenueByUserId(userID);
-    }
+    public Revenue getRevenue(Long revenueId);
 
-    @Transactional
-    public List<Revenue> findAll() {
-        return revenueRepository.findAll();
-    }
+    public void deleteRevenue(Long revenueID);
+
+    public List<Revenue> findRevenueByUserId(Long userID);
+
+    public List<Revenue> findRevenueByDate(LocalDate localDate);
+
+    public List<Revenue> findAll();
 }
