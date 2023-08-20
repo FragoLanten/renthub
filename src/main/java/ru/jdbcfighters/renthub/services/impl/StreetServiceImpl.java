@@ -19,7 +19,7 @@ public class StreetServiceImpl implements StreetService {
     }
 
     public Street getStreet(Long streetId) {
-        return streetReository.findById(streetId).orElseThrow(() -> new EntityNotFoundException("Город не найден!"));
+        return streetReository.findById(streetId).orElseThrow(() -> new EntityNotFoundException("Улица не найдена!"));
     }
 
     public void delete(Long streetID) {
