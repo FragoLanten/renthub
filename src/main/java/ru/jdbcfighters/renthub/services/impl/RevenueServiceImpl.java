@@ -2,6 +2,7 @@ package ru.jdbcfighters.renthub.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.jdbcfighters.renthub.domain.models.Revenue;
 import ru.jdbcfighters.renthub.repositories.RevenueRepository;
 
@@ -10,33 +11,37 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+
 @Service
+@Transactional(readOnly = true)
 public class RevenueServiceImpl {
     @Autowired
     RevenueRepository revenueRepository;
 
-    public Revenue saveRevenue(Revenue revenue) {
+    @Transactional
+    public Revenue save(Revenue revenue) {
         Objects.requireNonNull(revenue);
         return revenueRepository.save(revenue);
     }
 
-    public Revenue getRevenue(Long revenueId) {
+    public Revenue getById(Long revenueId) {
         return revenueRepository.findById(revenueId).orElseThrow(() -> new EntityNotFoundException("Объявление не найдено!"));
     }
 
-    public void deleteRevenue(Long revenueID) {
+    @Transactional
+    public void delete(Long revenueID) {
         existCheck(revenueID);
         revenueRepository.deleteById(revenueID);
     }
 
     public List<Revenue> findRevenueByUserId(Long userID) {
         Objects.requireNonNull(userID);
-        return revenueRepository.findRevenueByUserId(userID);
+        return revenueRepository.findByUserId(userID);
     }
 
-    public List<Revenue> findRevenueByDate(LocalDate localDate) {
+    public List<Revenue> findByDate(LocalDate localDate) {
         Objects.requireNonNull(localDate);
-        return revenueRepository.findRevenueByDate(localDate);
+        return revenueRepository.findByDate(localDate);
     }
 
     public List<Revenue> findAll() {

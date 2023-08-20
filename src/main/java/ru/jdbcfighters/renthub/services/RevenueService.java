@@ -6,15 +6,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface RevenueService {
-    public Revenue saveRevenue(Revenue revenue);
+    public Revenue save(Revenue revenue);
 
-    public Revenue getRevenue(Long revenueId);
+    public Revenue getById(Long revenueId);
 
-    public void deleteRevenue(Long revenueID);
+    public void delete(Long revenueID);
 
-    public List<Revenue> findRevenueByUserId(Long userID);
+    public List<Revenue> findByUserId(Long userID);
 
-    public List<Revenue> findRevenueByDate(LocalDate localDate);
+    public List<Revenue> findByDate(LocalDate localDate);
 
     public List<Revenue> findAll();
 }

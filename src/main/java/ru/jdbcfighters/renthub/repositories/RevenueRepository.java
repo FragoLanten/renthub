@@ -13,9 +13,10 @@ import java.util.List;
 public interface RevenueRepository extends JpaRepository<Revenue, Long> {
 
     @Query("SELECT rev FROM Revenue rev Join fetch rev.user u where u.id = :userId")
-    List<Revenue> findRevenueByUserId(Long userId);
+    List<Revenue> findByUserId(Long userId);
 
     @Query("SELECT rev From Revenue rev where rev.date = :localDate")
-    List<Revenue> findRevenueByDate(LocalDate localDate);
+    List<Revenue> findByDate(LocalDate localDate);
+
 
 }
