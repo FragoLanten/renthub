@@ -1,5 +1,8 @@
 package ru.jdbcfighters.renthub.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +24,9 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @Table(name = "attributes")
 public class Attribute {
 
@@ -37,6 +43,7 @@ public class Attribute {
             joinColumns = @JoinColumn(name = "attribute_id"),
             inverseJoinColumns = @JoinColumn(name = "estate_id")
     )
+    @JsonIgnore
     private Set<Estate> estates;
 
     @ManyToMany

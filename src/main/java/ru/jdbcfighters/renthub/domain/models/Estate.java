@@ -1,25 +1,9 @@
 package ru.jdbcfighters.renthub.domain.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.*;
+import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -28,6 +12,20 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@ToString
+@NamedEntityGraph(
+        name = "estate-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode("owner"),
+                @NamedAttributeNode("street"),
+                @NamedAttributeNode("deal"),
+                @NamedAttributeNode("advertisement"),
+                @NamedAttributeNode("city"),
+                @NamedAttributeNode("attributes")
+        })
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @Table(name = "estate")
 public class Estate {
 
@@ -74,6 +72,7 @@ public class Estate {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "estate_id")
     )
+    @JsonIgnore
     private Set<User> users;
 
     @ManyToMany
