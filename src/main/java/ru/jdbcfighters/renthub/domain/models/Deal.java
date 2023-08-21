@@ -8,11 +8,14 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
@@ -22,6 +25,11 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @Entity
+@NamedEntityGraph(name = "deal-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode("dealType"),
+                @NamedAttributeNode("dealStatus")
+        })
 @Table(name = "deals")
 public class Deal {
 
@@ -35,24 +43,24 @@ public class Deal {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     @JsonBackReference
     private Estate estate;
 
     // TODO: 8/19/2023 Статус и Тип попробовать сделать без сущностей
 
-//    @OneToOne
-//    @JoinColumn(name = "status_id")
-//    @JsonBackReference
-//    private DealStatus dealStatus;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id")
+    @JsonBackReference
+    private DealStatus dealStatus;
 
-//    @OneToOne
-//    @JoinColumn(name = "type_id")
-//    @JsonBackReference
-//    private DealType dealType;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id")
+    @JsonBackReference
+    private DealType dealType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buyer_user_id")
     @JsonBackReference
     private User buyer;
