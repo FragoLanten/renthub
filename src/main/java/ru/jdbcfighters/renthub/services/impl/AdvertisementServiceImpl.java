@@ -54,7 +54,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public boolean checkIfIdExist(Long id) {
-        return advertisementRepository.checkIfIdExist(id);
+        return advertisementRepository.existsById(id);
     }
 
     @Override
