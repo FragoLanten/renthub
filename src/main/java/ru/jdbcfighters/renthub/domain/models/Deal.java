@@ -55,12 +55,12 @@ public class Deal {
 
     // TODO: 8/19/2023 Статус и Тип попробовать сделать без сущностей
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id")
     @JsonBackReference
     private DealStatus dealStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id")
     @JsonBackReference
     private DealType dealType;

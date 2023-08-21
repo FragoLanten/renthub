@@ -75,9 +75,8 @@ public class User {
     )
     private Set<Estate> estates;
 
-//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "users_role", joinColumns = @JoinColumn(name = "user_id"))
-//    @Enumerated(EnumType.STRING)
-//    private Set<Role> userRoles;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 }
