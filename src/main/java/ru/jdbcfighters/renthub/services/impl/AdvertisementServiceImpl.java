@@ -52,10 +52,10 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         advertisementRepository.deleteById(id);
     }
 
-    @Override
-    public boolean checkIfIdExist(Long id) {
-        return advertisementRepository.checkIfIdExist(id);
-    }
+//    @Override
+//    public boolean checkIfIdExist(Long id) {
+//        return advertisementRepository.checkIfIdExist(id);
+//    }
 
     @Override
     public Advertisement getAdvertisementByEstate(Estate estate) {

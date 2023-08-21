@@ -6,7 +6,7 @@ import ru.jdbcfighters.renthub.domain.models.Estate;
 
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
 
-    boolean checkIfIdExist(Long id);
+//    boolean checkIfIdExist(Long id);
 
     Advertisement getAdvertisementByEstate(Estate estate);
 
