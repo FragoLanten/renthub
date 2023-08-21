@@ -21,7 +21,7 @@ public interface AdvertisementService {
     //Удаление из БД
     void hardDelete (Long id);
 
-//    boolean checkIfIdExist(Long id);
+    boolean checkIfIdExist(Long id);
 
     //Получить объявление по связанному объекту
     Advertisement getAdvertisementByEstate(Estate estate);
