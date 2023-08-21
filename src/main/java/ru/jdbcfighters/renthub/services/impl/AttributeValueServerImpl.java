@@ -1,4 +1,4 @@
-package ru.jdbcfighters.renthub.services.implementations;
+package ru.jdbcfighters.renthub.services.impl;
 
 import org.springframework.stereotype.Service;
 import ru.jdbcfighters.renthub.domain.models.AttributeValue;
