@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS public.type_deal
     CONSTRAINT type_deal_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS public.atribute_value
+CREATE TABLE IF NOT EXISTS public.attribute_value
 (
     id bigserial NOT NULL,
     name character varying NOT NULL,
@@ -137,7 +137,7 @@ INSERT INTO cities (name) VALUES
 INSERT INTO attributes (name) VALUES
                                   ('flat number'), ('number of floors'), ('floor'), ('number of rooms'), ('balcony');
 
-INSERT INTO atribute_value (name) VALUES
+INSERT INTO attribute_value (name) VALUES
                                       ('85'), ('30'), ('15'), ('3'), ('true'),
                                       ('3'), ('4'), ('true'),
                                       ('30'), ('5'), ('4'), ('2'), ('false'),
