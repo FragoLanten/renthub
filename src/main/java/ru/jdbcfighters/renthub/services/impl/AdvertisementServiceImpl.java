@@ -1,6 +1,7 @@
 package ru.jdbcfighters.renthub.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.jdbcfighters.renthub.domain.models.Advertisement;
 import ru.jdbcfighters.renthub.domain.models.Estate;
@@ -15,7 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdvertisementServiceImpl implements AdvertisementService {
 
-    private final AdvertisementRepository advertisementRepository;
+    @Autowired
+    private AdvertisementRepository advertisementRepository;
 
     @Override
     public Advertisement create(Advertisement advertisement) {
@@ -56,6 +58,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public boolean checkIfIdExist(Long id) {
         return advertisementRepository.existsById(id);
     }
+
 
     @Override
     public Advertisement getAdvertisementByEstate(Estate estate) {
