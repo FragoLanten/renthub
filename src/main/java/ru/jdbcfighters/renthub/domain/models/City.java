@@ -36,4 +36,12 @@ public class City {
     @JsonManagedReference
     private Set<Estate> estates;
 
+    @Override
+    public String toString() {
+        return name;
+
+
+
+
+    }
 }

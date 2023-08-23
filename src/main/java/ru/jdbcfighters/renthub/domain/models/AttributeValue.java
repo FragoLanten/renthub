@@ -44,4 +44,8 @@ public class AttributeValue {
     )
     private Set<Attribute> attributes;
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

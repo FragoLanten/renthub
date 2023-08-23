@@ -307,7 +307,7 @@ ALTER TABLE IF EXISTS public.estate_attribute_value
 
 ALTER TABLE IF EXISTS public.estate_attribute_value
     ADD CONSTRAINT estate_attribute_value_on_value_fk FOREIGN KEY (value_id)
-        REFERENCES public.atribute_value (id) MATCH SIMPLE
+        REFERENCES public.attribute_value (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID;
