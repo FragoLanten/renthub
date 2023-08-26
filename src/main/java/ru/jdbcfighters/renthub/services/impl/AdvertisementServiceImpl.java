@@ -26,7 +26,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public Advertisement get(Long id) {
-        return advertisementRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Объявление не найдено!"));
+        return advertisementRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Объявление не найдено!"));
     }
 
     @Override

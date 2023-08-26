@@ -121,12 +121,12 @@ CREATE TABLE IF NOT EXISTS public.advertisments
 
 INSERT INTO type_deal (name) VALUES ('SALE'), ('RENT');
 
-INSERT INTO status_deal (name) VALUES ('IN WORK'), ('FINISHED');
+INSERT INTO status_deal (name) VALUES ('PROCESSING'), ('FINISHED');
 
 INSERT INTO users_role (user_id, role) VALUES
                                            (1, 'SELLER'), (2, 'SELLER'), (3, 'BUYER'), (4, 'SELLER'), (5, 'BUYER'),
                                            (6, 'SELLER'), (7, 'BUYER'), (8, 'BUYER'), (9, 'BUYER'), (10, 'BUYER'),
-                                           (11, 'USER'), (12, 'USER'), (13, 'USER'), (14, 'ADMIN'), (15, 'USER');
+                                           (11, 'MANAGER'), (12, 'MANAGER'), (13, 'MANAGER'), (14, 'ADMIN'), (15, 'MANAGER');
 
 INSERT INTO streets (name) VALUES
                                ('Lenina'), ('Sverdlova'), ('Kirova'), ('Lermontova'), ('Mira'), ('Oktyabrskaya');

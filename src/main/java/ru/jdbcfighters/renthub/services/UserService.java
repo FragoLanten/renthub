@@ -1,12 +1,13 @@
 package ru.jdbcfighters.renthub.services;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.jdbcfighters.renthub.domain.models.User;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface UserService {
-    User create(User user);
+public interface UserService extends UserDetailsService {
+    User save(User user);
 
     User get(Long id);
 

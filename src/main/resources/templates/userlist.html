@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="ru">
+<th:block layout:fragment="content">
+    <h2>Список пользователей</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Номер телефона</th>
+            <th>Объект</th>
+            <th>Роли</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.getFirstName()}"></td>
+            <td th:text="${user.getLastName()}"></td>
+            <td th:text="${user.getPhoneNumber()}"></td>
+            <td th:text="${user.getEstates()}"></td>
+            <td th:text="${#strings.setJoin(user.getRole(), ', ')}"></td>
+            <td><a th:href="@{/user/{id}(id=${user.getId()})}">edit</a> </td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>
+</html>
