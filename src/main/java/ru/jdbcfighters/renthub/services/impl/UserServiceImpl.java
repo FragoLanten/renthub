@@ -1,6 +1,8 @@
 package ru.jdbcfighters.renthub.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.jdbcfighters.renthub.domain.models.User;
@@ -24,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User create(User user) {
+    public User save(User user) {
         return userRepository.save(user);
     }
 
@@ -100,5 +102,15 @@ public class UserServiceImpl implements UserService {
     private void existCheck(Long id) {
         if (!userRepository.existsById(id))
             throw throwNotFoundException();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByLogin(username);
+
+        if (user == null){
+            throw new UsernameNotFoundException("Пользователь не найден");
+        }
+        return user;
     }
 }
