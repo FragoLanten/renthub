@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -73,7 +74,7 @@ public class Estate {
             inverseJoinColumns = @JoinColumn(name = "estate_id")
     )
     @JsonIgnore
-    private Set<User> users;
+    private List<User> users;
 
     @ManyToMany
     @JoinTable(
@@ -81,6 +82,14 @@ public class Estate {
             joinColumns = @JoinColumn(name = "estate_id"),
             inverseJoinColumns = @JoinColumn(name = "attribute_id")
     )
-    private Set<Attribute> attributes;
+    private List<Attribute> attributes;
+
+    @ManyToMany
+    @JoinTable(
+            name = "estate_attribute_value",
+            joinColumns = @JoinColumn(name = "estate_id"),
+            inverseJoinColumns = @JoinColumn(name = "value_id")
+    )
+    private List<AttributeValue> atributeValue;
 
 }

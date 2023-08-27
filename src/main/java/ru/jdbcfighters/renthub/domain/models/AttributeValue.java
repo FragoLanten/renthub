@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -26,7 +27,7 @@ import java.util.Set;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-@Table(name = "attribute_value")
+@Table(name = "atribute_value")
 public class AttributeValue {
 
     @Id
@@ -42,7 +43,7 @@ public class AttributeValue {
             joinColumns = @JoinColumn(name = "value_id"),
             inverseJoinColumns = @JoinColumn(name = "attribute_id")
     )
-    private Set<Attribute> attributes;
+    private List<Attribute> attributes;
 
     @Override
     public String toString() {

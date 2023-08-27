@@ -3,36 +3,35 @@
       layout:decorate="~{layout}"
       lang="ru">
 <th:block layout:fragment="content">
-   <h2> Список объявлений</h2>
-    <div class="card-columns" th:each="advertisement : ${advertisements}" th:if="${#bools.isTrue(advertisement.getVisible())}">
-        <div class="card my-3" style="width: 80rem;" th:each="estate : ${advertisement.getEstate()}">
-            <div class="m-2">
+    <h2> Список объявлений</h2>
+    <div class="card-columns" th:each="estate : ${estates}"
+         >
+        <div class="card my-3" style="width: 80rem;">
+            <div class="m-2" >
 
-                <table>
+                <table class="table table-bordered" th:each="advertisement : ${estate.getAdvertisement()}"
+                       th:if="${#bools.isTrue(advertisement.getVisible())}">
                     <thead>
                     <tr>
                         <th>Город</th>
                         <th>Улица</th>
                         <th>Номер дома</th>
                         <th>Площадь кв. метров</th>
-                        <th>Номер квартиры</th>
-                        <th>Кол-во этажей в доме</th>
-                        <th>Этаж</th>
-                        <th>Количество комант</th>
-                        <th>Балкон</th>
+                        <th th:each="attribute : ${estate.getAttributes()}" th:text="${attribute.getName}"></th>
+<!--                        <th>Номер квартиры</th>-->
+<!--                        <th>Кол-во этажей в доме</th>-->
+<!--                        <th>Этаж</th>-->
+<!--                        <th>Количество комант</th>-->
+<!--                        <th>Балкон</th>-->
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr >
                         <td th:text="${estate.getCity}"></td>
                         <td th:text="${estate.getStreet}"></td>
                         <td th:text="${estate.getNumber}"></td>
                         <td th:text="${estate.getSquare}"></td>
-<!--                        <td th:text="${value.getName}"></td>-->
-<!--                        <td th:text="${value.getName}"></td>-->
-<!--                        <td th:text="${value.getName}"></td>-->
-<!--                        <td th:text="${value.getName}"></td>-->
-<!--                        <td th:text="${value.getName}"></td>-->
+                        <td th:each="value : ${estate.getAtributeValue}" th:text="${value.getName}"></td>
                     </tr>
                     </tbody>
                 </table>
