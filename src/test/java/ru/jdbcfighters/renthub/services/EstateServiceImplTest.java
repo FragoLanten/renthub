@@ -1,18 +1,11 @@
 package ru.jdbcfighters.renthub.services;
 
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.Assert;
 import ru.jdbcfighters.renthub.domain.exception.EstateNotFoundException;
 import ru.jdbcfighters.renthub.domain.models.Estate;
 import ru.jdbcfighters.renthub.repositories.EstateRepo;
@@ -33,7 +26,7 @@ public final class EstateServiceImplTest {
     private EstateServiceImpl estateService;
 
     @Test
-    public void getAllShouldReturnEstates(){
+    public void getAllShouldReturnEstates() {
         final List<Estate> estates = new ArrayList<Estate>();
 
         estates.add(new Estate());
@@ -50,7 +43,7 @@ public final class EstateServiceImplTest {
     }
 
     @Test
-    public void getByIdShouldReturnEstate(){
+    public void getByIdShouldReturnEstate() {
         final Estate estate = mock(Estate.class);
         when(estateRepo.findById(ID)).thenReturn(Optional.of(estate));
 
@@ -62,7 +55,7 @@ public final class EstateServiceImplTest {
     }
 
     @Test
-    public void getByIdShouldReturnException(){
+    public void getByIdShouldReturnException() {
         when(estateRepo.findById(ID)).thenReturn(Optional.empty());
 
         Assertions.assertThrows(EstateNotFoundException.class, () ->
@@ -70,17 +63,33 @@ public final class EstateServiceImplTest {
     }
 
     @Test
-    public void saveShouldSaveEstate(){
+    public void saveShouldSaveEstate() {
+        final Estate estate = mock(Estate.class);
+        when(estateRepo.save(estate)).thenReturn(estate);
 
+        final Estate savedEstate = estateService.save(estate);
+
+        Assertions.assertNotNull(savedEstate);
+        Assertions.assertEquals(estate, savedEstate);
+        verify(estateRepo).save(estate);
     }
 
     @Test
-    public void updateShouldUpdateEstate(){
+    public void updateShouldUpdateEstate() {
+        final Estate estate = mock(Estate.class);
+        when(estateRepo.save(estate)).thenReturn(estate);
 
+        final Estate updatedEstate = estateService.update(ID, estate);
+
+        Assertions.assertNotNull(updatedEstate);
+        Assertions.assertEquals(estate, updatedEstate);
+        verify(estateRepo).save(estate);
     }
 
     @Test
-    public void deleteShouldUpdateEstate(){
+    public void deleteShouldUpdateEstate() {
+        estateService.delete(ID);
 
+        verify(estateRepo).deleteById(ID);
     }
 }
