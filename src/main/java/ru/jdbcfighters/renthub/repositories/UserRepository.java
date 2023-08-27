@@ -5,10 +5,11 @@ import ru.jdbcfighters.renthub.domain.models.User;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByLogin(String username);
+    Optional<User> findByLogin(String username);
 
     List<User> findUsersByFirstNameOrLastNameOrLogin(String firstname, String lastname, String login);
 
