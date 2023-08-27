@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -34,7 +35,7 @@ public class Street {
 
     @OneToMany(mappedBy = "street", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Estate> estates;
+    private List<Estate> estates;
 
     @Override
     public String toString() {

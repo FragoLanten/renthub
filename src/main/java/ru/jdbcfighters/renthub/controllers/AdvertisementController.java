@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.jdbcfighters.renthub.domain.models.Advertisement;
+import ru.jdbcfighters.renthub.domain.models.Estate;
 import ru.jdbcfighters.renthub.repositories.AdvertisementRepository;
 import ru.jdbcfighters.renthub.repositories.EstateRepo;
 
@@ -14,12 +15,12 @@ import ru.jdbcfighters.renthub.repositories.EstateRepo;
 @RequiredArgsConstructor
 public class AdvertisementController {
 
-    private final AdvertisementRepository advertisementRepository;
+    private final EstateRepo estateRepo;
 
     @GetMapping
     public String advertisementList(Model model){
-        Iterable<Advertisement> advertisements = advertisementRepository.findAll();
-        model.addAttribute("advertisements", advertisements);
+        Iterable<Estate> estate = estateRepo.findAll();
+        model.addAttribute("estates", estate);
         return "advertisement";
     }
 
