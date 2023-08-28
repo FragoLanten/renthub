@@ -3,7 +3,6 @@ package ru.jdbcfighters.renthub.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -63,7 +62,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf()
-                .disable()//
+                .disable()
                 .authorizeHttpRequests((authorize) -> authorize
 
                         .antMatchers("/registration", "/", "/advertisement", "/static/**", "/auth")
@@ -72,20 +71,9 @@ public class WebSecurityConfig {
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll())
-//                .rememberMe((remember) -> remember
-//                        .rememberMeServices(rememberMeServices))
                 .logout(LogoutConfigurer::permitAll)
                 .addFilterBefore(authenticationTokenFilterBean(authenticationManager(authenticationConfiguration())), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
-//    @Bean
-//    RememberMeServices rememberMeServices(UserDetailsService userDetailsService) {
-//        TokenBasedRememberMeServices.RememberMeTokenAlgorithm encodingAlgorithm =
-//                TokenBasedRememberMeServices.RememberMeTokenAlgorithm.SHA256;
-//        TokenBasedRememberMeServices rememberMe = new TokenBasedRememberMeServices("uniqueAndSecret",
-//                userDetailsService, encodingAlgorithm);
-//        rememberMe.setMatchingAlgorithm(TokenBasedRememberMeServices.RememberMeTokenAlgorithm.MD5);
-//        return rememberMe;
-//    }
 }
