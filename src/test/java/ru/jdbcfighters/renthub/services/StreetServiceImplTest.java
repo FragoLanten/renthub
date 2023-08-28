@@ -1,4 +1,4 @@
-package ru.jdbcfighters.renthub.services.impl;
+package ru.jdbcfighters.renthub.services;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.jdbcfighters.renthub.domain.models.City;
 import ru.jdbcfighters.renthub.domain.models.Street;
 import ru.jdbcfighters.renthub.repositories.StreetRepository;
+import ru.jdbcfighters.renthub.services.impl.StreetServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
