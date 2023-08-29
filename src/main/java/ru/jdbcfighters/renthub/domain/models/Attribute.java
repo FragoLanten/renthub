@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -52,7 +53,7 @@ public class Attribute {
             joinColumns = @JoinColumn(name = "attribute_id"),
             inverseJoinColumns = @JoinColumn(name = "value_id")
     )
-    private Set<AttributeValue> attributeValues;
+    private List<AttributeValue> attributeValues;
 
     @Override
     public String toString() {

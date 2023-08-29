@@ -1,9 +1,13 @@
 package ru.jdbcfighters.renthub.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.jdbcfighters.renthub.domain.models.User;
+import ru.jdbcfighters.renthub.domain.models.enums.Role;
 import ru.jdbcfighters.renthub.repositories.UserRepository;
 import ru.jdbcfighters.renthub.services.UserService;
 
@@ -11,6 +15,7 @@ import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -24,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User create(User user) {
+    public User save(User user) {
         return userRepository.save(user);
     }
 
@@ -100,5 +105,31 @@ public class UserServiceImpl implements UserService {
     private void existCheck(Long id) {
         if (!userRepository.existsById(id))
             throw throwNotFoundException();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        try {
+            Optional<User> searchResult = userRepository.findByLogin(username);
+            if (searchResult.isPresent()) {
+                User user = searchResult.get();
+                String login = user.getLogin();
+                String password = user.getPassword();
+                return new org.springframework.security.core.userdetails.User(
+                        login,
+                        password,
+                        AuthorityUtils.commaSeparatedStringToAuthorityList(
+                                user.getAuthorities()
+                                        .stream()
+                                        .map(Role::name)
+                                        .collect(Collectors.joining(","))
+                        )
+                );
+            } else {
+                throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+            }
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("User with this username not found");
+        }
     }
 }
