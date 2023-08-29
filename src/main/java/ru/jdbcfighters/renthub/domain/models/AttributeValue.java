@@ -27,7 +27,7 @@ import java.util.Set;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-@Table(name = "atribute_value")
+@Table(name = "attribute_value")
 public class AttributeValue {
 
     @Id
