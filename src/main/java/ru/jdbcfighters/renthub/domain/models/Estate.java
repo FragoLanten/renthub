@@ -13,6 +13,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@EqualsAndHashCode
 @ToString
 @NamedEntityGraph(
         name = "estate-entity-graph",
