@@ -12,9 +12,9 @@ public interface RevenueService {
 
     public void delete(Long revenueID);
 
-    public List<Revenue> findByUserId(Long userID);
+    public List<Revenue> findRevenueByUserId(Long userID);
 
-    public List<Revenue> findByDate(LocalDate localDate);
+    public List<Revenue> findRevenueByDate(LocalDate localDate);
 
     public List<Revenue> findAll();
 }
