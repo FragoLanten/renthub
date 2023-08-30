@@ -121,12 +121,12 @@ CREATE TABLE IF NOT EXISTS public.advertisments
 
 INSERT INTO type_deal (name) VALUES ('SALE'), ('RENT');
 
-INSERT INTO status_deal (name) VALUES ('IN WORK'), ('FINISHED');
+INSERT INTO status_deal (name) VALUES ('PROCESSING'), ('FINISHED');
 
 INSERT INTO users_role (user_id, role) VALUES
                                            (1, 'SELLER'), (2, 'SELLER'), (3, 'BUYER'), (4, 'SELLER'), (5, 'BUYER'),
                                            (6, 'SELLER'), (7, 'BUYER'), (8, 'BUYER'), (9, 'BUYER'), (10, 'BUYER'),
-                                           (11, 'USER'), (12, 'USER'), (13, 'USER'), (14, 'ADMIN'), (15, 'USER');
+                                           (11, 'MANAGER'), (12, 'MANAGER'), (13, 'MANAGER'), (14, 'ADMIN'), (15, 'MANAGER');
 
 INSERT INTO streets (name) VALUES
                                ('Lenina'), ('Sverdlova'), ('Kirova'), ('Lermontova'), ('Mira'), ('Oktyabrskaya');
@@ -166,7 +166,7 @@ INSERT INTO users (first_name, last_name, login, password, phone, is_deleted, ba
                                                                                            ('Orren', 'Brimilcombe', 'obrimilcombea', 'fZ1>l+L=', '9418026004', false, 1882323479),
                                                                                            ('Janaya', 'Ecclestone', 'jecclestoneb', 'nF9{pzWD''e`=Wh8', '9597071752', false, 1794270479),
                                                                                            ('Ely', 'Sneyd', 'esneydc', 'pB7&mu?QMb', '9173140074', false, 1216655078),
-                                                                                           ('Gerri', 'Wase', 'gwased', 'gX7/?/L#', '9239489967', false, 1233919226),
+                                                                                           ('Gerri', 'Wase', 'gwased', '$2a$10$TIHwDIaveYxH8HqzgD0V4eGWSa88ooSSUgQZnt/fciyN7ziIHRjs.', '9239489967', false, 1233919226),
                                                                                            ('Rheta', 'Camfield', 'rcamfielde', 'qG5<*5(n\T*', '9799848020', true, 404884861),
                                                                                            ('Frances', 'Drury', 'fdruryf', 'uX1|u>|tK7Z6p', '9627505038', false, 1439310088),
                                                                                            ('Cindy', 'Rubanenko', 'crubanenkog', 'rO2(wHbTr', '9662412888', false, 1147282207),
@@ -214,10 +214,10 @@ INSERT INTO wishlist (user_id, estate_id) VALUES
                                               (3, 6), (7, 4), (3, 2), (5, 1), (10, 4), (10, 5), (5, 6);
 
 INSERT INTO estate_attribute_value (attribute_id, estate_id, value_id) VALUES
-                                                                           (1, 1, 1), (1, 2, 2), (1, 3, 3), (1, 4, 4), (1, 5, 5),
-                                                                           (2, 1, 6), (2, 2, 7), (2, 3, 8),
-                                                                           (3, 1, 9), (3, 2, 10), (3, 3, 11), (3, 4, 12), (3, 5, 13),
-                                                                           (4, 1, 14), (4, 2, 15), (4, 3, 16), (4, 4, 17), (4, 5, 18);
+                                                                           (1, 1, 1), (2, 1, 2), (3, 1, 3), (4, 1, 4), (5, 1, 5),
+                                                                           (1, 2, 6), (2, 2, 7), (5, 2, 8),
+                                                                           (1, 3, 9), (2, 3, 10), (3, 3, 11), (4, 3, 12), (5, 3, 13),
+                                                                           (1, 4, 14), (2, 4, 15), (3, 4, 16), (4, 4, 17), (5, 4, 18);
 
 INSERT INTO deals (start_date, end_date, estate_id, type_id, buyer_user_id, status_id) VALUES
                                                                                            ('2023-07-01', '2023-07-28', 1, 2, 3, 2),
