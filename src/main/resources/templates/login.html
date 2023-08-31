@@ -19,7 +19,7 @@
     <div th:if="${param.logout}" class="mb-3 mt-3">
         Вы вышли.
     </div>
-    <form th:action="@{/login}" method="post">
+    <form th:action="@{/auth}" method="post">
         <div th:insert="~{fragments/login}"></div>
         <button class="btn btn-primary" type="submit">Войти</button>
     </form>

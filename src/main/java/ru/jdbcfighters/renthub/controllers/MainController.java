@@ -3,9 +3,12 @@ package ru.jdbcfighters.renthub.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.jdbcfighters.renthub.currency.service.SbrService;
+import ru.jdbcfighters.renthub.security.CustomHeaders;
+import ru.jdbcfighters.renthub.security.jwt.TokenProvider;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,27 +19,27 @@ public class MainController {
 
     private final SbrService currencyService;
 
-    @GetMapping("/")
-    public String greeting(Model model) {
+    private final TokenProvider tokenProvider;
+
+    @ModelAttribute
+    public void addAttributes(Model model) {
         List<BigDecimal> currency = currencyService.requestByCurrencyCode();
         model.addAttribute("eur", currency.get(0));
         model.addAttribute("usd", currency.get(1));
+    }
+
+    @GetMapping("/")
+    public String greeting() {
         return "greeting";
     }
 
-//    @GetMapping("/main")
-//    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-//        Iterable<Message> messages;
-//
-//        if (filter != null && !filter.isEmpty()) {
-//            messages = messageRepository.findByTag(filter);
-//        } else {
-//            messages = messageRepository.findAll();
-//        }
-//        model.addAttribute("messages", messages);
-//        model.addAttribute("filter", filter);
-//        return "main";
-//    }
+    @GetMapping("/main")
+    public String main(@CookieValue(value = CustomHeaders.X_AUTH_TOKEN, defaultValue = "null") String jwtToken,  Model model) {
+       if (tokenProvider.validateToken(jwtToken)){
+         return "main";
+       }else
+        return "login";
+    }
 //
 //    @PostMapping("/main")
 //    public String add(
