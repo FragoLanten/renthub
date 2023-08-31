@@ -2,19 +2,19 @@ package ru.jdbcfighters.renthub.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import ru.jdbcfighters.renthub.currency.service.SbrService;
 import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.domain.models.enums.Role;
 import ru.jdbcfighters.renthub.services.UserService;
 
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -22,6 +22,14 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final SbrService currencyService;
+
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        List<BigDecimal> currency = currencyService.requestByCurrencyCode();
+        model.addAttribute("eur", currency.get(0));
+        model.addAttribute("usd", currency.get(1));
+    }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping

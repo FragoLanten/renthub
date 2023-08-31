@@ -8,7 +8,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -64,15 +63,17 @@ public class WebSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests((authorize) -> authorize
-
                         .antMatchers("/registration", "/", "/advertisement", "/static/**", "/auth")
                         .permitAll()
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll())
-                .logout(LogoutConfigurer::permitAll)
-                .addFilterBefore(authenticationTokenFilterBean(authenticationManager(authenticationConfiguration())), UsernamePasswordAuthenticationFilter.class);
+                .logout(logout -> logout.logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .deleteCookies(CustomHeaders.X_AUTH_TOKEN))
+                .addFilterBefore(authenticationTokenFilterBean(authenticationManager(authenticationConfiguration())),
+                        UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

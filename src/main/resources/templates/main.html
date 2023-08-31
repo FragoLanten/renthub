@@ -3,6 +3,7 @@
       layout:decorate="~{layout}"
       lang="ru">
 <th:block layout:fragment="content">
+    <h2>Привет!!!!!! Токен!!!!</h2>
 <!--    <div class="form-row">-->
 <!--        <form method="get" action="/main" class="form-inline">-->
 <!--            <input class="form-control" type="text" name="filter" th:if="${filter != null}" th:value="${filter}"-->
@@ -14,54 +15,54 @@
 <!--       aria-controls="collapseExample">-->
 <!--        Добавить сообщение-->
 <!--    </a>-->
-    <div class="collapse" th:classappend="${message != null} ? show : ''" id="collapseExample">
-        <div class="form-group mt-3">
-            <form th:action="@{/main}" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <input type="text" name="text" placeholder="Введите сообщение"
-                           class="form-control" th:classappend="${message != null} ? 'is-invalid' : ''"
-                           th:value="${message != null} ? ${message.getText()} : ''"/>
-                    <div class="invalid-feedback" th:if="${message != null}" th:object="${message}" th:field="*{text}">
-                        <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">
-                            Text Error
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="tag" placeholder="Введите тэг"
-                           class="form-control" th:classappend="${message != null} ? 'is-invalid' : ''"
-                           th:value="${message != null} ? ${message.getTag()} : ''"/>
-                    <div class="invalid-feedback" th:if="${message != null}" th:object="${message}" th:field="*{tag}">
-                        <div th:if="${#fields.hasErrors('tag')}" th:errors="*{tag}">
-                            Tag Error
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="custom-file">
-                        <input type="file" name="file" id="customFile">
-                        <label class="custom-file-label" for="customFile">Выбрать файл</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Добавить</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="card-columns">
-        <div class="card my-3" style="width: 18rem;" th:each="message : ${messages}">
-            <div th:if="${#bools.isTrue(message.filename)}">
-                <img class="card-img-top" th:src="@{${'/img/' + message.getFilename()}}"/>
-            </div>
-            <div class="m-2">
-                <span th:text="${message.getText()}"></span>
-                <i th:text="${message.getTag()}"></i>
-            </div>
-            <div class="card-footer text-muted">
-                <span th:text="${message.authorName}"></span>
-            </div>
-        </div>
-    </div>
+<!--    <div class="collapse" th:classappend="${message != null} ? show : ''" id="collapseExample">-->
+<!--        <div class="form-group mt-3">-->
+<!--            <form th:action="@{/main}" method="post" enctype="multipart/form-data">-->
+<!--                <div class="form-group">-->
+<!--                    <input type="text" name="text" placeholder="Введите сообщение"-->
+<!--                           class="form-control" th:classappend="${message != null} ? 'is-invalid' : ''"-->
+<!--                           th:value="${message != null} ? ${message.getText()} : ''"/>-->
+<!--                    <div class="invalid-feedback" th:if="${message != null}" th:object="${message}" th:field="*{text}">-->
+<!--                        <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">-->
+<!--                            Text Error-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <input type="text" name="tag" placeholder="Введите тэг"-->
+<!--                           class="form-control" th:classappend="${message != null} ? 'is-invalid' : ''"-->
+<!--                           th:value="${message != null} ? ${message.getTag()} : ''"/>-->
+<!--                    <div class="invalid-feedback" th:if="${message != null}" th:object="${message}" th:field="*{tag}">-->
+<!--                        <div th:if="${#fields.hasErrors('tag')}" th:errors="*{tag}">-->
+<!--                            Tag Error-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <div class="custom-file">-->
+<!--                        <input type="file" name="file" id="customFile">-->
+<!--                        <label class="custom-file-label" for="customFile">Выбрать файл</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <button class="btn btn-primary" type="submit">Добавить</button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="card-columns">-->
+<!--        <div class="card my-3" style="width: 18rem;" th:each="message : ${messages}">-->
+<!--            <div th:if="${#bools.isTrue(message.filename)}">-->
+<!--                <img class="card-img-top" th:src="@{${'/img/' + message.getFilename()}}"/>-->
+<!--            </div>-->
+<!--            <div class="m-2">-->
+<!--                <span th:text="${message.getText()}"></span>-->
+<!--                <i th:text="${message.getTag()}"></i>-->
+<!--            </div>-->
+<!--            <div class="card-footer text-muted">-->
+<!--                <span th:text="${message.authorName}"></span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 </th:block>
 </html>

@@ -1,12 +1,18 @@
 package ru.jdbcfighters.renthub.security.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import ru.jdbcfighters.renthub.services.UserService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +27,7 @@ import static java.util.Calendar.MILLISECOND;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class TokenProvider {
 
     /*Generate JWT Token and fields in token. Also add signature into 3-d part of token*/
@@ -33,6 +40,13 @@ public class TokenProvider {
     public static final SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS512;
 
     private final JWTConfiguration jwtTokenConfig;
+
+    private final UserService userService;
+
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = userService.loadUserByUsername(getUsernameFromToken(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
 
     private String generateToken(Map<String, Object> claims) {
         return Jwts
@@ -88,14 +102,27 @@ public class TokenProvider {
         return userDetails.getAuthorities().
                 stream()
                 .map(GrantedAuthority::getAuthority)
-                .map(s -> s.replace("ROLE_", ""))
+//                .map(s -> s.replace("ROLE_", ""))
                 .map(String::toLowerCase)
                 .collect(Collectors.toList());
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
-        return username.equals(userDetails.getUsername());
+//    public Boolean validateToken(String token, UserDetails userDetails) {
+//        final String username = getUsernameFromToken(token);
+//        return username.equals(userDetails.getUsername());
+//    }
+    public boolean validateToken(String token) {
+        try {
+            if (getClaimsFromToken(token).getExpiration().before(new Date())) {
+                log.info(" JWT token has expired");
+                return false;
+            }
+            log.info("JWT token is valid");
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            log.info("Expired or invalid JWT token");
+            return false;
+        }
     }
 
 }
