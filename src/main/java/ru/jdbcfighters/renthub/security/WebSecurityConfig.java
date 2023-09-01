@@ -23,11 +23,8 @@ import ru.jdbcfighters.renthub.services.UserService;
 public class WebSecurityConfig {
 
     private final UserService userService;
-
     private final EncoderConfig encoderConfig;
-
     private final TokenProvider tokenUtils;
-
     private final UserDetailsService userProvider;
 
     @Bean
@@ -41,7 +38,8 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

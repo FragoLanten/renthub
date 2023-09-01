@@ -88,10 +88,10 @@ public class AuthenticationController {
             throw new RuntimeException("Principal object is empty");
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Cookie cookie = new Cookie(CustomHeaders.X_AUTH_TOKEN, "");
-        cookie.setPath("/");
-        cookie.setMaxAge(-1);
-        res.addCookie(cookie);
+//        Cookie cookie = new Cookie(CustomHeaders.X_AUTH_TOKEN, "");
+//        cookie.setPath("/");
+//        cookie.setMaxAge(-1);
+//        res.addCookie(cookie);
         if (authentication != null && principal.getName().equals(authentication.getName())) {
             SecurityContextHolder.clearContext();
         } else {

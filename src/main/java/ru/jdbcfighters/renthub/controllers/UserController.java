@@ -2,34 +2,30 @@ package ru.jdbcfighters.renthub.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.jdbcfighters.renthub.currency.service.SbrService;
+import ru.jdbcfighters.renthub.controllers.utils.InjectModelAttribute;
+import ru.jdbcfighters.renthub.domain.dto.UserRequestDto;
 import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.domain.models.enums.Role;
 import ru.jdbcfighters.renthub.services.UserService;
 
-import java.math.BigDecimal;
-import java.util.List;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@InjectModelAttribute
 public class UserController {
 
     private final UserService userService;
-    private final SbrService currencyService;
-
-    @ModelAttribute
-    public void addAttributes(Model model) {
-        List<BigDecimal> currency = currencyService.requestByCurrencyCode();
-        model.addAttribute("eur", currency.get(0));
-        model.addAttribute("usd", currency.get(1));
-    }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
@@ -47,13 +43,22 @@ public class UserController {
 //    @PreAuthorize("hasAuthority('ADMIN')")
 //    @PostMapping
 //    public String userSave(
-//            @RequestParam String username,
+//            UserDto userDto,
 //            @RequestParam Map<String, String> form,
 //            @RequestParam("userId") User user
 //    ){
-//        userService.save(username, user, form);
+//        userService.save(userDto, user, form);
 //        return "redirect:/user";
 //    }
+
+    @PostMapping("/edit")
+    public String updateUser(@AuthenticationPrincipal UserDetails userDetails,
+                             @ModelAttribute("user") @Valid UserRequestDto userRequestDto) {
+        String login = userDetails.getUsername();
+        userService.updateUser(login, userRequestDto);
+
+        return "redirect:/users/edit";
+    }
 
 //    @GetMapping("/profile")
 //    public String getProfile(Model model, @AuthenticationPrincipal User user){
