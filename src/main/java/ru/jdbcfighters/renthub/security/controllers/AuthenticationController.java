@@ -2,8 +2,6 @@ package ru.jdbcfighters.renthub.security.controllers;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,21 +9,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import ru.jdbcfighters.renthub.security.CustomHeaders;
-import ru.jdbcfighters.renthub.security.dto.AuthRequest;
-import ru.jdbcfighters.renthub.security.dto.AuthResponse;
+import ru.jdbcfighters.renthub.security.dto.AuthRequestDTO;
+import ru.jdbcfighters.renthub.security.dto.AuthResponseDTO;
 import ru.jdbcfighters.renthub.security.jwt.JWTConfiguration;
 import ru.jdbcfighters.renthub.security.jwt.TokenProvider;
 import ru.jdbcfighters.renthub.services.UserService;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
@@ -44,7 +36,7 @@ public class AuthenticationController {
     private final JWTConfiguration configuration;
 
     @PostMapping("/auth")
-    public String login(AuthRequest authRequest,
+    public String login(AuthRequestDTO authRequest,
                         HttpServletResponse res) {
 
         /*Check login and password*/
@@ -52,7 +44,7 @@ public class AuthenticationController {
                 (new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
 
-        AuthResponse response = AuthResponse.builder().login(authRequest.getLogin())
+        AuthResponseDTO response = AuthResponseDTO.builder().login(authRequest.getLogin())
                 .token(provider.generateToken(userProvider.loadUserByUsername(authRequest.getLogin()))).build();
         Cookie cookie = new Cookie(CustomHeaders.X_AUTH_TOKEN, response.getToken());
         cookie.setPath("/");

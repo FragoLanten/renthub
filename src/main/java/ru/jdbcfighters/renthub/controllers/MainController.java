@@ -23,10 +23,7 @@ public class MainController {
 
     @GetMapping("/main")
     public String main(@CookieValue(value = CustomHeaders.X_AUTH_TOKEN, defaultValue = "null") String jwtToken,  Model model) {
-       if (tokenProvider.validateToken(jwtToken)){
-         return "main";
-       }else
-        return "login";
+        return tokenProvider.validateToken(jwtToken) ? "main" : "login";
     }
 //
 //    @PostMapping("/main")
