@@ -14,8 +14,11 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
@@ -24,30 +27,47 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 
     private final UserDetailsService userDetailsService;
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
             throws IOException, ServletException {
 
-        /*1. Check if X-Auth-Token exists in header*/
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String authToken = httpRequest.getHeader(CustomHeaders.X_AUTH_TOKEN);
+        Optional.ofNullable((HttpServletRequest) req)
+                .map(HttpServletRequest::getCookies)
+                .stream()
+                .flatMap(Arrays::stream)
+                .filter(cookie -> cookie.getName().equals(CustomHeaders.X_AUTH_TOKEN))
+                .findFirst()
+                .map(Cookie::getValue)
+                .filter(tokenUtils::validateToken)
+                .map(tokenUtils::getAuthentication)
+                .ifPresent(auth -> SecurityContextHolder.getContext().setAuthentication(auth));
 
-        if (authToken != null) {
-
-            /*2. Validate and check username security details in token and in system*/
-            String username = tokenUtils.getUsernameFromToken(authToken);
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-                if (tokenUtils.validateToken(authToken, userDetails)) {
-
-                    UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
-            }
-        }
-        chain.doFilter(request, response);
+        filterChain.doFilter(req, res);
     }
+
+//    @Override
+//    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+//            throws IOException, ServletException {
+//
+//        /*1. Check if X-Auth-Token exists in header*/
+//        HttpServletRequest httpRequest = (HttpServletRequest) request;
+//        String authToken = httpRequest.getHeader(CustomHeaders.X_AUTH_TOKEN);
+//
+//        if (authToken != null) {
+//
+//            /*2. Validate and check username security details in token and in system*/
+//            String username = tokenUtils.getUsernameFromToken(authToken);
+//            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+//                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+//
+//                if (tokenUtils.validateToken(authToken, userDetails)) {
+//
+//                    UsernamePasswordAuthenticationToken authentication =
+//                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+//                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
+//                    SecurityContextHolder.getContext().setAuthentication(authentication);
+//                }
+//            }
+//        }
+//        chain.doFilter(request, response);
+//    }
 }
