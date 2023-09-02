@@ -11,11 +11,15 @@ import ru.jdbcfighters.renthub.repositories.EstateRepo;
 
 @Controller
 @RequestMapping("/advertisement")
-@RequiredArgsConstructor
+
 @InjectModelAttribute
 public class AdvertisementController {
 
     private final EstateRepo estateRepo;
+
+    public AdvertisementController(EstateRepo estateRepo) {
+        this.estateRepo = estateRepo;
+    }
 
     @GetMapping
     public String advertisementList(Model model) {

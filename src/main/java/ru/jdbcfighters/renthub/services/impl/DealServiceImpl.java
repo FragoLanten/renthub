@@ -20,11 +20,16 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+
 public class DealServiceImpl implements DealService {
 
     private final DealRepository dealRepository;
     private final DealStatusService dealStatusService;
+
+    public DealServiceImpl(DealRepository dealRepository, DealStatusService dealStatusService) {
+        this.dealRepository = dealRepository;
+        this.dealStatusService = dealStatusService;
+    }
 
     @Override
     public void createDeal(LocalDate startDate, Estate estate,

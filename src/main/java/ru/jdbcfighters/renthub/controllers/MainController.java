@@ -10,11 +10,14 @@ import ru.jdbcfighters.renthub.security.CustomHeaders;
 import ru.jdbcfighters.renthub.security.jwt.TokenProvider;
 
 @Controller
-@RequiredArgsConstructor
 @InjectModelAttribute
 public class MainController {
 
     private final TokenProvider tokenProvider;
+
+    public MainController(TokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
+    }
 
     @GetMapping("/")
     public String greeting() {

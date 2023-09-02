@@ -18,4 +18,19 @@ public class JWTConfiguration {
 
     private Integer expiration;
 
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public Integer getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(Integer expiration) {
+        this.expiration = expiration;
+    }
 }

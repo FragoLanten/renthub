@@ -10,10 +10,13 @@ public enum ExceptionMessage {
     ESTATE_NOT_FOUND("Недвижимость с id %s не зарегистрирована"),
     REVENUE_NOT_FOUND("Поступление с id %s не найдено");
 
-    @Getter
     private final String message;
 
     ExceptionMessage(String message) {
         this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

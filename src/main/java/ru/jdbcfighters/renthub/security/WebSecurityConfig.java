@@ -19,7 +19,6 @@ import ru.jdbcfighters.renthub.services.UserService;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class WebSecurityConfig {
 
     private final UserService userService;
@@ -29,6 +28,14 @@ public class WebSecurityConfig {
     private final TokenProvider tokenUtils;
 
     private final UserDetailsService userProvider;
+
+    public WebSecurityConfig(UserService userService, EncoderConfig encoderConfig,
+                             TokenProvider tokenUtils, UserDetailsService userProvider) {
+        this.userService = userService;
+        this.encoderConfig = encoderConfig;
+        this.tokenUtils = tokenUtils;
+        this.userProvider = userProvider;
+    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {

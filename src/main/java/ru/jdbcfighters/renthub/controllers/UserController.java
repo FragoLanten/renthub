@@ -1,6 +1,7 @@
 package ru.jdbcfighters.renthub.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +26,8 @@ import javax.validation.Valid;
 @InjectModelAttribute
 public class UserController {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
