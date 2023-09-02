@@ -11,3 +11,7 @@ spring:
 jwtconfig:
   secret: secret
   expiration: 6000000
+
+currency:
+  client:
+    url: "http://www.cbr.ru/scripts/XML_daily.asp"
