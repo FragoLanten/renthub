@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.jdbcfighters.renthub.domain.dto.UserRequestDto;
 import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.domain.models.enums.Role;
 import ru.jdbcfighters.renthub.repositories.UserRepository;
@@ -105,6 +106,11 @@ public class UserServiceImpl implements UserService {
     private void existCheck(Long id) {
         if (!userRepository.existsById(id))
             throw throwNotFoundException();
+    }
+
+    @Override
+    public void updateUser(String login, UserRequestDto userRequestDto) {
+
     }
 
     @Override

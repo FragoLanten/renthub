@@ -1,9 +1,9 @@
 package ru.jdbcfighters.renthub.currency.client;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.jdbcfighters.renthub.currency.config.CurrencyClientConfig;
 
 import java.io.IOException;
 import java.net.URI;
@@ -15,16 +15,18 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 @RequiredArgsConstructor
-public class CbrCurrencyRateClient implements HttpCurrencyDateRateClient{
+public class CbrCurrencyRateClient implements HttpCurrencyDateRateClient {
 
     public static final String DATE_PATTERN = "dd/MM/yyyy";
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
 
-    private final CurrencyClientConfig clientConfig;
+    @Value("${currency.client.url}")
+    private String url;
+
     @Override
     public String requestByDate(LocalDate date) {
-        String baseUrl = clientConfig.getUrl();
+        String baseUrl = url;
         HttpClient client = HttpClient.newHttpClient();
         String url = buildUriRequest(baseUrl, date);
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
