@@ -1,6 +1,7 @@
 package ru.jdbcfighters.renthub.services;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
+import ru.jdbcfighters.renthub.domain.dto.UserRequestDto;
 import ru.jdbcfighters.renthub.domain.models.User;
 
 import java.math.BigDecimal;
@@ -32,4 +33,6 @@ public interface UserService extends UserDetailsService {
 
     //Удаление из БД
     void hardDelete(Long id);
+
+    void updateUser(String login, UserRequestDto userRequestDto);
 }

@@ -30,7 +30,14 @@
                 <a class="nav-link" th:href="@{/registration}">Регистрация</a>
             </li>
         </ul>
-
+        <div class="navbar-text mr-3 align-baseline">
+            <a>Евро</a>
+            <span th:text="${eur}"></span>
+        </div>
+        <div class="navbar-text mr-3 align-baseline">
+            <a>Доллар</a>
+            <span th:text="${usd}"></span>
+        </div>
         <div class="navbar-text mr-3 align-baseline">
             <span sec:authentication="name"></span>
         </div>
