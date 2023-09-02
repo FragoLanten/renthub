@@ -18,6 +18,7 @@ import ru.jdbcfighters.renthub.domain.models.enums.Role;
 import ru.jdbcfighters.renthub.services.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/user")
@@ -58,6 +59,13 @@ public class UserController {
         userService.updateUser(login, userRequestDto);
 
         return "redirect:/users/edit";
+    }
+
+    @GetMapping("/profile")
+    public String showProfile(Principal principal, Model model) {
+
+        model.addAttribute("user", userService.getByLogin(principal.getName()));
+        return "profile";
     }
 
 //    @GetMapping("/profile")

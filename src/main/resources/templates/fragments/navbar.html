@@ -22,7 +22,7 @@
                 <a class="nav-link" th:href="@{/user/profile}">Профиль</a>
             </li>
         </ul>
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto" sec:authorize="isAnonymous()">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/login}">Войти</a>
             </li>

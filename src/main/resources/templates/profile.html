@@ -1,26 +1,88 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}"
       lang="ru">
 <th:block layout:fragment="content">
-    <h5 th:text="${username}"></h5>
-    <form th:action="@{/user/profile}" method="post">
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Password: </label>
-            <div class="col-sm-6">
-                <input type="password" name="password" class="form-control-plaintext" placeholder="Password"/>
+
+    <form th:method="post" th:object="${user}">
+        <h3> Привет,  <span sec:authentication="name"></span></h3>
+        <h3>Мои объявления</h3>
+        <div>
+            <a th:href="@{/advertisement/create}" type="button" class="btn btn-danger">Добавить объявление</a>
+        </div>
+        <div class="card-columns" th:each="estate : ${user.getEstateList()}">
+            <div class="card my-3" style="width: 80rem;">
+                <div class="m-2">
+                    <table class="table table-bordered" th:each="advertisement : ${estate.getAdvertisement()}">
+                        <thead>
+                        <tr>
+                            <th>Город</th>
+                            <th>Улица</th>
+                            <th>Номер дома</th>
+                            <th>Площадь кв. метров</th>
+                            <th th:each="attribute : ${estate.getAttributes()}" th:text="${attribute.getName}"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${estate.getCity}"></td>
+                            <td th:text="${estate.getStreet}"></td>
+                            <td th:text="${estate.getNumber}"></td>
+                            <td th:text="${estate.getSquare}"></td>
+                            <td th:each="value : ${estate.getAttributeValue}" th:text="${value.getName}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-<!--        <div class="form-group row">-->
-<!--            <label class="col-sm-2 col-form-label"> Email: </label>-->
-<!--            <div class="col-sm-6">-->
-<!--                <input type="email" name="email"-->
-<!--                       class="form-control-plaintext"-->
-<!--                       placeholder="Email"-->
-<!--                       th:value="${email != null} ? ${email} : ${null}"/>-->
-<!--            </div>-->
-<!--        </div>-->
-        <button class="btn btn-primary" type="submit">Сохранить</button>
+        <h3>Избранное</h3>
+        <div class="card-columns" th:each="wishlist : ${user.getWishlist()}">
+            <div class="card my-3" style="width: 80rem;">
+                <div class="m-2">
+                    <table class="table table-bordered" th:each="advertisement : ${wishlist.getAdvertisement()}">
+                        <thead>
+                        <tr>
+                            <th>Город</th>
+                            <th>Улица</th>
+                            <th>Номер дома</th>
+                            <th>Площадь кв. метров</th>
+                            <th th:each="attribute : ${wishlist.getAttributes()}" th:text="${wishlist.getName}"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${wishlist.getCity}"></td>
+                            <td th:text="${wishlist.getStreet}"></td>
+                            <td th:text="${wishlist.getNumber}"></td>
+                            <td th:text="${wishlist.getSquare}"></td>
+                            <td th:each="value : ${wishlist.getAttributeValue}" th:text="${wishlist.getName}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--        <div>-->
+        <!--            <button type="submit" class="btn btn-primary">Сохранить</button>-->
+        <!--            <a th:href="@{/user}" type="button" class="btn btn-danger">Выйти</a>-->
+        <!--        </div>-->
+        <!--        <label>-->
+        <!--            <input type="text" name="username" th:value="${user.getFirstName()}">-->
+        <!--            <input type="text" name="username" th:value="${user.getLastName()}">-->
+        <!--            <input type="hidden" name="username" th:value="${user.getPhoneNumber()}">-->
+        <!--            <input type="text" name="username" th:value="${user.getLogin()}">-->
+        <!--&lt;!&ndash;            <input type="text" name="username" th:value="${user.getPassword()}">&ndash;&gt;-->
+        <!--&lt;!&ndash;            <input type="text" name="username" th:value="${user.getDeleted()}">&ndash;&gt;-->
+        <!--            <input type="hidden" name="userId" th:value="${user.getId()}">-->
+        <!--        </label>-->
+        <!--        <div th:each="role : ${roles}">-->
+        <!--            <label>-->
+        <!--                <input th:type="checkbox" th:name="${role}" th:text="${role.name()}" th:checked="${user.getRole().contains(role)} ? 'checked'">-->
+        <!--            </label>-->
+        <!--        </div>-->
+        <!--        <button type="submit">Save</button>-->
     </form>
 </th:block>
 </html>

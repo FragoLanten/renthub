@@ -15,3 +15,7 @@ jwtconfig:
 currency:
   client:
     url: "http://www.cbr.ru/scripts/XML_daily.asp"
+
+#liquibase:
+#  change-log: classpath:db/changelog/db.changelog-master.yaml
+#    enabled: true

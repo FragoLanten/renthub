@@ -1,0 +1,78 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout}"
+      lang="ru">
+<th:block layout:fragment="content">
+    <form th:action="@{/advertisement/create}" th:method="post">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Тип объекта </label>
+            <div class="col-sm-6">
+                <input type="text" name="typeEstate" class="form-control" placeholder="Тип объекта"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Город </label>
+            <div class="col-sm-6">
+                <input type="text" name="city" class="form-control" placeholder="Город"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Улица </label>
+            <div class="col-sm-6">
+                <input type="text" name="street" class="form-control" placeholder="Улица"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Номер дома </label>
+            <div class="col-sm-6">
+                <input type="text" name="number" class="form-control" placeholder="Номер дома"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Номер квартиры </label>
+            <div class="col-sm-6">
+                <input type="text" name="flatNumber" class="form-control" placeholder="Номер квартиры"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Стоимость </label>
+            <div class="col-sm-6">
+                <input type="text" name="price" class="form-control" placeholder="Стоимость"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Площадь </label>
+            <div class="col-sm-6">
+                <input type="text" name="square" class="form-control" placeholder="Площадь"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Количество этажей </label>
+            <div class="col-sm-6">
+                <input type="text" name="numberOfFloors" class="form-control" placeholder="Количество этажей"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Этаж </label>
+            <div class="col-sm-6">
+                <input type="text" name="floor" class="form-control" placeholder="Этаж"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Количество комнат </label>
+            <div class="col-sm-6">
+                <input type="text" name="numberOfRooms" class="form-control" placeholder="Количество комнат"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Балкон </label>
+            <div class="col-sm-6">
+                <input type="text" name="balcony" class="form-control" placeholder="Балкон"/>
+            </div>
+        </div>
+<!--        <a th:href="@{/advertisement/create}" type="button" class="btn btn-danger">Выйти</a>-->
+        <button class="btn btn-primary" type="submit">Добавить объявление</button>
+    </form>
+
+</th:block>
+</html>
