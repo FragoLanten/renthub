@@ -45,37 +45,4 @@ public class Advertisement {
     @JsonManagedReference
     private Estate estate;
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-
-    public void setVisible(Boolean visible) {
-        this.visible = visible;
-    }
-
-    public Integer getRank() {
-        return rank;
-    }
-
-    public void setRank(Integer rank) {
-        this.rank = rank;
-    }
-
-    public Estate getEstate() {
-        return estate;
-    }
-
-    public void setEstate(Estate estate) {
-        this.estate = estate;
-    }
 }

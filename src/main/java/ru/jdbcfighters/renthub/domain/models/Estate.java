@@ -92,49 +92,4 @@ public class Estate {
     )
     private List<AttributeValue> attributeValue;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public Street getStreet() {
-        return street;
-    }
-
-    public void setStreet(Street street) {
-        this.street = street;
-    }
-
-    public Advertisement getAdvertisement() {
-        return advertisement;
-    }
-
-    public void setAdvertisement(Advertisement advertisement) {
-        this.advertisement = advertisement;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public Deal getDeal() {
-        return deal;
-    }
-
-    public void setDeal(Deal deal) {
-        this.deal = deal;
-    }
-
-
 }

@@ -70,41 +70,4 @@ public class Deal {
     @JsonBackReference
     private User buyer;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public Estate getEstate() {
-        return estate;
-    }
-
-    public void setEstate(Estate estate) {
-        this.estate = estate;
-    }
-
-
-    public void setDealStatus(DealStatus dealStatus) {
-        this.dealStatus = dealStatus;
-    }
-
-    public void setDealType(DealType dealType) {
-        this.dealType = dealType;
-    }
-
-    public void setBuyer(User buyer) {
-        this.buyer = buyer;
-    }
 }
