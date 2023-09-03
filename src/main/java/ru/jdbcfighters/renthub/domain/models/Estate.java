@@ -6,7 +6,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -91,6 +90,6 @@ public class Estate {
             joinColumns = @JoinColumn(name = "estate_id"),
             inverseJoinColumns = @JoinColumn(name = "value_id")
     )
-    private List<AttributeValue> atributeValue;
+    private List<AttributeValue> attributeValue;
 
 }

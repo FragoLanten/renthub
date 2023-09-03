@@ -69,7 +69,7 @@ public class SbrService {
             JAXBContext context = JAXBContext.newInstance(ValCurs.class);
             return (ValCurs) context.createUnmarshaller().unmarshal(reader);
         } catch (JAXBException e) {
-            throw new RuntimeException(e);
+            return new ValCurs();
         }
     }
 }

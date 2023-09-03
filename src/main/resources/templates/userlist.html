@@ -19,7 +19,7 @@
             <td th:text="${user.getFirstName()}"></td>
             <td th:text="${user.getLastName()}"></td>
             <td th:text="${user.getPhoneNumber()}"></td>
-            <td th:text="${user.getEstates()}"></td>
+            <td th:text="${user.getWishlist()}"></td>
             <td th:text="${#strings.setJoin(user.getRole(), ', ')}"></td>
             <td><a th:href="@{/user/{id}(id=${user.getId()})}">edit</a> </td>
         </tr>

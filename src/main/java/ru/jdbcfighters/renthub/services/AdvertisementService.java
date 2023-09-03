@@ -1,13 +1,15 @@
 package ru.jdbcfighters.renthub.services;
 
+import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
 import ru.jdbcfighters.renthub.domain.models.Advertisement;
 import ru.jdbcfighters.renthub.domain.models.Estate;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface AdvertisementService {
 
-    Advertisement create(Advertisement advertisement);
+    Advertisement create(Principal principal, EstateRequestDTO estateRequestDTO);
 
     Advertisement get(Long id);
 

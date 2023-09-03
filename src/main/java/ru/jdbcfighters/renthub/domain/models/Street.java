@@ -26,6 +26,10 @@ import java.util.Set;
 @Table(name = "streets")
 public class Street {
 
+    public Street(String name) {
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

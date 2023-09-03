@@ -1,27 +1,52 @@
 package ru.jdbcfighters.renthub.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
+import ru.jdbcfighters.renthub.domain.mappers.AdvertisementMapper;
+import ru.jdbcfighters.renthub.domain.mappers.EstateMapper;
 import ru.jdbcfighters.renthub.domain.models.Advertisement;
+import ru.jdbcfighters.renthub.domain.models.City;
 import ru.jdbcfighters.renthub.domain.models.Estate;
+import ru.jdbcfighters.renthub.domain.models.Street;
 import ru.jdbcfighters.renthub.repositories.AdvertisementRepository;
+import ru.jdbcfighters.renthub.repositories.CityRepository;
+import ru.jdbcfighters.renthub.repositories.EstateRepo;
+import ru.jdbcfighters.renthub.repositories.StreetRepository;
 import ru.jdbcfighters.renthub.services.AdvertisementService;
+import ru.jdbcfighters.renthub.services.UserService;
 
 import javax.persistence.EntityNotFoundException;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AdvertisementServiceImpl implements AdvertisementService {
 
-    @Autowired
-    private AdvertisementRepository advertisementRepository;
+    private final AdvertisementMapper advertisementMapper;
+    private final EstateMapper estateMapper;
+    private final AdvertisementRepository advertisementRepository;
+    private final StreetRepository streetRepository;
+    private final EstateRepo estateRepo;
+    private final CityRepository cityRepository;
+    private final UserService userService;
 
     @Override
-    public Advertisement create(Advertisement advertisement) {
-        return advertisementRepository.save(advertisement);
+    public Advertisement create(Principal principal, EstateRequestDTO estateRequestDTO) {
+        Advertisement advertisement = advertisementMapper.estateRequestDTOToAdvertisement(estateRequestDTO);
+        Estate estate = estateMapper.estateRequestDTOToEstate(estateRequestDTO);
+        Optional<Street> street = streetRepository.findByName(estateRequestDTO.street());
+        Optional<City> city = cityRepository.findByName(estateRequestDTO.city());
+        estate.setStreet(street.orElseGet(() -> streetRepository.save(new Street(estateRequestDTO.street()))));
+        estate.setCity(city.orElseGet(() -> cityRepository.save(new City(estateRequestDTO.city()))));
+        estate.setOwner(userService.getByLogin(principal.getName()));
+        Advertisement saveAdvertisement = advertisementRepository.save(advertisement);
+        estate.setAdvertisement(saveAdvertisement);
+        estateRepo.save(estate);
+        return saveAdvertisement;
     }
 
     @Override
