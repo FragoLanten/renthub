@@ -26,13 +26,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AdvertisementServiceImpl implements AdvertisementService {
 
-    private final AdvertisementMapper advertisementMapper;
-    private final EstateMapper estateMapper;
-    private final AdvertisementRepository advertisementRepository;
-    private final StreetRepository streetRepository;
-    private final EstateRepo estateRepo;
-    private final CityRepository cityRepository;
-    private final UserService userService;
+    private AdvertisementMapper advertisementMapper;
+    private EstateMapper estateMapper;
+    private AdvertisementRepository advertisementRepository;
+    private StreetRepository streetRepository;
+    private EstateRepo estateRepo;
+    private CityRepository cityRepository;
+    private UserService userService;
 
     @Override
     public Advertisement create(Principal principal, EstateRequestDTO estateRequestDTO) {

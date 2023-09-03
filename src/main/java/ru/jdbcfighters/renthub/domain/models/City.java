@@ -20,12 +20,15 @@ import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
-@NoArgsConstructor
+
 @Setter
 @Getter
 @Entity
 @Table(name = "cities")
 public class City {
+
+    public City() {
+    }
 
     public City(String name){
         this.name = name;

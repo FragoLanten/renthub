@@ -196,7 +196,7 @@
 					<sources>src/main/resources/xsd/ValCurs.xsd</sources>
 					<outputDirectory>${basedir}/src/main/java</outputDirectory>
 					<clearOutputDir>false</clearOutputDir>
-					<packageName>ru.konovalov.currency.schema</packageName>
+					<packageName>ru.jdbcfighters.renthub.currency.schema</packageName>
 					<noGeneratedHeaderComments>true</noGeneratedHeaderComments>
 					<extension>true</extension>
 					<generateEpisode>false</generateEpisode>

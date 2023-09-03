@@ -1,6 +1,7 @@
 package ru.jdbcfighters.renthub.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +21,10 @@ import java.security.Principal;
 @InjectModelAttribute
 public class AdvertisementController {
 
-    private final EstateRepo estateRepo;
+    @Autowired
+    private EstateRepo estateRepo;
 
-    private final AdvertisementService advertisementService;
+    private AdvertisementService advertisementService;
 
     @GetMapping
     public String advertisementList(Model model) {

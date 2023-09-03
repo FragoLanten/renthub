@@ -180,11 +180,4 @@ public class Estate {
         this.attributes = attributes;
     }
 
-    public List<AttributeValue> getAtributeValue() {
-        return atributeValue;
-    }
-
-    public void setAtributeValue(List<AttributeValue> atributeValue) {
-        this.atributeValue = atributeValue;
-    }
 }

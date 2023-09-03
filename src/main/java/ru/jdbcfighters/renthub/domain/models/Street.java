@@ -19,12 +19,15 @@ import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
-@NoArgsConstructor
+
 @Setter
 @Getter
 @Entity
 @Table(name = "streets")
 public class Street {
+
+    public Street() {
+    }
 
     public Street(String name) {
         this.name = name;
