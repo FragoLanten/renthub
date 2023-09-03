@@ -12,10 +12,14 @@ import ru.jdbcfighters.renthub.services.DealStatusService;
 import java.time.LocalDate;
 
 @Service
-@RequiredArgsConstructor
+
 public class DealStatusServiceImpl implements DealStatusService {
 
     private final DealStatusRepository dealStatusRepository;
+
+    public DealStatusServiceImpl(DealStatusRepository dealStatusRepository) {
+        this.dealStatusRepository = dealStatusRepository;
+    }
 
     @Override
     public void changeStatusToFinishedAndEndDateOfDealById(Deal deal) {

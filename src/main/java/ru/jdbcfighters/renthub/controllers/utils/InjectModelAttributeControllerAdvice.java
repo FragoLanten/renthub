@@ -10,10 +10,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @ControllerAdvice(annotations = InjectModelAttribute.class)
-@RequiredArgsConstructor
 public class InjectModelAttributeControllerAdvice {
 
     private final SbrService currencyService;
+
+    public InjectModelAttributeControllerAdvice(SbrService currencyService) {
+        this.currencyService = currencyService;
+    }
 
     @ModelAttribute
     public void addAttributes(Model model) {

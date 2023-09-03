@@ -12,11 +12,14 @@ import ru.jdbcfighters.renthub.security.jwt.TokenProvider;
 import java.security.Principal;
 
 @Controller
-@RequiredArgsConstructor
 @InjectModelAttribute
 public class MainController {
 
     private final TokenProvider tokenProvider;
+
+    public MainController(TokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
+    }
 
     @GetMapping("/")
     public String greeting() {

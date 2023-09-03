@@ -1,6 +1,7 @@
 package ru.jdbcfighters.renthub.security.filters;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,12 +21,17 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+
 public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
 
     private final TokenProvider tokenUtils;
 
     private final UserDetailsService userDetailsService;
+
+    public AuthenticationTokenFilter(TokenProvider tokenUtils, UserDetailsService userDetailsService) {
+        this.tokenUtils = tokenUtils;
+        this.userDetailsService = userDetailsService;
+    }
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
             throws IOException, ServletException {
