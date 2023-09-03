@@ -100,34 +100,6 @@ public class Estate {
         this.id = id;
     }
 
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public Float getSquare() {
-        return square;
-    }
-
-    public void setSquare(Float square) {
-        this.square = square;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
     public void setOwner(User owner) {
         this.owner = owner;
     }
@@ -164,20 +136,5 @@ public class Estate {
         this.deal = deal;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public List<Attribute> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(List<Attribute> attributes) {
-        this.attributes = attributes;
-    }
 
 }

@@ -66,11 +66,4 @@ public class AttributeValue {
         this.name = name;
     }
 
-    public List<Attribute> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(List<Attribute> attributes) {
-        this.attributes = attributes;
-    }
 }

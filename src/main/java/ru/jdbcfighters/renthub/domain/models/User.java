@@ -124,22 +124,6 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getLogin() {
         return login;
     }
@@ -156,51 +140,12 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
-    public Set<Deal> getDeals() {
-        return deals;
-    }
-
-    public void setDeals(Set<Deal> deals) {
-        this.deals = deals;
-    }
-
-    public Set<Revenue> getRevenues() {
-        return revenues;
-    }
-
-    public void setRevenues(Set<Revenue> revenues) {
-        this.revenues = revenues;
     }
 
     public Set<Role> getRole() {
         return role;
     }
 
-    public void setRole(Set<Role> role) {
-        this.role = role;
-    }
 }

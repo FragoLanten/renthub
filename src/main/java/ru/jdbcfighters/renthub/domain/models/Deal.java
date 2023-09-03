@@ -78,17 +78,10 @@ public class Deal {
         this.id = id;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
-    }
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
@@ -102,24 +95,13 @@ public class Deal {
         this.estate = estate;
     }
 
-    public DealStatus getDealStatus() {
-        return dealStatus;
-    }
 
     public void setDealStatus(DealStatus dealStatus) {
         this.dealStatus = dealStatus;
     }
 
-    public DealType getDealType() {
-        return dealType;
-    }
-
     public void setDealType(DealType dealType) {
         this.dealType = dealType;
-    }
-
-    public User getBuyer() {
-        return buyer;
     }
 
     public void setBuyer(User buyer) {
