@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import ru.jdbcfighters.renthub.domain.models.AttributeValue;
 
-public interface AttrubuteValueRepository extends JpaRepository<AttributeValue, Long> {
+public interface AttributeValueRepository extends JpaRepository<AttributeValue, Long> {
     @Query("DELETE FROM AttributeValue as av WHERE av.id = :id")
     @Modifying
     void deleteAttributeValue(Long id);

@@ -2,16 +2,16 @@ package ru.jdbcfighters.renthub.services.impl;
 
 import org.springframework.stereotype.Service;
 import ru.jdbcfighters.renthub.domain.models.Attribute;
-import ru.jdbcfighters.renthub.repositories.AttrubuteRepository;
+import ru.jdbcfighters.renthub.repositories.AttributeRepository;
 import ru.jdbcfighters.renthub.services.AttributeService;
 
 import java.util.List;
 
 @Service
 public class AttributeServerImpl implements AttributeService {
-    private final AttrubuteRepository attrubuteRepository;
+    private final AttributeRepository attrubuteRepository;
 
-    public AttributeServerImpl(AttrubuteRepository attrubuteRepository) {
+    public AttributeServerImpl(AttributeRepository attrubuteRepository) {
         this.attrubuteRepository = attrubuteRepository;
     }
 

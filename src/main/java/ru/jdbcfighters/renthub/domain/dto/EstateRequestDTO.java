@@ -1,7 +1,6 @@
 package ru.jdbcfighters.renthub.domain.dto;
 
 import java.math.BigDecimal;
-
 public record EstateRequestDTO(Integer number,
                                Float square,
                                BigDecimal price,
