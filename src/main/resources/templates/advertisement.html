@@ -6,7 +6,7 @@
     <h2> Список объявлений</h2>
     <div class="card-columns" th:each="estate : ${estates}"
          >
-        <div class="card my-3" style="width: 80rem;">
+        <div class="card my-3" style="width: 80rem;" th:if="${#bools.isTrue(estate.getAdvertisement().getVisible())}">
             <div class="m-2" >
 
                 <table class="table table-bordered" th:each="advertisement : ${estate.getAdvertisement()}"
