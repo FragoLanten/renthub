@@ -1,10 +1,12 @@
 package ru.jdbcfighters.renthub.services.impl;
 
 import org.springframework.stereotype.Service;
+import ru.jdbcfighters.renthub.domain.exception.AttributeNotFoundException;
 import ru.jdbcfighters.renthub.domain.models.Attribute;
 import ru.jdbcfighters.renthub.repositories.AttributeRepository;
 import ru.jdbcfighters.renthub.services.AttributeService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -17,7 +19,7 @@ public class AttributeServerImpl implements AttributeService {
 
     @Override
     public Attribute findById(Long id) {
-        return attrubuteRepository.findById(id).orElseThrow(() -> new RuntimeException("Attribute not found!"));
+        return attrubuteRepository.findById(id).orElseThrow(() -> new AttributeNotFoundException(id));
     }
 
     @Override
@@ -26,22 +28,25 @@ public class AttributeServerImpl implements AttributeService {
     }
 
     @Override
-    public Attribute create(Attribute object) {
+    public Attribute save(Attribute object) {
         return attrubuteRepository.save(object);
     }
 
     @Override
     public Attribute update(Attribute object) {
-//        if (!attrubuteRepository.existsById(object.getId()))
-//            throw new EntityNotFoundException("Subscription not found!");
+        existCheck(object.getId());
         return attrubuteRepository.save(object);
     }
 
     @Override
     public void delete(Long id) {
-//        if (!attrubuteRepository.existsById(id))
-//            throw new EntityNotFoundException("Subscription not found!");
+        existCheck(id);
         attrubuteRepository.deleteAttribute(id);
+    }
+
+    private void existCheck(Long id) {
+        if (!attrubuteRepository.existsById(id))
+            throw new AttributeNotFoundException(id);
     }
 
 }
