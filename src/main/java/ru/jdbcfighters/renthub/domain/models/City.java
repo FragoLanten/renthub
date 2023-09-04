@@ -2,6 +2,7 @@ package ru.jdbcfighters.renthub.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@Builder
 @Table(name = "cities")
 public class City {
 

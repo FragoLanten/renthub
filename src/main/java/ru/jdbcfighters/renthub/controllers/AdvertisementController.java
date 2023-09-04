@@ -14,24 +14,25 @@ import ru.jdbcfighters.renthub.repositories.EstateRepo;
 import ru.jdbcfighters.renthub.services.AdvertisementService;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
-@RequestMapping("/advertisement")
+@RequestMapping("/advertisements")
 @RequiredArgsConstructor
 @InjectModelAttribute
 public class AdvertisementController {
 
-    @Autowired
-    private EstateRepo estateRepo;
+    private final EstateRepo estateRepo;
 
-    private AdvertisementService advertisementService;
+    private final AdvertisementService advertisementService;
 
     @GetMapping
-    public String advertisementList(Model model) {
-        Iterable<Estate> estate = estateRepo.findAll();
+    public String getAdvertisementList(Model model) {
+        List<Estate> estate = estateRepo.findAll();
         model.addAttribute("estates", estate);
         return "advertisement";
     }
+
     @GetMapping("/create")
     public String show(){
         return "add_advertisement";
@@ -42,6 +43,5 @@ public class AdvertisementController {
         advertisementService.create(principal, advertisementRequestDTO);
         return "redirect:/user/profile";
     }
-
 
 }

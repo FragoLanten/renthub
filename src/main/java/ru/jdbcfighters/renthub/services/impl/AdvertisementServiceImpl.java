@@ -115,5 +115,4 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             throw new EntityNotFoundException("Объявление не найдено!");
     }
 
-
 }
