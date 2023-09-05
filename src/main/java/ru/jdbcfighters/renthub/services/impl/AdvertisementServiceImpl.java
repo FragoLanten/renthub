@@ -31,36 +31,20 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AdvertisementServiceImpl implements AdvertisementService {
 
-    private AdvertisementMapper advertisementMapper;
-    private EstateMapper estateMapper;
-    private AdvertisementRepository advertisementRepository;
-    private StreetRepository streetRepository;
-    private AttributeValueRepository attributeValueRepository;
-    private AttributeRepository attributeRepository;
-    private EstateRepo estateRepo;
-    private CityRepository cityRepository;
-    private UserService userService;
+    private final AdvertisementMapper advertisementMapper;
+    private final EstateMapper estateMapper;
+    private final AdvertisementRepository advertisementRepository;
+    private final StreetRepository streetRepository;
+    private final AttributeValueRepository attributeValueRepository;
+    private final AttributeRepository attributeRepository;
+    private final EstateRepo estateRepo;
+    private final CityRepository cityRepository;
+    private final UserService userService;
     private List<Attribute> finalAttributeList;
     private List<AttributeValue> finalAttributeValueList;
-
-    public AdvertisementServiceImpl() {
-    }
-
-    public AdvertisementServiceImpl(AdvertisementMapper advertisementMapper, EstateMapper estateMapper, AdvertisementRepository advertisementRepository, StreetRepository streetRepository, AttributeValueRepository attributeValueRepository, AttributeRepository attributeRepository, EstateRepo estateRepo, CityRepository cityRepository, UserService userService, List<Attribute> finalAttributeList, List<AttributeValue> finalAttributeValueList) {
-        this.advertisementMapper = advertisementMapper;
-        this.estateMapper = estateMapper;
-        this.advertisementRepository = advertisementRepository;
-        this.streetRepository = streetRepository;
-        this.attributeValueRepository = attributeValueRepository;
-        this.attributeRepository = attributeRepository;
-        this.estateRepo = estateRepo;
-        this.cityRepository = cityRepository;
-        this.userService = userService;
-        this.finalAttributeList = finalAttributeList;
-        this.finalAttributeValueList = finalAttributeValueList;
-    }
 
     @Override
     public Advertisement create(Principal principal, EstateRequestDTO estateRequestDTO) {
