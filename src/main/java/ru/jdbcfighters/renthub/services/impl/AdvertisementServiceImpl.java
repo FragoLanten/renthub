@@ -91,6 +91,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         return advertisementRepository.getAdvertisementByEstate(estate);
     }
 
+    //Какая-то мелочь
     @Override
     public Advertisement rankUp(Advertisement advertisement, Integer rank) {
         advertisement.setRank(advertisement.getRank() + rank);
