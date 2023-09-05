@@ -51,10 +51,10 @@ public class SbrService {
         return response.getValute()
                 .stream()
                 .collect(toMap(ValCurs.Valute::getCharCode, item ->
-                        pasreWithLocale(item.getValue())));
+                        parseWithLocale(item.getValue())));
     }
 
-    private BigDecimal pasreWithLocale(String currency) {
+    private BigDecimal parseWithLocale(String currency) {
         try {
             double v = NumberFormat.getNumberInstance(Locale.getDefault())
                     .parse(currency).doubleValue();
