@@ -4,16 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.jdbcfighters.renthub.controllers.utils.InjectModelAttribute;
 import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
 import ru.jdbcfighters.renthub.domain.models.Estate;
-import ru.jdbcfighters.renthub.repositories.EstateRepo;
 import ru.jdbcfighters.renthub.services.AdvertisementService;
 import ru.jdbcfighters.renthub.services.EstateService;
 

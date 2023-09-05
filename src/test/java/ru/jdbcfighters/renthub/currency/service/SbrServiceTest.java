@@ -6,28 +6,26 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Value;
-
 import ru.jdbcfighters.renthub.currency.client.CbrCurrencyRateClient;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.List;
 
-
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @ExtendWith(MockitoExtension.class)
 class SbrServiceTest {
 
     private SbrService sbrService;
+
     @Value("${currency.client.url-test}")
     private String url;
     private final CbrCurrencyRateClient client = new CbrCurrencyRateClient();
     private Field urlField;
 
-    private Method parseWithLocaleMethod;
+//    private Method parseWithLocaleMethod;
 
     @BeforeEach
     void init() throws NoSuchFieldException{
@@ -56,8 +54,9 @@ class SbrServiceTest {
 //        urlField.set(client, "");
 //        parseWithLocaleMethod = sbrService.getClass().getDeclaredMethod("parseWithLocale", String.class);
 //        parseWithLocaleMethod.setAccessible(true);
+//        when(sbrService.requestByCurrencyCode()).thenThrow(ParseException.class, parseWithLocaleMethod(""));
 //        parseWithLocaleMethod("");
 //        Assertions.assertThrows(ParseException.class, () -> sbrService.requestByCurrencyCode());
-   // }
+//    }
 
 }
