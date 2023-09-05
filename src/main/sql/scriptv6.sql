@@ -46,9 +46,9 @@ CREATE TABLE IF NOT EXISTS public.attribute_value
 
 CREATE TABLE IF NOT EXISTS public.estate_attribute_value
 (
-    attribute_id bigint NOT NULL,
+    attribute_id bigint,
     estate_id bigint NOT NULL,
-    value_id bigint NOT NULL
+    value_id bigint
 );
 
 CREATE TABLE IF NOT EXISTS public.status_deal
@@ -135,7 +135,7 @@ INSERT INTO cities (name) VALUES
                               ('Moscow'), ('Yekaterinburg'), ('Minsk'), ('Gomel'), ('Novosibirsk');
 
 INSERT INTO attributes (name) VALUES
-                                  ('flat number'), ('number of floors'), ('floor'), ('number of rooms'), ('balcony');
+     ('flat number'), ('number of floors'), ('floor'), ('number of rooms'), ('balcony'), ('type estate');
 
 INSERT INTO attribute_value (name) VALUES
                                       ('85'), ('30'), ('15'), ('3'), ('true'),
@@ -153,7 +153,7 @@ INSERT INTO advertisments (end_date, visible, rank, is_moderated) VALUES
 
 
 INSERT INTO users (first_name, last_name, login, password, phone, is_deleted, balance) VALUES
-                                                                                           ('Alexio', 'Fronks', 'afronks0', 'gL7(503yV.yyFO', '9603505542', false, 1131304843),
+                                                                                           ('Alexio', 'Fronks', 'alexio', '$2a$12$8//Djh.tchDgj5GpjMMDhuoqwaKyhSgMWhPiaz6oZ47tSUeRs8OB6', '9603505542', false, 1131304843),
                                                                                            ('Eloise', 'Tollfree', 'etollfree1', 'xG2_4R8ZcPkLnB,,', '9027928591', false, 1969967536),
                                                                                            ('Glynnis', 'McTeague', 'gmcteague2', 'pW9(S`iT', '9242191483', false, 1489198406),
                                                                                            ('Alexina', 'Fearick', 'afearick3', 'xW8=L7x8D+|t', '9871284160', false, 1179912815),

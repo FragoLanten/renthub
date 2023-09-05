@@ -2,7 +2,6 @@ package ru.jdbcfighters.renthub.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Attr;
 import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
 import ru.jdbcfighters.renthub.domain.mappers.AdvertisementMapper;
 import ru.jdbcfighters.renthub.domain.mappers.EstateMapper;

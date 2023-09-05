@@ -1,6 +1,5 @@
 package ru.jdbcfighters.renthub.controllers.utils;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
