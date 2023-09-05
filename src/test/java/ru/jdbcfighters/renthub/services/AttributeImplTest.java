@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.jdbcfighters.renthub.domain.exception.AttributeNotFoundException;
 import ru.jdbcfighters.renthub.domain.models.Attribute;
-import ru.jdbcfighters.renthub.repositories.AttrubuteRepository;
+import ru.jdbcfighters.renthub.repositories.AttributeRepository;
 import ru.jdbcfighters.renthub.services.impl.AttributeServerImpl;
 
 import java.util.ArrayList;
@@ -24,13 +24,13 @@ public class AttributeImplTest {
     private AttributeServerImpl attributeServer;
 
     @Mock
-    private AttrubuteRepository attrubuteRepository;
+    private AttributeRepository attributeRepository;
     private static final Long ATTRIBUTE_ID = 1L;
 
     @Test
     void finByIdTest() {
         Attribute attributeValue = new Attribute();
-        when(attrubuteRepository.findById(ATTRIBUTE_ID)).thenReturn(Optional.of(attributeValue));
+        when(attributeRepository.findById(ATTRIBUTE_ID)).thenReturn(Optional.of(attributeValue));
         final Attribute actualAttributeValue = attributeServer.findById(ATTRIBUTE_ID);
 
         Assertions.assertNotNull(actualAttributeValue);
@@ -40,7 +40,7 @@ public class AttributeImplTest {
     @Test
     void findAllTest() {
         List<Attribute> attributeValues = new ArrayList<>();
-        when(attrubuteRepository.findAll()).thenReturn(attributeValues);
+        when(attributeRepository.findAll()).thenReturn(attributeValues);
         List<Attribute> actualAttributeValues = attributeServer.findAll();
 
         Assertions.assertNotNull(actualAttributeValues);
@@ -50,8 +50,8 @@ public class AttributeImplTest {
     @Test
     void saveTest() {
         Attribute attributeValue = new Attribute();
-        attrubuteRepository.save(attributeValue);
-        when(attrubuteRepository.save(attributeValue)).thenReturn(attributeValue);
+        attributeRepository.save(attributeValue);
+        when(attributeRepository.save(attributeValue)).thenReturn(attributeValue);
         Attribute actualAttributeValue = attributeServer.save(attributeValue);
 
         Assertions.assertNotNull(actualAttributeValue);

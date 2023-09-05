@@ -8,7 +8,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.jdbcfighters.renthub.domain.exception.AttributeValueNotFoundException;
 import ru.jdbcfighters.renthub.domain.models.AttributeValue;
-import ru.jdbcfighters.renthub.repositories.AttrubuteValueRepository;
+
+import ru.jdbcfighters.renthub.repositories.AttributeValueRepository;
 import ru.jdbcfighters.renthub.services.impl.AttributeValueServerImpl;
 
 import java.util.ArrayList;
@@ -24,13 +25,13 @@ public class AttributeValueImplTest {
     private AttributeValueServerImpl attributeValueServer;
 
     @Mock
-    private AttrubuteValueRepository attrubuteValueRepository;
+    private AttributeValueRepository attributeValueRepository;
     private static final Long ATTRIBUTE_VALUE_ID = 1L;
 
     @Test
     void finByIdTest() {
         AttributeValue attributeValue = new AttributeValue();
-        when(attrubuteValueRepository.findById(ATTRIBUTE_VALUE_ID)).thenReturn(Optional.of(attributeValue));
+        when(attributeValueRepository.findById(ATTRIBUTE_VALUE_ID)).thenReturn(Optional.of(attributeValue));
         final AttributeValue actualAttributeValue = attributeValueServer.findById(ATTRIBUTE_VALUE_ID);
 
         Assertions.assertNotNull(actualAttributeValue);
@@ -40,7 +41,7 @@ public class AttributeValueImplTest {
     @Test
     void findAllTest() {
         List<AttributeValue> attributeValues = new ArrayList<>();
-        when(attrubuteValueRepository.findAll()).thenReturn(attributeValues);
+        when(attributeValueRepository.findAll()).thenReturn(attributeValues);
         List<AttributeValue> actualAttributeValues = attributeValueServer.findAll();
 
         Assertions.assertNotNull(actualAttributeValues);
@@ -50,8 +51,8 @@ public class AttributeValueImplTest {
     @Test
     void saveTest() {
         AttributeValue attributeValue = new AttributeValue();
-        attrubuteValueRepository.save(attributeValue);
-        when(attrubuteValueRepository.save(attributeValue)).thenReturn(attributeValue);
+        attributeValueRepository.save(attributeValue);
+        when(attributeValueRepository.save(attributeValue)).thenReturn(attributeValue);
         AttributeValue actualAttributeValue = attributeValueServer.save(attributeValue);
 
         Assertions.assertNotNull(actualAttributeValue);

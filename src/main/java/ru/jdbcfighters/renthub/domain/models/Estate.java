@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
+@Builder
 @EqualsAndHashCode
 @ToString
 @NamedEntityGraph(
