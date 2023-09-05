@@ -1,22 +1,24 @@
 package ru.jdbcfighters.renthub.services;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
 import ru.jdbcfighters.renthub.domain.mappers.AdvertisementMapper;
 import ru.jdbcfighters.renthub.domain.mappers.EstateMapper;
 import ru.jdbcfighters.renthub.domain.models.Advertisement;
+import ru.jdbcfighters.renthub.domain.models.Attribute;
+import ru.jdbcfighters.renthub.domain.models.AttributeValue;
 import ru.jdbcfighters.renthub.domain.models.City;
 import ru.jdbcfighters.renthub.domain.models.Estate;
 import ru.jdbcfighters.renthub.domain.models.Street;
 import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.repositories.AdvertisementRepository;
+import ru.jdbcfighters.renthub.repositories.AttributeRepository;
+import ru.jdbcfighters.renthub.repositories.AttributeValueRepository;
 import ru.jdbcfighters.renthub.repositories.CityRepository;
 import ru.jdbcfighters.renthub.repositories.EstateRepo;
 import ru.jdbcfighters.renthub.repositories.StreetRepository;
@@ -44,31 +46,36 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+
 @ExtendWith(MockitoExtension.class)
-@Disabled
 public class AdvertisementServiceImplTest {
 
-    @MockBean
+    @Mock
     private AdvertisementMapper advertisementMapper;
 
-    @MockBean
+    @Mock
     private EstateMapper estateMapper;
 
-    @MockBean
+    @Mock
     private AdvertisementRepository advertisementRepository;
 
-    @MockBean
+    @Mock
     private StreetRepository streetRepository;
 
-    @MockBean
+    @Mock
     private EstateRepo estateRepo;
 
-    @MockBean
+    @Mock
     private CityRepository cityRepository;
 
-    @MockBean
+    @Mock
     private UserService userService;
+
+    @Mock
+    private AttributeRepository attributeRepository;
+
+    @Mock
+    private AttributeValueRepository attributeValueRepository;
 
     @InjectMocks
     private AdvertisementServiceImpl advertisementService;
@@ -124,6 +131,15 @@ public class AdvertisementServiceImplTest {
 
     @Test
     void create_Success() {
+        List<Attribute> attributes = new ArrayList<>();
+        Attribute attribute1 = new Attribute();
+        Attribute attribute2 = new Attribute();
+        attribute1.setName("Тип");
+        attribute1.setId(1L);
+        attribute2.setName("Обзор");
+        attribute2.setId(2L);
+        attributes.add(attribute1);
+        attributes.add(attribute2);
         when(principal.getName()).thenReturn("username");
         when(advertisementMapper.estateRequestDTOToAdvertisement(estateRequestDTO)).thenReturn(advertisement);
         when(estateMapper.estateRequestDTOToEstate(estateRequestDTO)).thenReturn(estate);
@@ -132,6 +148,8 @@ public class AdvertisementServiceImplTest {
         when(streetRepository.save(any(Street.class))).thenReturn(street);
         when(cityRepository.save(any(City.class))).thenReturn(city);
         when(userService.getByLogin(anyString())).thenReturn(new User());
+        when(attributeRepository.findAll()).thenReturn(attributes);
+        when(attributeValueRepository.save(any())).thenReturn(new AttributeValue());
         when(advertisementRepository.save(any(Advertisement.class))).thenReturn(advertisement);
 
         Advertisement result = advertisementService.create(principal, estateRequestDTO);
