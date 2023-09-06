@@ -38,10 +38,8 @@ public class PromoteAdvertisementController {
         Long advertisementId = advertisement.getId();
         if (availableAdvertisementId.contains(advertisementId)) {
             Long amountOfDays = Long.valueOf(advertisementDto.amountOfDays());
-            int rank = (-1) * advertisementDto.rank() + advertisementService.get(advertisementId).getRank();
-            if (rank > 0) {
-                advertisementService.startPromotion(advertisementService.get(advertisementId), amountOfDays, rank);
-            }
+            int rank = Math.max((-1) * advertisementDto.rank() + advertisementService.get(advertisementId).getRank(), 1);
+            advertisementService.startPromotion(advertisementService.get(advertisementId), amountOfDays, rank);
         }
         return "redirect:/advertisement";
     }
