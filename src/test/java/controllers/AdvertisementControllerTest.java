@@ -3,8 +3,13 @@ package controllers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.jdbcfighters.renthub.controllers.AdvertisementController;
@@ -19,6 +24,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -30,16 +36,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-
+@ExtendWith(MockitoExtension.class)
+@SpringBootTest(classes = {AdvertisementControllerTest.class})
+@AutoConfigureMockMvc
 public class AdvertisementControllerTest {
 
+    @Autowired
     private MockMvc mockMvc;
 
     @Mock
-    private EstateRepo estateRepo;
+    private AdvertisementService advertisementService;
 
     @Mock
-    private AdvertisementService advertisementService;
+    private EstateRepo estateRepo;
 
     @Mock
     private Principal principal;
@@ -47,15 +56,16 @@ public class AdvertisementControllerTest {
     @Mock
     private EstateService estateService;
 
+    @InjectMocks
     private AdvertisementController advertisementController;
 
     private EstateRequestDTO estateRequestDTO;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.initMocks(this);
         advertisementController = new AdvertisementController(estateService, advertisementService);
         mockMvc = MockMvcBuilders.standaloneSetup(advertisementController).build();
+        principal = mock(Principal.class);
         estateRequestDTO = EstateRequestDTO.builder()
                 .square(50.2f)
                 .price(BigDecimal.valueOf(100))
@@ -74,14 +84,14 @@ public class AdvertisementControllerTest {
     @Disabled
     public void testGetAdvertisementList() throws Exception {
         List<Estate> estates = new ArrayList<>();
-        when(estateRepo.findAll()).thenReturn(estates);
+        when(estateService.getAll()).thenReturn(estates);
 
         mockMvc.perform(get("/advertisement"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("advertisement"))
                 .andExpect(model().attribute("estates", estates));
 
-        verify(estateRepo, times(1)).findAll();
+        verify(estateService, times(1)).getAll();
         verifyNoMoreInteractions(estateRepo);
     }
 
