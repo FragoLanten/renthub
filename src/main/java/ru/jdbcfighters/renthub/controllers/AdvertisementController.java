@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import ru.jdbcfighters.renthub.domain.models.Estate;
 import ru.jdbcfighters.renthub.services.AdvertisementService;
 import ru.jdbcfighters.renthub.services.EstateService;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -38,8 +41,13 @@ public class AdvertisementController {
     }
 
     @PostMapping("/create")
-    public String addAdvertisement(Principal principal, EstateRequestDTO advertisementRequestDTO){
-        advertisementService.create(principal, advertisementRequestDTO);
+    public String addAdvertisement(Principal principal,
+                                   @ModelAttribute("estate") @Valid EstateRequestDTO estateRequestDTO,
+                                   BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "add_advertisement";
+        }
+        advertisementService.create(principal, estateRequestDTO);
         return "redirect:/user/profile";
     }
     @PreAuthorize("hasAuthority('ADMIN, MANAGER')")
@@ -49,12 +57,18 @@ public class AdvertisementController {
         model.addAttribute("estates", estate);
         return "administrator_advertisement";
     }
-
-    @PostMapping("/delete/{advertisementId}")
-    public String deleteAdvertisement(@PathVariable("advertisementId") Long advertisementId){
+    @PreAuthorize("hasAuthority('ADMIN, MANAGER')")
+    @PostMapping("/admin/delete/{advertisementId}")
+    public String adminDeleteAdvertisement(@PathVariable("advertisementId") Long advertisementId){
         advertisementService.delete(advertisementId);
-        return "administrator_advertisement";
+        return "redirect:/advertisement/administrator";
     }
 
+    @PreAuthorize("hasAuthority('SELLER')")
+    @PostMapping("/seller/delete/{advertisementId}")
+    public String sellerDeleteAdvertisement(@PathVariable("advertisementId") Long advertisementId){
+        advertisementService.delete(advertisementId);
+        return "redirect:/user/profile";
+    }
 
 }

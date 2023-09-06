@@ -2,6 +2,7 @@ package ru.jdbcfighters.renthub.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
 import ru.jdbcfighters.renthub.domain.mappers.AdvertisementMapper;
 import ru.jdbcfighters.renthub.domain.mappers.EstateMapper;
@@ -11,6 +12,8 @@ import ru.jdbcfighters.renthub.domain.models.AttributeValue;
 import ru.jdbcfighters.renthub.domain.models.City;
 import ru.jdbcfighters.renthub.domain.models.Estate;
 import ru.jdbcfighters.renthub.domain.models.Street;
+import ru.jdbcfighters.renthub.domain.models.User;
+import ru.jdbcfighters.renthub.domain.models.enums.Role;
 import ru.jdbcfighters.renthub.repositories.AdvertisementRepository;
 import ru.jdbcfighters.renthub.repositories.AttributeRepository;
 import ru.jdbcfighters.renthub.repositories.AttributeValueRepository;
@@ -24,6 +27,7 @@ import javax.persistence.EntityNotFoundException;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -46,6 +50,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private List<AttributeValue> finalAttributeValueList;
 
     @Override
+    @Transactional
     public Advertisement create(Principal principal, EstateRequestDTO estateRequestDTO) {
         setAttributeValue(estateRequestDTO);
         Advertisement advertisement = advertisementMapper.estateRequestDTOToAdvertisement(estateRequestDTO);
@@ -54,7 +59,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         Optional<City> city = cityRepository.findByName(estateRequestDTO.city());
         estate.setStreet(street.orElseGet(() -> streetRepository.save(new Street(estateRequestDTO.street()))));
         estate.setCity(city.orElseGet(() -> cityRepository.save(new City(estateRequestDTO.city()))));
-        estate.setOwner(userService.getByLogin(principal.getName()));
+        User userFromDb = userService.getByLogin(principal.getName());
+        userFromDb.setRole(Collections.singleton(Role.SELLER));
+        estate.setOwner(userFromDb);
         Advertisement saveAdvertisement = advertisementRepository.save(advertisement);
         estate.setAdvertisement(saveAdvertisement);
         estate.setAttributeValue(finalAttributeValueList);

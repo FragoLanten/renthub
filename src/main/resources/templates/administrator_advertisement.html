@@ -27,7 +27,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <form th:action="@{/advertisement/delete/} + ${estate.getAdvertisement().getId()}" method="post">
+                <form th:action="@{/advertisement/admin/delete/} + ${estate.getAdvertisement().getId()}" method="post">
                     <button class="btn btn-primary" type="submit">Удалить объявление</button>
                 </form>
             </div>
