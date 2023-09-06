@@ -35,4 +35,6 @@ public interface UserService extends UserDetailsService {
     void hardDelete(Long id);
 
     void updateUser(String login, UserRequestDto userRequestDto);
+
+    void banned(long id);
 }

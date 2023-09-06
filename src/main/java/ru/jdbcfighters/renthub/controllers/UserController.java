@@ -7,11 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.jdbcfighters.renthub.controllers.utils.InjectModelAttribute;
 import ru.jdbcfighters.renthub.domain.dto.UserRequestDto;
 import ru.jdbcfighters.renthub.domain.models.User;
@@ -61,6 +57,12 @@ public class UserController {
         userService.updateUser(login, userRequestDto);
 
         return "redirect:/users/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String banned(@PathVariable long id){
+        userService.banned(id);
+        return "redirect:/user";
     }
 
     @GetMapping("/profile")

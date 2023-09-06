@@ -4,9 +4,13 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/company
+    url: jdbc:postgresql://localhost:5432/renthub
     username: postgres
-    password: root
+    password: postgres
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
 jwtconfig:
   secret: secret
@@ -15,6 +19,8 @@ jwtconfig:
 currency:
   client:
     url: "http://www.cbr.ru/scripts/XML_daily.asp"
+
+
 
 #liquibase:
 #  change-log: classpath:db/changelog/db.changelog-master.yaml
