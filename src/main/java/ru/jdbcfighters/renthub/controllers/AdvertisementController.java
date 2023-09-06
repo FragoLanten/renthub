@@ -15,6 +15,8 @@ import ru.jdbcfighters.renthub.services.AdvertisementService;
 import ru.jdbcfighters.renthub.services.EstateService;
 
 import java.security.Principal;
+import java.util.Comparator;
+import java.util.List;
 
 @Controller
 @RequestMapping("/advertisement")
@@ -28,7 +30,8 @@ public class AdvertisementController {
 
     @GetMapping
     public String advertisementList(Model model) {
-        Iterable<Estate> estate = estateService.getAll();
+        List<Estate> estate = estateService.getAll();
+        estate.sort(Comparator.comparing(e -> e.getAdvertisement().getRank()));
         model.addAttribute("estates", estate);
         return "advertisement";
     }
