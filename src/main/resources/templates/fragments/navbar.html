@@ -44,7 +44,7 @@
         <div class="navbar-text mr-3 align-baseline">
             <span sec:authentication="name"></span>
         </div>
-        <form th:action="@{/logout}" method="post">
+        <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
             <button class="btn btn-primary" type="submit">Выйти</button>
         </form>
     </div>
