@@ -32,15 +32,9 @@ public class PromoteAdvertisementController {
                                        @PathVariable Advertisement advertisement,
                                        Model model){
         model.addAttribute("advertisement", advertisement);
-        String userName = userDetails.getUsername();
-        Set<Long> availableAdvertisementId = estateService.getAll().stream().filter(estate -> estate.getOwner().getLogin().equals(userName)).map(Estate::getAdvertisement).map(Advertisement::getId).collect(Collectors.toSet());
-
-        Long advertisementId = advertisement.getId();
-        if (availableAdvertisementId.contains(advertisementId)) {
-            Long amountOfDays = Long.valueOf(advertisementDto.amountOfDays());
-            int rank = Math.max((-1) * advertisementDto.rank() + advertisementService.get(advertisementId).getRank(), 1);
-            advertisementService.startPromotion(advertisementService.get(advertisementId), amountOfDays, rank);
-        }
+        Long amountOfDays = Long.valueOf(advertisementDto.amountOfDays());
+        int rank = Math.max((-1) * advertisementDto.rank() + advertisement.getRank(), 1);
+        advertisementService.startPromotion(advertisement, amountOfDays, rank);
         return "redirect:/advertisement";
     }
 }
