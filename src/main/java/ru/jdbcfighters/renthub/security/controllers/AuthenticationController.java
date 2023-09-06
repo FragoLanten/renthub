@@ -1,7 +1,6 @@
 package ru.jdbcfighters.renthub.security.controllers;
 
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -47,7 +46,6 @@ public class AuthenticationController {
     @PostMapping("/auth")
     public String login(AuthRequestDTO authRequest,
                         HttpServletResponse res) {
-
         /*Check login and password*/
         Authentication authenticate = authenticationManager.authenticate
                 (new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));

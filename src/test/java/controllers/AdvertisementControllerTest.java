@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -36,19 +37,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+
+
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = {AdvertisementControllerTest.class})
 @AutoConfigureMockMvc
 public class AdvertisementControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
     @Mock
-    private AdvertisementService advertisementService;
+    private EstateRepo estateRepo;
 
     @Mock
-    private EstateRepo estateRepo;
+    private AdvertisementService advertisementService;
 
     @Mock
     private Principal principal;
@@ -63,12 +65,13 @@ public class AdvertisementControllerTest {
 
     @BeforeEach
     public void setup() {
+        MockitoAnnotations.initMocks(this);
         advertisementController = new AdvertisementController(estateService, advertisementService);
         mockMvc = MockMvcBuilders.standaloneSetup(advertisementController).build();
         principal = mock(Principal.class);
         estateRequestDTO = EstateRequestDTO.builder()
-                .square(50.2f)
-                .price(BigDecimal.valueOf(100))
+                .square(String.valueOf(50.2f))
+                .price(String.valueOf(BigDecimal.valueOf(100)))
                 .street("Ленинская")
                 .city("Волгоград")
                 .typeEstate("Дом")

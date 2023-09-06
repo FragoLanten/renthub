@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/renthub
+    url: jdbc:postgresql://localhost:5433/company
     username: postgres
-    password: postgres
+    password: root
   mvc:
     hiddenmethod:
       filter:

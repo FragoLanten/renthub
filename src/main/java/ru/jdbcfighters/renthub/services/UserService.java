@@ -1,11 +1,13 @@
 package ru.jdbcfighters.renthub.services;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
+import ru.jdbcfighters.renthub.domain.dto.RegistrationUserRequestDto;
 import ru.jdbcfighters.renthub.domain.dto.UserRequestDto;
 import ru.jdbcfighters.renthub.domain.models.User;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
     User save(User user);
@@ -37,4 +39,6 @@ public interface UserService extends UserDetailsService {
     void updateUser(String login, UserRequestDto userRequestDto);
 
     void banned(long id);
+
+    Optional<User> addUser(RegistrationUserRequestDto registrationUserRequestDto);
 }
