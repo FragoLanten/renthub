@@ -293,7 +293,7 @@ public class AdvertisementServiceImplTest {
         long amountOfDays = 7L;
         Integer rank = 10;
 
-        LocalDate expectedEndDate = LocalDate.now().plusDays(amountOfDays);
+        LocalDate expectedEndDate = advertisement.getEndDate().plusDays(amountOfDays);
 
         when(advertisementRepository.save(advertisement)).thenReturn(advertisement);
 
