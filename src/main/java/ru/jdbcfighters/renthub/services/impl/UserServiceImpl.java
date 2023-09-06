@@ -109,8 +109,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updateUser(String login, UserRequestDto userRequestDto) {
 
+    }
+
+    @Override
+    @Transactional
+    public void banned(long id) {
+        Optional<User> updatedUser = userRepository.findById(id);
+        if (updatedUser.isEmpty()) {
+            throw new UsernameNotFoundException("User with id " + id + " not found");
+        }
+        updatedUser.get().setDeleted(true);
     }
 
     @Override

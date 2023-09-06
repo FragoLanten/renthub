@@ -12,6 +12,7 @@
             <th>Номер телефона</th>
             <th>Объект</th>
             <th>Роли</th>
+            <th>Бан</th>
         </tr>
         </thead>
         <tbody>
@@ -19,9 +20,12 @@
             <td th:text="${user.getFirstName()}"></td>
             <td th:text="${user.getLastName()}"></td>
             <td th:text="${user.getPhoneNumber()}"></td>
-            <td th:text="${user.getWishlist()}"></td>
             <td th:text="${#strings.setJoin(user.getRole(), ', ')}"></td>
-            <td><a th:href="@{/user/{id}(id=${user.getId()})}">edit</a> </td>
+            <td><a th:href="@{/user/{id}(id=${user.getId()})}">edit</a></td>
+            <td>
+                <form th:method="PATCH" th:action="@{/user/{id}(id=${user.getId()})}">
+                    <input type="submit" th:value="Бан"/></form>
+            </td>
         </tr>
         </tbody>
     </table>
