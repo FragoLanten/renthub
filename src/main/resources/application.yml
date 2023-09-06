@@ -1,12 +1,12 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/renthub
+    url: jdbc:postgresql://localhost:5433/company
     username: postgres
-    password: postgres
+    password: root
 
 jwtconfig:
   secret: secret
@@ -15,3 +15,7 @@ jwtconfig:
 currency:
   client:
     url: "http://www.cbr.ru/scripts/XML_daily.asp"
+
+#liquibase:
+#  change-log: classpath:db/changelog/db.changelog-master.yaml
+#    enabled: true

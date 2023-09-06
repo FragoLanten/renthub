@@ -21,8 +21,11 @@
             <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER', 'BUYER', 'SELLER')">
                 <a class="nav-link" th:href="@{/user/profile}">Профиль</a>
             </li>
+            <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')">
+                <a class="nav-link" th:href="@{/advertisement/administrator}">Редактор объявлений</a>
+            </li>
         </ul>
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto" sec:authorize="isAnonymous()">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/login}">Войти</a>
             </li>

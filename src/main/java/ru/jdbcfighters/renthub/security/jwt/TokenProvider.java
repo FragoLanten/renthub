@@ -26,7 +26,7 @@ import static io.jsonwebtoken.Claims.SUBJECT;
 import static java.util.Calendar.MILLISECOND;
 
 @Component
-@RequiredArgsConstructor
+
 @Slf4j
 public class TokenProvider {
 
@@ -42,6 +42,11 @@ public class TokenProvider {
     private final JWTConfiguration jwtTokenConfig;
 
     private final UserService userService;
+
+    public TokenProvider(JWTConfiguration jwtTokenConfig, UserService userService) {
+        this.jwtTokenConfig = jwtTokenConfig;
+        this.userService = userService;
+    }
 
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userService.loadUserByUsername(getUsernameFromToken(token));
@@ -114,13 +119,13 @@ public class TokenProvider {
     public boolean validateToken(String token) {
         try {
             if (getClaimsFromToken(token).getExpiration().before(new Date())) {
-                log.info(" JWT token has expired");
+//                log.info(" JWT token has expired");
                 return false;
             }
-            log.info("JWT token is valid");
+//            log.info("JWT token is valid");
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            log.info("Expired or invalid JWT token");
+//            log.info("Expired or invalid JWT token");
             return false;
         }
     }

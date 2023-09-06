@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 @Controller
-@RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
@@ -35,6 +34,16 @@ public class AuthenticationController {
 
     private final JWTConfiguration configuration;
 
+    public AuthenticationController(AuthenticationManager authenticationManager, TokenProvider provider,
+                                    UserDetailsService userProvider, UserService userService,
+                                    JWTConfiguration configuration) {
+        this.authenticationManager = authenticationManager;
+        this.provider = provider;
+        this.userProvider = userProvider;
+        this.userService = userService;
+        this.configuration = configuration;
+    }
+
     @PostMapping("/auth")
     public String login(AuthRequestDTO authRequest,
                         HttpServletResponse res) {
@@ -44,8 +53,12 @@ public class AuthenticationController {
                 (new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
 
-        AuthResponseDTO response = AuthResponseDTO.builder().login(authRequest.getLogin())
-                .token(provider.generateToken(userProvider.loadUserByUsername(authRequest.getLogin()))).build();
+//        AuthResponseDTO response = AuthResponseDTO.builder().login(authRequest.getLogin())
+//                .token(provider.generateToken(userProvider.loadUserByUsername(authRequest.getLogin()))).build();
+        AuthResponseDTO response = new AuthResponseDTO();
+        response.setLogin(authRequest.getLogin());
+        response.setToken(provider.generateToken(userProvider.loadUserByUsername(authRequest.getLogin())));
+
         Cookie cookie = new Cookie(CustomHeaders.X_AUTH_TOKEN, response.getToken());
         cookie.setPath("/");
         cookie.setMaxAge(Integer.MAX_VALUE);
@@ -80,10 +93,6 @@ public class AuthenticationController {
             throw new RuntimeException("Principal object is empty");
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Cookie cookie = new Cookie(CustomHeaders.X_AUTH_TOKEN, "");
-//        cookie.setPath("/");
-//        cookie.setMaxAge(-1);
-//        res.addCookie(cookie);
         if (authentication != null && principal.getName().equals(authentication.getName())) {
             SecurityContextHolder.clearContext();
         } else {

@@ -9,21 +9,31 @@ import ru.jdbcfighters.renthub.controllers.utils.InjectModelAttribute;
 import ru.jdbcfighters.renthub.security.CustomHeaders;
 import ru.jdbcfighters.renthub.security.jwt.TokenProvider;
 
+import java.security.Principal;
+
 @Controller
-@RequiredArgsConstructor
 @InjectModelAttribute
 public class MainController {
 
     private final TokenProvider tokenProvider;
+
+    public MainController(TokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
+    }
 
     @GetMapping("/")
     public String greeting() {
         return "greeting";
     }
 
+//    @GetMapping("/main")
+//    public String main(@CookieValue(value = CustomHeaders.X_AUTH_TOKEN, defaultValue = "null") String jwtToken,  Model model) {
+//        return tokenProvider.validateToken(jwtToken) ? "main" : "login";
+//    }
+
     @GetMapping("/main")
-    public String main(@CookieValue(value = CustomHeaders.X_AUTH_TOKEN, defaultValue = "null") String jwtToken,  Model model) {
-        return tokenProvider.validateToken(jwtToken) ? "main" : "login";
+    public String main(Principal principal, Model model) {
+        return principal != null ? "main" : "login";
     }
 //
 //    @PostMapping("/main")

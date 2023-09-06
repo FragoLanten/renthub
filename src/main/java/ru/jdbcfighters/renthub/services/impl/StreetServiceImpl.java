@@ -12,22 +12,22 @@ import java.util.List;
 @Service
 public class StreetServiceImpl implements StreetService {
     @Autowired
-    StreetRepository streetReository;
+    StreetRepository streetRepository;
 
     public Street save(Street street) {
-        return streetReository.save(street);
+        return streetRepository.save(street);
     }
 
     public Street getStreet(Long streetId) {
-        return streetReository.findById(streetId).orElseThrow(() -> new EntityNotFoundException("Улица не найдена!"));
+        return streetRepository.findById(streetId).orElseThrow(() -> new EntityNotFoundException("Улица не найдена!"));
     }
 
     public void delete(Long streetID) {
-        streetReository.deleteById(streetID);
+        streetRepository.deleteById(streetID);
     }
 
     public List<Street> findAll() {
-        return streetReository.findAll();
+        return streetRepository.findAll();
     }
 
 }

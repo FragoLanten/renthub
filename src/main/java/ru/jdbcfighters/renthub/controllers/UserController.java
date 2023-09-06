@@ -1,6 +1,7 @@
 package ru.jdbcfighters.renthub.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ import ru.jdbcfighters.renthub.domain.models.enums.Role;
 import ru.jdbcfighters.renthub.services.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/user")
@@ -25,7 +27,8 @@ import javax.validation.Valid;
 @InjectModelAttribute
 public class UserController {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
@@ -58,6 +61,13 @@ public class UserController {
         userService.updateUser(login, userRequestDto);
 
         return "redirect:/users/edit";
+    }
+
+    @GetMapping("/profile")
+    public String showProfile(Principal principal, Model model) {
+
+        model.addAttribute("user", userService.getByLogin(principal.getName()));
+        return "profile";
     }
 
 //    @GetMapping("/profile")

@@ -51,10 +51,10 @@ public class SbrService {
         return response.getValute()
                 .stream()
                 .collect(toMap(ValCurs.Valute::getCharCode, item ->
-                        pasreWithLocale(item.getValue())));
+                        parseWithLocale(item.getValue())));
     }
 
-    private BigDecimal pasreWithLocale(String currency) {
+    private BigDecimal parseWithLocale(String currency) {
         try {
             double v = NumberFormat.getNumberInstance(Locale.getDefault())
                     .parse(currency).doubleValue();
@@ -69,7 +69,7 @@ public class SbrService {
             JAXBContext context = JAXBContext.newInstance(ValCurs.class);
             return (ValCurs) context.createUnmarshaller().unmarshal(reader);
         } catch (JAXBException e) {
-            throw new RuntimeException(e);
+            return new ValCurs();
         }
     }
 }

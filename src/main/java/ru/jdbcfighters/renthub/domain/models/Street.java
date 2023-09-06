@@ -2,6 +2,7 @@ package ru.jdbcfighters.renthub.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,12 +20,20 @@ import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
-@NoArgsConstructor
+
 @Setter
 @Getter
 @Entity
+@Builder
 @Table(name = "streets")
 public class Street {
+
+    public Street() {
+    }
+
+    public Street(String name) {
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

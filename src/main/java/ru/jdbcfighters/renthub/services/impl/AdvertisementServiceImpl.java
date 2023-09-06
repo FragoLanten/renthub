@@ -1,27 +1,98 @@
 package ru.jdbcfighters.renthub.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
+import ru.jdbcfighters.renthub.domain.mappers.AdvertisementMapper;
+import ru.jdbcfighters.renthub.domain.mappers.EstateMapper;
 import ru.jdbcfighters.renthub.domain.models.Advertisement;
+import ru.jdbcfighters.renthub.domain.models.Attribute;
+import ru.jdbcfighters.renthub.domain.models.AttributeValue;
+import ru.jdbcfighters.renthub.domain.models.City;
 import ru.jdbcfighters.renthub.domain.models.Estate;
+import ru.jdbcfighters.renthub.domain.models.Street;
 import ru.jdbcfighters.renthub.repositories.AdvertisementRepository;
+import ru.jdbcfighters.renthub.repositories.AttributeRepository;
+import ru.jdbcfighters.renthub.repositories.AttributeValueRepository;
+import ru.jdbcfighters.renthub.repositories.CityRepository;
+import ru.jdbcfighters.renthub.repositories.EstateRepo;
+import ru.jdbcfighters.renthub.repositories.StreetRepository;
 import ru.jdbcfighters.renthub.services.AdvertisementService;
+import ru.jdbcfighters.renthub.services.UserService;
 
 import javax.persistence.EntityNotFoundException;
+import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class AdvertisementServiceImpl implements AdvertisementService {
 
-    @Autowired
-    private AdvertisementRepository advertisementRepository;
+    private final AdvertisementMapper advertisementMapper;
+    private final EstateMapper estateMapper;
+    private final AdvertisementRepository advertisementRepository;
+    private final StreetRepository streetRepository;
+    private final AttributeValueRepository attributeValueRepository;
+    private final AttributeRepository attributeRepository;
+    private final EstateRepo estateRepo;
+    private final CityRepository cityRepository;
+    private final UserService userService;
+    private List<Attribute> finalAttributeList;
+    private List<AttributeValue> finalAttributeValueList;
 
     @Override
-    public Advertisement create(Advertisement advertisement) {
-        return advertisementRepository.save(advertisement);
+    public Advertisement create(Principal principal, EstateRequestDTO estateRequestDTO) {
+        setAttributeValue(estateRequestDTO);
+        Advertisement advertisement = advertisementMapper.estateRequestDTOToAdvertisement(estateRequestDTO);
+        Estate estate = estateMapper.estateRequestDTOToEstate(estateRequestDTO);
+        Optional<Street> street = streetRepository.findByName(estateRequestDTO.street());
+        Optional<City> city = cityRepository.findByName(estateRequestDTO.city());
+        estate.setStreet(street.orElseGet(() -> streetRepository.save(new Street(estateRequestDTO.street()))));
+        estate.setCity(city.orElseGet(() -> cityRepository.save(new City(estateRequestDTO.city()))));
+        estate.setOwner(userService.getByLogin(principal.getName()));
+        Advertisement saveAdvertisement = advertisementRepository.save(advertisement);
+        estate.setAdvertisement(saveAdvertisement);
+        estate.setAttributeValue(finalAttributeValueList);
+        estate.setAttributes(finalAttributeList);
+        estateRepo.save(estate);
+
+        return saveAdvertisement;
+    }
+
+    private void setAttributeValue(EstateRequestDTO estateRequestDTO) {
+        List<Attribute> attributeList = attributeRepository.findAll();
+     finalAttributeList = new ArrayList<>();
+     finalAttributeValueList = new ArrayList<>();
+        List<String> lists = new ArrayList<>();
+        Map<Long, String> mapAttribute = attributeList.stream()
+                .collect(Collectors.toMap((Attribute::getId), (Attribute::getName)));
+        lists.add(estateRequestDTO.flatNumber());
+        lists.add(estateRequestDTO.numberOfFloors());
+        lists.add(estateRequestDTO.floor());
+        lists.add(estateRequestDTO.numberOfRooms());
+        lists.add(estateRequestDTO.balcony());
+        lists.add(estateRequestDTO.typeEstate());
+
+        long index = 1L;
+
+        for (String list : lists) {
+            if (list != null) {
+                AttributeValue av = new AttributeValue();
+                Attribute a = new Attribute();
+                av.setName(list);
+                a.setName(mapAttribute.get(index));
+                a.setId(index);
+                attributeValueRepository.save(av);
+                finalAttributeList.add(a);
+                finalAttributeValueList.add(av);
+            }
+            index++;
+        }
     }
 
     @Override
