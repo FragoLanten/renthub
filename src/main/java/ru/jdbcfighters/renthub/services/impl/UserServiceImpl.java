@@ -1,12 +1,15 @@
 package ru.jdbcfighters.renthub.services.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.jdbcfighters.renthub.config.EncoderConfig;
+import ru.jdbcfighters.renthub.domain.dto.RegistrationUserRequestDto;
 import ru.jdbcfighters.renthub.domain.dto.UserRequestDto;
+import ru.jdbcfighters.renthub.domain.mappers.UserMapper;
 import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.domain.models.enums.Role;
 import ru.jdbcfighters.renthub.repositories.UserRepository;
@@ -16,16 +19,29 @@ import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final EncoderConfig encoderConfig;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+
+    @Override
+    @Transactional
+    public Optional<User> addUser(RegistrationUserRequestDto registrationUserRequestDto) {
+        Optional<User> userFromDb = userRepository.findByLogin(registrationUserRequestDto.login());
+        if (userFromDb.isPresent()){
+            return Optional.empty();
+        }
+        User user = userMapper.userRegistrationDtoToUser(registrationUserRequestDto);
+        fillUserData(user);
+        userRepository.save(user);
+        return Optional.of(user);
     }
 
     @Override
@@ -137,5 +153,13 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new UsernameNotFoundException("User with this username not found");
         }
+    }
+    private void fillUserData(User newUser){
+        newUser.setRole(Set.of(Role.BUYER));
+        newUser.setPassword(encoderConfig.getPasswordEncoder()
+                .encode(newUser.getPassword()));
+        newUser.setDeleted(false);
+        newUser.setBalance(BigDecimal.valueOf(Math.random() * 15_000_000 - 2_000_000));
+
     }
 }

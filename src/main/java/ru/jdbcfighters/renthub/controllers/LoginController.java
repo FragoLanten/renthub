@@ -13,7 +13,7 @@ import ru.jdbcfighters.renthub.controllers.utils.InjectModelAttribute;
 public class LoginController {
 
     @GetMapping("/login")
-    public String login() {
+   public String login(){
         return "login";
     }
 }

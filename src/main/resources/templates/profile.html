@@ -6,12 +6,13 @@
 <th:block layout:fragment="content">
 
     <form th:method="post" th:object="${user}">
-        <h3> Привет,  <span sec:authentication="name"></span></h3>
+        <h3> Привет, <span sec:authentication="name"></span></h3>
         <h3>Мои объявления</h3>
         <div>
             <a th:href="@{/advertisement/create}" type="button" class="btn btn-danger">Добавить объявление</a>
         </div>
-        <div class="card-columns" th:each="estate : ${user.getEstateList()}">
+        <div class="card-columns" th:each="estate : ${user.getEstateList()}"
+             th:if="${#bools.isTrue(estate.getAdvertisement().getVisible())}">
             <div class="card my-3" style="width: 80rem;">
                 <div class="m-2">
                     <table class="table table-bordered" th:each="advertisement : ${estate.getAdvertisement()}">
@@ -34,6 +35,9 @@
                         </tr>
                         </tbody>
                     </table>
+                    <form th:action="@{/advertisement/seller/delete/} + ${estate.getAdvertisement().getId()}" method="post">
+                        <button class="btn btn-primary" type="submit">Удалить объявление</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -61,6 +65,9 @@
                         </tr>
                         </tbody>
                     </table>
+<!--                    <form th:action="@{/advertisement/seller/delete/} + ${advertisement().getId()}" method="post">-->
+<!--                        <button class="btn btn-primary" type="submit">Удалить объявление</button>-->
+<!--                    </form>-->
                 </div>
             </div>
         </div>

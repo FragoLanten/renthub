@@ -1,29 +1,24 @@
 <div class="form-group row">
-    <label class="col-sm-2 col-form-label"> User Name: </label>
+    <label class="col-sm-2 col-form-label"> Логин: </label>
     <div class="col-sm-6">
-        <input type="text" name="login" class="form-control" placeholder="User Name"
-               th:classappend="${user != null} ? 'is-invalid' : ''"
-               th:value="${user != null} ? ${user.getLogin()} : ''"/>
+        <input type="text" name="login" class="form-control" placeholder="Логин"
+               th:classappend="${user != null} ? 'is-invalid' : ''"/>
         <div class="invalid-feedback" th:if="${user != null}" th:object="${user}" th:field="*{login}">
             <div th:if="${#fields.hasErrors('login')}" th:errors="*{login}">
-                Ошибка имени пользователя
+                Ошибка логина
             </div>
         </div>
     </div>
 </div>
 <div class="form-group row">
-    <label class="col-sm-2 col-form-label"> Password: </label>
+    <label class="col-sm-2 col-form-label"> Пароль: </label>
     <div class="col-sm-6">
-        <input type="text" name="password" class="form-control" placeholder="Password"
+        <input type="text" name="password" class="form-control" placeholder="Пароль"
                th:classappend="${user != null} ? 'is-invalid' : ''"/>
         <div class="invalid-feedback" th:if="${user != null}" th:object="${user}" th:field="*{password}">
             <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
                 Ошибка пароля
             </div>
-            <div th:if="${passwordError}">
-                Пароли не совпадают
-            </div>
         </div>
-
     </div>
 </div>

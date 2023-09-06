@@ -88,8 +88,8 @@ public class AdvertisementServiceImplTest {
     @BeforeEach
     void setup() {
         estateRequestDTO = EstateRequestDTO.builder()
-                .square(50.2f)
-                .price(BigDecimal.valueOf(100))
+                .square(String.valueOf(50.2f))
+                .price(String.valueOf(BigDecimal.valueOf(100)))
                 .street("Ленинская")
                 .city("Волгоград")
                 .typeEstate("Дом")
