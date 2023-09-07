@@ -1,0 +1,60 @@
+<form th:action="@{/promote_advertisement/} + ${estate.getAdvertisement().getId()}" method="post" onsubmit="return validateForm(this)">
+    <div>
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label>На сколько дней хотите продлить объявление
+                    <input type="text" name="amountOfDays" class="form-control-amount"/>
+                </label>
+                <div class="invalid_amount" style="display:none;">
+                    Неправильное число дней
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label>На сколько позиций хотите поднять
+                    <input type="text" name="rank" class="form-control-rank"/>
+                </label>
+                <div class="invalid_rank" style="display:none;">
+                    Неправильное число позиций
+                </div>
+            </div>
+            <div class="col-sm-4 pt-3">
+                <button class="btn btn-primary" type="submit">Ок</button>
+            </div>
+
+            <script th:inline="javascript">
+                function validateForm(form) {
+                    let elements_amount = document.getElementsByClassName("form-control-amount");
+                    let elements_rank = document.getElementsByClassName("form-control-rank");
+                    let elements_invalid_amount = document.getElementsByClassName("invalid_amount");
+                    let elements_invalid_rank = document.getElementsByClassName("invalid_rank");
+                    let flag = true;
+                    for (let i = 0; i < elements_amount.length; i++){
+                        let value_amount = parseInt(elements_amount[i].value);
+                        let value_rank = parseInt(elements_rank[i].value);
+                        if ((!isNaN(value_amount) && value_amount <= 0) || (isNaN(value_amount) && elements_amount[i].value != "") ){
+                            elements_invalid_amount[i].style = "display:block;";
+                            elements_invalid_amount[i].style.color = "#F54C3E";
+                            elements_invalid_amount[i].style.fontSize = "16px";
+                            flag = false;
+                        }
+                        else{
+                            elements_invalid_amount[i].style = "display:none;"
+                        }
+
+                        if ((!isNaN(value_rank) && value_rank <= 0) || (isNaN(value_rank) && elements_rank[i].value != "") ){
+                            elements_invalid_rank[i].style = "display:block;";
+                            elements_invalid_rank[i].style.color = "#F54C3E";
+                            elements_invalid_rank[i].style.fontSize = "16px";
+                            flag = false;
+                        }
+                        else{
+                            elements_invalid_amount[i].style = "display:none;"
+                        }
+                    }
+                    return flag;
+                }
+            </script>
+
+        </div>
+    </div>
+</form>
