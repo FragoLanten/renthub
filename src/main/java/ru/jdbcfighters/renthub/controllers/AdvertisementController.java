@@ -63,12 +63,14 @@ public class AdvertisementController {
         model.addAttribute("estates", estate);
         return "administrator_advertisement";
     }
+
     @PreAuthorize("hasAuthority('ADMIN, MANAGER')")
     @PostMapping("/admin/delete/{advertisementId}")
     public String adminDeleteAdvertisement(@PathVariable("advertisementId") Long advertisementId){
         advertisementService.delete(advertisementId);
         return "redirect:/advertisement/administrator";
     }
+
     @PreAuthorize("hasAuthority('ADMIN, MANAGER')")
     @PostMapping("/admin/restore/{advertisementId}")
     public String adminRestoreAdvertisement(@PathVariable("advertisementId") Long advertisementId){
@@ -77,7 +79,8 @@ public class AdvertisementController {
     }
 
     @PostMapping("/wishlist/{advertisementId}")
-    public String addAdvertisementToWishList(@PathVariable("advertisementId") Long advertisementId, Principal principal, Model model) {
+    public String addAdvertisementToWishList(@PathVariable("advertisementId") Long advertisementId,
+                                             Principal principal, Model model) {
         advertisementService.addToWishList(advertisementId, principal);
         Iterable<Estate> estate = estateService.getAll();
         model.addAttribute("estates", estate);
@@ -85,11 +88,13 @@ public class AdvertisementController {
     }
 
     @PostMapping("/wishlist/delete/{advertisementId}")
-    public String deleteAdvertisementFromWishList(@PathVariable("advertisementId") Long advertisementId, Principal principal, Model model) {
+    public String deleteAdvertisementFromWishList(@PathVariable("advertisementId") Long advertisementId,
+                                                  Principal principal, Model model) {
         User user = advertisementService.deleteFromWishList(advertisementId, principal);
         model.addAttribute("user", user);
         return "profile";
     }
+
     @PostMapping("/seller/delete/{advertisementId}")
     public String sellerDeleteAdvertisement(@PathVariable("advertisementId") Long advertisementId){
         advertisementService.delete(advertisementId);

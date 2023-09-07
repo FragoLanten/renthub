@@ -16,6 +16,6 @@ public interface AdvertisementMapper {
     @Mapping(target = "endDate", expression = "java(LocalDate.now())")
     @Mapping(target = "visible", expression = "java(true)")
     @Mapping(target = "rank", expression = "java(1)")
-    @Mapping(target = "moderated", expression = "java(false)")
+    @Mapping(target = "moderated", expression = "java(true)")
     Advertisement estateRequestDTOToAdvertisement(EstateRequestDTO estateRequestDTO);
 }

@@ -7,9 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Builder
 public record AdvertisementDto(
-
         Long amountOfDays,
-
         Integer rank
 )
 {

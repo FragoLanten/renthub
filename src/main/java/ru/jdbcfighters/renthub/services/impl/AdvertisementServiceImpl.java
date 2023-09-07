@@ -13,7 +13,6 @@ import ru.jdbcfighters.renthub.domain.models.City;
 import ru.jdbcfighters.renthub.domain.models.Estate;
 import ru.jdbcfighters.renthub.domain.models.Street;
 import ru.jdbcfighters.renthub.domain.models.User;
-import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.domain.models.enums.Role;
 import ru.jdbcfighters.renthub.repositories.AdvertisementRepository;
 import ru.jdbcfighters.renthub.repositories.AttributeRepository;
@@ -26,9 +25,7 @@ import ru.jdbcfighters.renthub.services.UserService;
 
 import javax.persistence.EntityNotFoundException;
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
