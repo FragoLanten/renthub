@@ -4,7 +4,7 @@
       lang="ru">
 <th:block layout:fragment="body">
     <h3>Редактор пользователей</h3>
-    <form th:method="post" th:object="${user}">
+    <form th:action="@{/user/edit/{id}(id=${user.getId()})}" th:method="PATCH" th:object="${user}">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Имя пользователя</label>
             <div class="col-sm-6">
@@ -37,7 +37,7 @@
             </label>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <input type="submit" class="btn btn-primary" th:value="Сохранить"/>
             <a th:href="@{/user}" type="button" class="btn btn-danger">Выйти</a>
         </div>
         <!--        <label>-->

@@ -50,13 +50,15 @@ public class UserController {
 //        return "redirect:/user";
 //    }
 
-    @PostMapping("/edit")
-    public String updateUser(@AuthenticationPrincipal UserDetails userDetails,
-                             @ModelAttribute("user") @Valid UserRequestDto userRequestDto) {
-        String login = userDetails.getUsername();
-        userService.updateUser(login, userRequestDto);
 
-        return "redirect:/users/edit";
+
+    @PatchMapping("/edit/{id}")
+    public String updateUser(@AuthenticationPrincipal UserDetails userDetails,
+                             @ModelAttribute("user") @Valid UserRequestDto userRequestDto,
+                             @PathVariable Long id) {
+        userService.updateUser(id, userRequestDto);
+
+        return "redirect:/user/" +  id;
     }
 
     @PatchMapping("/{id}")

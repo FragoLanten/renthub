@@ -1,11 +1,11 @@
 package ru.jdbcfighters.renthub.domain.dto;
 
 import lombok.Builder;
+import ru.jdbcfighters.renthub.domain.models.enums.Role;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
 import static ru.jdbcfighters.renthub.domain.dto.validation.ValidationConstants.FIRST_NAME_PATTERN;
 import static ru.jdbcfighters.renthub.domain.dto.validation.ValidationConstants.LAST_NAME_PATTERN;
 import static ru.jdbcfighters.renthub.domain.dto.validation.ValidationConstants.PHONE_PATTERN;
@@ -28,6 +28,6 @@ public record UserRequestDto(
 
         @NotBlank(message = "Phone is mandatory!")
         @Pattern(regexp = PHONE_PATTERN, message = "Invalid phone")
-        String phoneNumber)
-{
+        String phoneNumber,
+        Role role) {
 }

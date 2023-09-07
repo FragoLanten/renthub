@@ -34,7 +34,7 @@ public interface UserService extends UserDetailsService {
     //Удаление из БД
     void hardDelete(Long id);
 
-    void updateUser(String login, UserRequestDto userRequestDto);
+    void updateUser(Long id, UserRequestDto userRequestDto);
 
     void banned(long id);
 }

@@ -110,8 +110,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(String login, UserRequestDto userRequestDto) {
+    public void updateUser(Long id, UserRequestDto userRequestDto) {
+        Optional<User> optUpdatedUser = userRepository.findById(id);
+        User updatedUser;
 
+        if (optUpdatedUser.isEmpty()){
+            throw new UsernameNotFoundException("");
+        }else{
+            updatedUser = optUpdatedUser.get();
+        }
+
+        updatedUser.setLogin(userRequestDto.login());
+        updatedUser.setFirstName(userRequestDto.firstName());
+        updatedUser.setLastName(userRequestDto.lastName());
+        updatedUser.setPhoneNumber(userRequestDto.phoneNumber());
+
+        userRepository.save(updatedUser);
     }
 
     @Override
