@@ -38,6 +38,9 @@
                     <form th:action="@{/advertisement/seller/delete/} + ${estate.getAdvertisement().getId()}" method="post">
                         <button class="btn btn-primary" type="submit">Удалить объявление</button>
                     </form>
+
+                    <div th:insert="~{fragments/promote_advertisement}"></div>
+
                 </div>
             </div>
         </div>
@@ -65,9 +68,6 @@
                         </tr>
                         </tbody>
                     </table>
-<!--                    <form th:action="@{/advertisement/seller/delete/} + ${advertisement().getId()}" method="post">-->
-<!--                        <button class="btn btn-primary" type="submit">Удалить объявление</button>-->
-<!--                    </form>-->
                 </div>
             </div>
         </div>
