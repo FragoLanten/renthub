@@ -158,7 +158,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public Advertisement startPromotion(Advertisement advertisement, Long amountOfDays, Integer rank) {
-        advertisement.setEndDate(LocalDate.now().plusDays(amountOfDays));
+        advertisement.setEndDate(advertisement.getEndDate().plusDays(amountOfDays));
         advertisement.setRank(rank);
         return advertisementRepository.save(advertisement);
     }
