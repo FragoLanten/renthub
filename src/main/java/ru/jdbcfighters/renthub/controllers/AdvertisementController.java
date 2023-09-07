@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.jdbcfighters.renthub.controllers.utils.InjectModelAttribute;
 import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
 import ru.jdbcfighters.renthub.domain.models.Estate;
+import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.services.AdvertisementService;
 import ru.jdbcfighters.renthub.services.EstateService;
 
@@ -38,8 +39,9 @@ public class AdvertisementController {
         model.addAttribute("estates", estate);
         return "advertisement";
     }
+
     @GetMapping("/create")
-    public String show(){
+    public String show() {
         return "add_advertisement";
     }
 
@@ -53,6 +55,7 @@ public class AdvertisementController {
         advertisementService.create(principal, estateRequestDTO);
         return "redirect:/user/profile";
     }
+
     @PreAuthorize("hasAuthority('ADMIN, MANAGER')")
     @GetMapping("/administrator")
     public String administratorAdvertisementList(Model model) {
@@ -73,6 +76,20 @@ public class AdvertisementController {
         return "redirect:/advertisement/administrator";
     }
 
+    @PostMapping("/wishlist/{advertisementId}")
+    public String addAdvertisementToWishList(@PathVariable("advertisementId") Long advertisementId, Principal principal, Model model) {
+        advertisementService.addToWishList(advertisementId, principal);
+        Iterable<Estate> estate = estateService.getAll();
+        model.addAttribute("estates", estate);
+        return "advertisement";
+    }
+
+    @PostMapping("/wishlist/delete/{advertisementId}")
+    public String deleteAdvertisementFromWishList(@PathVariable("advertisementId") Long advertisementId, Principal principal, Model model) {
+        User user = advertisementService.deleteFromWishList(advertisementId, principal);
+        model.addAttribute("user", user);
+        return "profile";
+    }
     @PostMapping("/seller/delete/{advertisementId}")
     public String sellerDeleteAdvertisement(@PathVariable("advertisementId") Long advertisementId){
         advertisementService.delete(advertisementId);

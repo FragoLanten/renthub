@@ -1,10 +1,12 @@
 package ru.jdbcfighters.renthub.services;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
 import ru.jdbcfighters.renthub.domain.mappers.AdvertisementMapper;
@@ -345,5 +347,98 @@ public class AdvertisementServiceImplTest {
         Advertisement result = advertisementService.getAdvertisementByEstate(estate);
 
         assertNull(result);
+    }
+
+    @Test
+    void addToWishList_Success() {
+        Long advertisementId = 1L;
+        String username = "user1";
+
+        User user = new User();
+        Advertisement advertisement = new Advertisement();
+        advertisement.setEndDate(LocalDate.now());
+        Estate estate = new Estate();
+        estate.setAdvertisement(new Advertisement());
+        List<Estate> wishlist = new ArrayList<>();
+        wishlist.add(estate);
+        user.setWishlist(wishlist);
+
+        when(userService.getByLogin(username)).thenReturn(user);
+        when(advertisementRepository.findById(advertisementId)).thenReturn(Optional.of(advertisement));
+
+
+        Principal principal = mock(Principal.class);
+        when(principal.getName()).thenReturn(username);
+
+        advertisementService.addToWishList(advertisementId, principal);
+
+        verify(userService).save(user);
+    }
+
+    @Test
+    void addToWishList_Exception() {
+        Long advertisementId = 1L;
+        String username = "user1";
+
+        User user = new User();
+        List<Estate> wishlist = new ArrayList<>();
+        user.setWishlist(wishlist);
+
+        Mockito.when(userService.getByLogin(username)).thenReturn(user);
+        Mockito.when(advertisementRepository.findById(advertisementId)).thenReturn(Optional.empty());
+
+        Principal principal = Mockito.mock(Principal.class);
+        Mockito.when(principal.getName()).thenReturn(username);
+
+        assertThrows(EntityNotFoundException.class, () -> {
+            advertisementService.addToWishList(advertisementId, principal);
+        });
+
+        Mockito.verify(userService, Mockito.never()).save(user);
+    }
+
+    @Test
+    void deleteFromWishList_Success() {
+        Long advertisementId = 1L;
+        String username = "user1";
+
+        User user = new User();
+        Advertisement advertisement = new Advertisement();
+        Estate estate = new Estate();
+        estate.setAdvertisement(advertisement);
+        List<Estate> wishlist = new ArrayList<>();
+        wishlist.add(estate);
+        user.setWishlist(wishlist);
+
+        Mockito.when(userService.getByLogin(username)).thenReturn(user);
+        Mockito.when(advertisementRepository.findById(advertisementId)).thenReturn(Optional.of(advertisement));
+
+        Mockito.when(principal.getName()).thenReturn(username);
+
+        User result = advertisementService.deleteFromWishList(advertisementId, principal);
+
+        Mockito.verify(userService).save(user);
+        Assertions.assertEquals(user, result);
+    }
+
+    @Test
+    void deleteFromWishList_Exception() {
+        Long advertisementId = 1L;
+        String username = "user1";
+
+        User user = new User();
+        List<Estate> wishlist = new ArrayList<>();
+        user.setWishlist(wishlist);
+
+        Mockito.when(userService.getByLogin(username)).thenReturn(user);
+        Mockito.when(advertisementRepository.findById(advertisementId)).thenReturn(Optional.empty());
+
+        Mockito.when(principal.getName()).thenReturn(username);
+
+        Assertions.assertThrows(EntityNotFoundException.class, () -> {
+            advertisementService.deleteFromWishList(advertisementId, principal);
+        });
+
+        Mockito.verify(userService, Mockito.never()).save(user);
     }
 }

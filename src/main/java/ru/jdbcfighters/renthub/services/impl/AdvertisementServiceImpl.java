@@ -13,6 +13,7 @@ import ru.jdbcfighters.renthub.domain.models.City;
 import ru.jdbcfighters.renthub.domain.models.Estate;
 import ru.jdbcfighters.renthub.domain.models.Street;
 import ru.jdbcfighters.renthub.domain.models.User;
+import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.domain.models.enums.Role;
 import ru.jdbcfighters.renthub.repositories.AdvertisementRepository;
 import ru.jdbcfighters.renthub.repositories.AttributeRepository;
@@ -74,8 +75,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     private void setAttributeValue(EstateRequestDTO estateRequestDTO) {
         List<Attribute> attributeList = attributeRepository.findAll();
-     finalAttributeList = new ArrayList<>();
-     finalAttributeValueList = new ArrayList<>();
+        finalAttributeList = new ArrayList<>();
+        finalAttributeValueList = new ArrayList<>();
         List<String> lists = new ArrayList<>();
         Map<Long, String> mapAttribute = attributeList.stream()
                 .collect(Collectors.toMap((Attribute::getId), (Attribute::getName)));
@@ -177,5 +178,28 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             throw new EntityNotFoundException("Объявление не найдено!");
     }
 
+    @Override
+    public void addToWishList(Long advertisementId, Principal principal) {
+        User user = userService.getByLogin(principal.getName());
+        Advertisement advertisement = advertisementRepository.findById(advertisementId).orElseThrow(EntityNotFoundException::new);
+        List<Estate> wishlist = user.getWishlist();
+        for (Estate estate : wishlist) {
+            if (estate.getAdvertisement().equals(advertisement)) {
+                return;
+            }
+        }
+        wishlist.add(advertisement.getEstate());
+        userService.save(user);
+    }
+
+    @Override
+    public User deleteFromWishList(Long advertisementId, Principal principal) {
+        User user = userService.getByLogin(principal.getName());
+        Advertisement advertisement = advertisementRepository.findById(advertisementId).orElseThrow(EntityNotFoundException::new);
+        List<Estate> wishlist = user.getWishlist();
+        wishlist.remove(advertisement.getEstate());
+        userService.save(user);
+        return user;
+    }
 
 }
