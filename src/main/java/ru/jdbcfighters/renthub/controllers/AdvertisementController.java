@@ -63,8 +63,13 @@ public class AdvertisementController {
         advertisementService.delete(advertisementId);
         return "redirect:/advertisement/administrator";
     }
+    @PreAuthorize("hasAuthority('ADMIN, MANAGER')")
+    @PostMapping("/admin/restore/{advertisementId}")
+    public String adminRestoreAdvertisement(@PathVariable("advertisementId") Long advertisementId){
+        advertisementService.restore(advertisementId);
+        return "redirect:/advertisement/administrator";
+    }
 
-    @PreAuthorize("hasAuthority('SELLER')")
     @PostMapping("/seller/delete/{advertisementId}")
     public String sellerDeleteAdvertisement(@PathVariable("advertisementId") Long advertisementId){
         advertisementService.delete(advertisementId);

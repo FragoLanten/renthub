@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,7 +61,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         estate.setStreet(street.orElseGet(() -> streetRepository.save(new Street(estateRequestDTO.street()))));
         estate.setCity(city.orElseGet(() -> cityRepository.save(new City(estateRequestDTO.city()))));
         User userFromDb = userService.getByLogin(principal.getName());
-        userFromDb.setRole(Collections.singleton(Role.SELLER));
+        userFromDb.setRole(Set.of(Role.SELLER));
         estate.setOwner(userFromDb);
         Advertisement saveAdvertisement = advertisementRepository.save(advertisement);
         estate.setAdvertisement(saveAdvertisement);
@@ -125,6 +126,14 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         Advertisement advertisement = get(id);
         advertisement.setVisible(false);
         return advertisementRepository.save(advertisement);
+    }
+
+    @Override
+    public void restore(Long id) {
+        existCheck(id);
+        Advertisement advertisement = get(id);
+        advertisement.setVisible(true);
+        advertisementRepository.save(advertisement);
     }
 
     @Override

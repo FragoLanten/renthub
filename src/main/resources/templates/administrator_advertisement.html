@@ -10,6 +10,7 @@
                 <table class="table table-bordered" th:each="advertisement : ${estate.getAdvertisement()}">
                     <thead>
                     <tr>
+                        <th>Статус</th>
                         <th>Город</th>
                         <th>Улица</th>
                         <th>Номер дома</th>
@@ -19,6 +20,7 @@
                     </thead>
                     <tbody>
                     <tr>
+                        <td th:text="${estate.getAdvertisement().getVisible() ? 'Актуально' : 'Удалено'}"></td>
                         <td th:text="${estate.getCity}"></td>
                         <td th:text="${estate.getStreet}"></td>
                         <td th:text="${estate.getNumber}"></td>
@@ -28,7 +30,10 @@
                     </tbody>
                 </table>
                 <form th:action="@{/advertisement/admin/delete/} + ${estate.getAdvertisement().getId()}" method="post">
-                    <button class="btn btn-primary" type="submit">Удалить объявление</button>
+                    <button class="btn btn-danger" type="submit">Удалить объявление</button>
+                </form>
+                <form th:action="@{/advertisement/admin/restore/} + ${estate.getAdvertisement().getId()}" method="post">
+                    <button class="btn btn-success" type="submit">Восстановить объявление</button>
                 </form>
             </div>
 
