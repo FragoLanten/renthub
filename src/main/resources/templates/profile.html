@@ -55,7 +55,7 @@
                             <th>Улица</th>
                             <th>Номер дома</th>
                             <th>Площадь кв. метров</th>
-                            <th th:each="attribute : ${wishlist.getAttributes()}" th:text="${wishlist.getName}"></th>
+                            <th th:each="attribute : ${wishlist.getAttributes()}" th:text="${attribute.getName}"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -64,10 +64,19 @@
                             <td th:text="${wishlist.getStreet}"></td>
                             <td th:text="${wishlist.getNumber}"></td>
                             <td th:text="${wishlist.getSquare}"></td>
-                            <td th:each="value : ${wishlist.getAttributeValue}" th:text="${wishlist.getName}"></td>
+                            <td th:each="value : ${wishlist.getAttributeValue}" th:text="${value.getName}"></td>
                         </tr>
                         </tbody>
                     </table>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <form th:action="@{/advertisement/wishlist/delete/} + ${wishlist.getAdvertisement.getId}" method="post">
+                                <button type="submit" class="btn btn-primary">Удалить из избранного</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
                 </div>
             </div>
         </div>
@@ -90,6 +99,6 @@
         <!--            </label>-->
         <!--        </div>-->
         <!--        <button type="submit">Save</button>-->
-<!--    </form>-->
+    </form>
 </th:block>
 </html>
