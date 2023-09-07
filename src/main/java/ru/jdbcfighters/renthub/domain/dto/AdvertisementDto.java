@@ -8,12 +8,8 @@ import javax.validation.constraints.NotNull;
 @Builder
 public record AdvertisementDto(
 
-        @NotNull(message = "Day amount must be positive")
-        @Min(value = 1)
-        Integer amountOfDays,
+        Long amountOfDays,
 
-        @NotNull(message = "Promotion must be positive")
-        @Min(value = 1)
         Integer rank
 )
 {
