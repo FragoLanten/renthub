@@ -15,7 +15,7 @@ public class ValidationConstants {
 
     public static final String PHONE_PATTERN = "^(?=.{0,}$)[0-9]*$";
 
-    public static final String INTEGER_PATTERN = "[[:digit:]]+";
+    public static final String INTEGER_PATTERN = "^[.0-9]+$";
 
     public static final String DOUBLE_PATTERN = "^[0-9]+.[0-9]+$";
 

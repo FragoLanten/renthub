@@ -5,13 +5,13 @@
       lang="ru">
 <th:block layout:fragment="content">
 
-    <form th:method="post" th:object="${user}">
+<!--    <form th:method="post" th:object="${user}">-->
         <h3> Привет, <span sec:authentication="name"></span></h3>
         <h3>Мои объявления</h3>
         <div>
             <a th:href="@{/advertisement/create}" type="button" class="btn btn-danger">Добавить объявление</a>
         </div>
-        <div class="card-columns" th:each="estate : ${user.getEstateList()}"
+        <div class="card-columns" th:object="${user}" th:each="estate : ${user.getEstateList()}"
              th:if="${#bools.isTrue(estate.getAdvertisement().getVisible())}">
             <div class="card my-3" style="width: 80rem;">
                 <div class="m-2">
@@ -90,6 +90,6 @@
         <!--            </label>-->
         <!--        </div>-->
         <!--        <button type="submit">Save</button>-->
-    </form>
+<!--    </form>-->
 </th:block>
 </html>

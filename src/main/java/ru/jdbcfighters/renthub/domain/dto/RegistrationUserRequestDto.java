@@ -29,11 +29,11 @@ public record RegistrationUserRequestDto(
         String phoneNumber,
 
         @NotBlank(message = "First name doesn't empty!")
-        @Pattern(regexp = FIRST_NAME_PATTERN, message = "Invalid first name")
+        @Pattern(regexp = FIRST_NAME_PATTERN, message = "Invalid first name! First Name must contain only Cyrillic letters!")
         String firstName,
 
         @NotBlank(message = "Last name doesn't empty!")
-        @Pattern(regexp = LAST_NAME_PATTERN, message = "Invalid last name")
+        @Pattern(regexp = LAST_NAME_PATTERN, message = "Invalid last name! Last Name must contain only Cyrillic letters!")
         String lastName){
 
 }

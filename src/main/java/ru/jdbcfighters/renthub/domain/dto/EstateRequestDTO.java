@@ -2,13 +2,9 @@ package ru.jdbcfighters.renthub.domain.dto;
 
 import lombok.Builder;
 
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.math.BigDecimal;
 
-import static ru.jdbcfighters.renthub.domain.dto.validation.ValidationConstants.DOUBLE_PATTERN;
 import static ru.jdbcfighters.renthub.domain.dto.validation.ValidationConstants.INTEGER_PATTERN;
 import static ru.jdbcfighters.renthub.domain.dto.validation.ValidationConstants.STRING_PATTERN;
 
@@ -18,10 +14,10 @@ public record EstateRequestDTO(
         @Pattern(regexp = INTEGER_PATTERN, message = "Only digits")
         String number,
         @NotBlank(message = "Square doesn't empty!")
-        @Pattern(regexp = DOUBLE_PATTERN, message = "Only digits and dot")
+        @Pattern(regexp = INTEGER_PATTERN, message = "Only digits and dot")
         String square,
         @NotBlank(message = "Price doesn't empty!")
-        @Pattern(regexp = DOUBLE_PATTERN, message = "Only digits and dot")
+        @Pattern(regexp = INTEGER_PATTERN, message = "Only digits and dot")
         String price,
         @NotBlank(message = "Street doesn't empty!")
         String street,

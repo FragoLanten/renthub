@@ -37,4 +37,5 @@ public interface AdvertisementService {
     //Начинает платное продвижение
     Advertisement startPromotion (Advertisement advertisement, Long amountOfDays, Integer rank);
 
+    void restore(Long id);
 }
