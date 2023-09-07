@@ -3,8 +3,8 @@ package ru.jdbcfighters.renthub.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.jdbcfighters.renthub.domain.exception.EstateNotFoundException;
 import ru.jdbcfighters.renthub.domain.models.Estate;
-import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.repositories.EstateRepo;
 import ru.jdbcfighters.renthub.services.EstateService;
 
@@ -28,14 +28,17 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public Optional<Estate> getById(long id) {
-        return estateRepo.findById(id);
+    public Estate getById(long id) {
+        Optional<Estate> optEst = estateRepo.findById(id);
+        if (optEst.isPresent()){
+            return optEst.get();
+        }
+        throw new EstateNotFoundException(id);
     }
 
     @Override
     @Transactional
-    public Estate create(Estate estate) {
-        estateRepo.save(estate);
+    public Estate save(Estate estate) {
         return estateRepo.save(estate);
     }
 

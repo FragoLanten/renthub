@@ -1,0 +1,5 @@
+#databaseChangeLog:
+#  - include:
+#      file: /db/changelog/changeset/E-6/changes-BANK-1287-13.02.2023.sql
+
+

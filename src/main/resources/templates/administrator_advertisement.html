@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="ru">
+<th:block layout:fragment="content">
+    <h2> Список объявлений</h2>
+    <div class="card-columns" th:each="estate : ${estates}">
+        <div class="card my-3" style="width: 80rem;">
+            <div class="m-2">
+                <table class="table table-bordered" th:each="advertisement : ${estate.getAdvertisement()}">
+                    <thead>
+                    <tr>
+                        <th>Статус</th>
+                        <th>Город</th>
+                        <th>Улица</th>
+                        <th>Номер дома</th>
+                        <th>Площадь кв. метров</th>
+                        <th th:each="attribute : ${estate.getAttributes()}" th:text="${attribute.getName}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${estate.getAdvertisement().getVisible() ? 'Актуально' : 'Удалено'}"></td>
+                        <td th:text="${estate.getCity}"></td>
+                        <td th:text="${estate.getStreet}"></td>
+                        <td th:text="${estate.getNumber}"></td>
+                        <td th:text="${estate.getSquare}"></td>
+                        <td th:each="value : ${estate.getAttributeValue}" th:text="${value.getName}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <form th:action="@{/advertisement/admin/delete/} + ${estate.getAdvertisement().getId()}" method="post">
+                    <button class="btn btn-danger" type="submit">Удалить объявление</button>
+                </form>
+                <form th:action="@{/advertisement/admin/restore/} + ${estate.getAdvertisement().getId()}" method="post">
+                    <button class="btn btn-success" type="submit">Восстановить объявление</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</th:block>
+</html>

@@ -1,0 +1,146 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layout}"
+      lang="ru">
+<th:block layout:fragment="content">
+    <form th:action="@{/advertisement/create}" th:method="post">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Тип объекта </label>
+            <div class="col-sm-6">
+                <input type="text" name="typeEstate" class="form-control" placeholder="Тип объекта"
+                       th:classappend="${estate != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${estate != null}" th:object="${estate}" th:field="*{typeEstate}">
+                    <div th:if="${#fields.hasErrors('typeEstate')}" th:errors="*{typeEstate}">
+                        Ошибка типа объекта
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Город </label>
+            <div class="col-sm-6">
+                <input type="text" name="city" class="form-control" placeholder="Город"
+                       th:classappend="${estate != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${estate != null}" th:object="${estate}" th:field="*{city}">
+                    <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}">
+                        Ошибка города
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Улица </label>
+            <div class="col-sm-6">
+                <input type="text" name="street" class="form-control" placeholder="Улица"
+                       th:classappend="${estate != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${estate != null}" th:object="${estate}" th:field="*{street}">
+                    <div th:if="${#fields.hasErrors('street')}" th:errors="*{street}">
+                        Ошибка улицы
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Номер дома </label>
+            <div class="col-sm-6">
+                <input type="text" name="number" class="form-control" placeholder="Номер дома"
+                       th:classappend="${estate != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${estate != null}" th:object="${estate}" th:field="*{number}">
+                    <div th:if="${#fields.hasErrors('number')}" th:errors="*{number}">
+                        Ошибка номера дома
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Номер квартиры </label>
+            <div class="col-sm-6">
+                <input type="text" name="flatNumber" class="form-control" placeholder="Номер квартиры"
+                       th:classappend="${estate != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${estate != null}" th:object="${estate}" th:field="*{flatNumber}">
+                    <div th:if="${#fields.hasErrors('flatNumber')}" th:errors="*{flatNumber}">
+                        Ошибка номера квартиры
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Стоимость </label>
+            <div class="col-sm-6">
+                <input type="text" name="price" class="form-control" placeholder="Стоимость"
+                       th:classappend="${estate != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${estate != null}" th:object="${estate}" th:field="*{price}">
+                    <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}">
+                        Ошибка в стоимости
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Площадь </label>
+            <div class="col-sm-6">
+                <input type="text" name="square" class="form-control" placeholder="Площадь"
+                       th:classappend="${estate != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${estate != null}" th:object="${estate}" th:field="*{square}">
+                    <div th:if="${#fields.hasErrors('square')}" th:errors="*{square}">
+                        Ошибка площади
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Количество этажей </label>
+            <div class="col-sm-6">
+                <input type="text" name="numberOfFloors" class="form-control" placeholder="Количество этажей"
+                       th:classappend="${estate != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${estate != null}" th:object="${estate}" th:field="*{numberOfFloors}">
+                    <div th:if="${#fields.hasErrors('numberOfFloors')}" th:errors="*{numberOfFloors}">
+                        Ошибка в количестве этажей
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Этаж </label>
+            <div class="col-sm-6">
+                <input type="text" name="floor" class="form-control" placeholder="Этаж"
+                       th:classappend="${estate != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${estate != null}" th:object="${estate}" th:field="*{floor}">
+                    <div th:if="${#fields.hasErrors('floor')}" th:errors="*{floor}">
+                        Ошибка этажа
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Количество комнат </label>
+            <div class="col-sm-6">
+                <input type="text" name="numberOfRooms" class="form-control" placeholder="Количество комнат"
+                       th:classappend="${estate != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${estate != null}" th:object="${estate}" th:field="*{numberOfRooms}">
+                    <div th:if="${#fields.hasErrors('numberOfRooms')}" th:errors="*{numberOfRooms}">
+                        Ошибка количества комнат
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Балкон </label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="balcony" value="есть" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Есть
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="balcony" value="нет" id="flexRadioDefault2" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Нет
+                </label>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Добавить объявление</button>
+    </form>
+
+</th:block>
+</html>

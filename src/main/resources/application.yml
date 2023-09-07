@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/company
+    username: postgres
+    password: root
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+jwtconfig:
+  secret: secret
+  expiration: 6000000
+
+currency:
+  client:
+    url: "http://www.cbr.ru/scripts/XML_daily.asp"
+
+
+
+#liquibase:
+#  change-log: classpath:db/changelog/db.changelog-master.yaml
+#    enabled: true

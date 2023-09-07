@@ -2,6 +2,7 @@ package ru.jdbcfighters.renthub.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,15 +16,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
-@NoArgsConstructor
+
 @Setter
 @Getter
 @Entity
+@Builder
 @Table(name = "streets")
 public class Street {
+
+    public Street() {
+    }
+
+    public Street(String name) {
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +44,7 @@ public class Street {
 
     @OneToMany(mappedBy = "street", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Estate> estates;
+    private List<Estate> estates;
 
     @Override
     public String toString() {

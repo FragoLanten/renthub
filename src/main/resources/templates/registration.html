@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="ru">
+<th:block layout:fragment="content">
+    <div th:if="${usernameError}">Пользователь существует</div>
+    <form th:action="@{/registration}" method="post" th:object="${user}">
+        <div th:insert="~{fragments/login}"></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Имя </label>
+            <div class="col-sm-6">
+                <input type="text" name="firstName" class="form-control" placeholder="Имя"
+                       th:classappend="${user != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${user != null}" th:object="${user}" th:field="*{firstName}">
+                    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+                        Ошибка в имени
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Фамилия </label>
+            <div class="col-sm-6">
+                <input type="text" name="lastName" class="form-control" placeholder="Фамилия"
+                       th:classappend="${user != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${user != null}" th:object="${user}" th:field="*{lastName()}">
+                    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+                        Ошибка в фамилии
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Номер телефона </label>
+            <div class="col-sm-6">
+                <input type="text" name="phoneNumber" class="form-control" placeholder="Номер телефона"
+                       th:classappend="${user != null} ? 'is-invalid' : ''"/>
+                <div class="invalid-feedback" th:if="${user != null}" th:object="${user}" th:field="*{phoneNumber}">
+                    <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">
+                        Ошибка номера телефона
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
+    </form>
+</th:block>
+</html>

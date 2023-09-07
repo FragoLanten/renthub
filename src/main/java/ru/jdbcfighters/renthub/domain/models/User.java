@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.userdetails.UserDetails;
 import ru.jdbcfighters.renthub.domain.models.enums.Role;
 
 import javax.persistence.CascadeType;
@@ -24,6 +25,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -32,7 +34,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,10 +75,45 @@ public class User {
             joinColumns = @JoinColumn(name = "estate_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<Estate> estates;
+    private List<Estate> wishlist;
 
-    @Column(name = "role")
+    @OneToMany(mappedBy = "owner")
+    @JsonManagedReference
+    private List<Estate> estateList;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "users_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Set<Role> role;
+
+    @Override
+    public Set<Role> getAuthorities() {
+        return getRole();
+    }
+
+    @Override
+    public String getUsername() {
+        return getLogin();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }
