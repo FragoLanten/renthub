@@ -3,6 +3,7 @@ package ru.jdbcfighters.renthub.services;
 import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
 import ru.jdbcfighters.renthub.domain.models.Advertisement;
 import ru.jdbcfighters.renthub.domain.models.Estate;
+import ru.jdbcfighters.renthub.domain.models.User;
 
 import java.security.Principal;
 import java.util.List;
@@ -21,7 +22,7 @@ public interface AdvertisementService {
     Advertisement delete(Long id);
 
     //Удаление из БД
-    void hardDelete (Long id);
+    void hardDelete(Long id);
 
     boolean checkIfIdExist(Long id);
 
@@ -35,6 +36,10 @@ public interface AdvertisementService {
     Advertisement rankDown(Advertisement advertisement, Integer rank);
 
     //Начинает платное продвижение
-    Advertisement startPromotion (Advertisement advertisement, Long amountOfDays, Integer rank);
+    Advertisement startPromotion(Advertisement advertisement, Long amountOfDays, Integer rank);
+
+    void addToWishList(Long advertisementId, Principal principal);
+
+    User deleteFromWishList(Long advertisementId, Principal principal);
 
 }

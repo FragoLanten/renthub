@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.jdbcfighters.renthub.controllers.utils.InjectModelAttribute;
 import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
 import ru.jdbcfighters.renthub.domain.models.Estate;
+import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.services.AdvertisementService;
 import ru.jdbcfighters.renthub.services.EstateService;
 
@@ -32,16 +33,18 @@ public class AdvertisementController {
         model.addAttribute("estates", estate);
         return "advertisement";
     }
+
     @GetMapping("/create")
-    public String show(){
+    public String show() {
         return "add_advertisement";
     }
 
     @PostMapping("/create")
-    public String addAdvertisement(Principal principal, EstateRequestDTO advertisementRequestDTO){
+    public String addAdvertisement(Principal principal, EstateRequestDTO advertisementRequestDTO) {
         advertisementService.create(principal, advertisementRequestDTO);
         return "redirect:/user/profile";
     }
+
     @PreAuthorize("hasAuthority('ADMIN, MANAGER')")
     @GetMapping("/administrator")
     public String administratorAdvertisementList(Model model) {
@@ -51,10 +54,24 @@ public class AdvertisementController {
     }
 
     @PostMapping("/delete/{advertisementId}")
-    public String deleteAdvertisement(@PathVariable("advertisementId") Long advertisementId){
+    public String deleteAdvertisement(@PathVariable("advertisementId") Long advertisementId) {
         advertisementService.delete(advertisementId);
         return "administrator_advertisement";
     }
 
+    @PostMapping("/wishlist/{advertisementId}")
+    public String addAdvertisementToWishList(@PathVariable("advertisementId") Long advertisementId, Principal principal, Model model) {
+        advertisementService.addToWishList(advertisementId, principal);
+        Iterable<Estate> estate = estateService.getAll();
+        model.addAttribute("estates", estate);
+        return "advertisement";
+    }
+
+    @PostMapping("/wishlist/delete/{advertisementId}")
+    public String deleteAdvertisementFromWishList(@PathVariable("advertisementId") Long advertisementId, Principal principal, Model model) {
+        User user = advertisementService.deleteFromWishList(advertisementId, principal);
+        model.addAttribute("user", user);
+        return "profile";
+    }
 
 }
