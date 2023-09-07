@@ -4,101 +4,90 @@
       layout:decorate="~{layout}"
       lang="ru">
 <th:block layout:fragment="content">
-
-<!--    <form th:method="post" th:object="${user}">-->
-        <h3> Привет, <span sec:authentication="name"></span></h3>
-        <h3>Мои объявления</h3>
-        <div>
-            <a th:href="@{/advertisement/create}" type="button" class="btn btn-danger">Добавить объявление</a>
-        </div>
-        <div class="card-columns" th:object="${user}" th:each="estate : ${user.getEstateList()}"
-             th:if="${#bools.isTrue(estate.getAdvertisement().getVisible())}">
-            <div class="card my-3" style="width: 80rem;">
-                <div class="m-2">
-                    <table class="table table-bordered" th:each="advertisement : ${estate.getAdvertisement()}">
-                        <thead>
-                        <tr>
-                            <th>Город</th>
-                            <th>Улица</th>
-                            <th>Номер дома</th>
-                            <th>Площадь кв. метров</th>
-                            <th th:each="attribute : ${estate.getAttributes()}" th:text="${attribute.getName}"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td th:text="${estate.getCity}"></td>
-                            <td th:text="${estate.getStreet}"></td>
-                            <td th:text="${estate.getNumber}"></td>
-                            <td th:text="${estate.getSquare}"></td>
-                            <td th:each="value : ${estate.getAttributeValue}" th:text="${value.getName}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <form th:action="@{/advertisement/seller/delete/} + ${estate.getAdvertisement().getId()}" method="post">
-                        <button class="btn btn-primary" type="submit">Удалить объявление</button>
-                    </form>
-
-                    <div th:insert="~{fragments/promote_advertisement}"></div>
-
-                </div>
-            </div>
-        </div>
-        <h3>Избранное</h3>
-        <div class="card-columns" th:each="wishlist : ${user.getWishlist()}">
-            <div class="card my-3" style="width: 80rem;">
-                <div class="m-2">
-                    <table class="table table-bordered" th:each="advertisement : ${wishlist.getAdvertisement()}">
-                        <thead>
-                        <tr>
-                            <th>Город</th>
-                            <th>Улица</th>
-                            <th>Номер дома</th>
-                            <th>Площадь кв. метров</th>
-                            <th th:each="attribute : ${wishlist.getAttributes()}" th:text="${attribute.getName}"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td th:text="${wishlist.getCity}"></td>
-                            <td th:text="${wishlist.getStreet}"></td>
-                            <td th:text="${wishlist.getNumber}"></td>
-                            <td th:text="${wishlist.getSquare}"></td>
-                            <td th:each="value : ${wishlist.getAttributeValue}" th:text="${value.getName}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
+    <h3> Привет, <span sec:authentication="name"></span></h3>
+    <h3>Мои объявления</h3>
+    <div>
+        <a th:href="@{/advertisement/create}" type="button" class="btn btn-danger">Добавить объявление</a>
+    </div>
+    <div class="card-columns" th:object="${user}" th:each="estate : ${user.getEstateList()}"
+         th:if="${#bools.isTrue(estate.getAdvertisement().getVisible())}">
+        <div class="card my-3" style="width: 80rem;">
+            <div class="m-2">
+                <table class="table table-bordered" th:each="advertisement : ${estate.getAdvertisement()}">
+                    <thead>
+                    <tr>
+                        <th>Город</th>
+                        <th>Улица</th>
+                        <th>Номер дома</th>
+                        <th>Площадь кв. метров</th>
+                        <th th:each="attribute : ${estate.getAttributes()}" th:text="${attribute.getName}"></th>
+                    </tr>
+                    </thead>
                     <tbody>
                     <tr>
-                        <td>
-                            <form th:action="@{/advertisement/wishlist/delete/} + ${wishlist.getAdvertisement.getId}" method="post">
-                                <button type="submit" class="btn btn-primary">Удалить из избранного</button>
-                            </form>
-                        </td>
+                        <td th:text="${estate.getCity}"></td>
+                        <td th:text="${estate.getStreet}"></td>
+                        <td th:text="${estate.getNumber}"></td>
+                        <td th:text="${estate.getSquare}"></td>
+                        <td th:each="value : ${estate.getAttributeValue}" th:text="${value.getName}"></td>
                     </tr>
                     </tbody>
-                </div>
+                </table>
+                <form th:action="@{/advertisement/seller/delete/} + ${estate.getAdvertisement().getId()}" method="post">
+                    <button class="btn btn-primary" type="submit">Удалить объявление</button>
+                </form>
+                <form th:action="@{/promote_advertisement/} + ${estate.getAdvertisement().getId()}" method="post">
+                    <div>
+                        <div class="form-group row">
+                            <div class="col-sm-4">
+                                <label>На сколько дней хотите продлить объявление
+                                    <input type="text" name="amountOfDays" class="form-control"/>
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>На сколько позиций хотите поднять
+                                    <input type="text" name="rank" class="form-control"/>
+                                </label>
+                            </div>
+                            <div class="col-sm-4 pt-3">
+                                <button class="btn btn-primary" type="submit">Ок</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-        <!--        <div>-->
-        <!--            <button type="submit" class="btn btn-primary">Сохранить</button>-->
-        <!--            <a th:href="@{/user}" type="button" class="btn btn-danger">Выйти</a>-->
-        <!--        </div>-->
-        <!--        <label>-->
-        <!--            <input type="text" name="username" th:value="${user.getFirstName()}">-->
-        <!--            <input type="text" name="username" th:value="${user.getLastName()}">-->
-        <!--            <input type="hidden" name="username" th:value="${user.getPhoneNumber()}">-->
-        <!--            <input type="text" name="username" th:value="${user.getLogin()}">-->
-        <!--&lt;!&ndash;            <input type="text" name="username" th:value="${user.getPassword()}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <input type="text" name="username" th:value="${user.getDeleted()}">&ndash;&gt;-->
-        <!--            <input type="hidden" name="userId" th:value="${user.getId()}">-->
-        <!--        </label>-->
-        <!--        <div th:each="role : ${roles}">-->
-        <!--            <label>-->
-        <!--                <input th:type="checkbox" th:name="${role}" th:text="${role.name()}" th:checked="${user.getRole().contains(role)} ? 'checked'">-->
-        <!--            </label>-->
-        <!--        </div>-->
-        <!--        <button type="submit">Save</button>-->
-    </form>
+    </div>
+    <h3>Избранное</h3>
+    <div class="card-columns" th:each="wishlist : ${user.getWishlist()}">
+        <div class="card my-3" style="width: 80rem;">
+            <div class="m-2">
+                <table class="table table-bordered" th:each="advertisement : ${wishlist.getAdvertisement()}">
+                    <thead>
+                    <tr>
+                        <th>Город</th>
+                        <th>Улица</th>
+                        <th>Номер дома</th>
+                        <th>Площадь кв. метров</th>
+                        <th th:each="attribute : ${wishlist.getAttributes()}" th:text="${attribute.getName}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${wishlist.getCity}"></td>
+                        <td th:text="${wishlist.getStreet}"></td>
+                        <td th:text="${wishlist.getNumber}"></td>
+                        <td th:text="${wishlist.getSquare}"></td>
+                        <td th:each="value : ${wishlist.getAttributeValue}" th:text="${value.getName}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <form th:action="@{/advertisement/wishlist/delete/} + ${wishlist.getAdvertisement.getId}" method="post">
+                    <button type="submit" class="btn btn-primary">Удалить из избранного</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </th:block>
 </html>
