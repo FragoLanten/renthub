@@ -1,6 +1,7 @@
 package ru.jdbcfighters.renthub.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,13 +45,15 @@ public class UserController {
         return "useredit";
     }
 
-    @PostMapping("/edit")
-    public String updateUser(@AuthenticationPrincipal UserDetails userDetails,
-                             @ModelAttribute("user") @Valid UserRequestDto userRequestDto) {
-        String login = userDetails.getUsername();
-        userService.updateUser(login, userRequestDto);
 
-        return "redirect:/users/edit";
+    // TODO: 08.09.2023  
+    @PatchMapping("/edit/{id}")
+    public String updateUser(@AuthenticationPrincipal UserDetails userDetails,
+                             @ModelAttribute("user") @Valid UserRequestDto userRequestDto,
+                             @PathVariable Long id) {
+        userService.updateUser(id, userRequestDto);
+
+        return "redirect:/user/" +  id;
     }
 
     @PatchMapping("/{id}")
