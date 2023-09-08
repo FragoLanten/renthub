@@ -51,8 +51,6 @@ public class AuthenticationController {
                 (new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
 
-//        AuthResponseDTO response = AuthResponseDTO.builder().login(authRequest.getLogin())
-//                .token(provider.generateToken(userProvider.loadUserByUsername(authRequest.getLogin()))).build();
         AuthResponseDTO response = new AuthResponseDTO();
         response.setLogin(authRequest.getLogin());
         response.setToken(provider.generateToken(userProvider.loadUserByUsername(authRequest.getLogin())));
@@ -62,28 +60,8 @@ public class AuthenticationController {
         cookie.setMaxAge(Integer.MAX_VALUE);
         res.addCookie(cookie);
 
-        /*Generate token with answer to user*/
         return "redirect:/";
     }
-
-//    @PostMapping("/auth")
-//    public ResponseEntity<AuthResponse> login(@RequestParam String login,
-//                                              @RequestParam String password) {
-//
-//        /*Check login and password*/
-//        Authentication authenticate = authenticationManager.authenticate
-//                (new UsernamePasswordAuthenticationToken(login, password));
-//        SecurityContextHolder.getContext().setAuthentication(authenticate);
-//
-//        AuthResponse response = AuthResponse.builder().login(login)
-//                .token(provider.generateToken(userProvider.loadUserByUsername(login))).build();
-//
-//
-//        /*Generate token with answer to user*/
-//        return ResponseEntity.ok()
-//                .header(CustomHeaders.X_AUTH_TOKEN, response.getToken())
-//                .body(response);
-//    }
 
     @DeleteMapping("/logout")
     public void logout(Principal principal, HttpServletResponse res) {

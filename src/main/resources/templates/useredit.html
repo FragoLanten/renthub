@@ -40,21 +40,6 @@
             <input type="submit" class="btn btn-primary" th:value="Сохранить"/>
             <a th:href="@{/user}" type="button" class="btn btn-danger">Выйти</a>
         </div>
-        <!--        <label>-->
-        <!--            <input type="text" name="username" th:value="${user.getFirstName()}">-->
-        <!--            <input type="text" name="username" th:value="${user.getLastName()}">-->
-        <!--            <input type="hidden" name="username" th:value="${user.getPhoneNumber()}">-->
-        <!--            <input type="text" name="username" th:value="${user.getLogin()}">-->
-        <!--&lt;!&ndash;            <input type="text" name="username" th:value="${user.getPassword()}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <input type="text" name="username" th:value="${user.getDeleted()}">&ndash;&gt;-->
-        <!--            <input type="hidden" name="userId" th:value="${user.getId()}">-->
-        <!--        </label>-->
-        <!--        <div th:each="role : ${roles}">-->
-        <!--            <label>-->
-        <!--                <input th:type="checkbox" th:name="${role}" th:text="${role.name()}" th:checked="${user.getRole().contains(role)} ? 'checked'">-->
-        <!--            </label>-->
-        <!--        </div>-->
-        <!--        <button type="submit">Save</button>-->
     </form>
 </th:block>
 </html>

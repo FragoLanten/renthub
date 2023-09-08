@@ -50,30 +50,4 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
         filterChain.doFilter(req, res);
     }
 
-//    @Override
-//    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-//            throws IOException, ServletException {
-//
-//        /*1. Check if X-Auth-Token exists in header*/
-//        HttpServletRequest httpRequest = (HttpServletRequest) request;
-//        String authToken = httpRequest.getHeader(CustomHeaders.X_AUTH_TOKEN);
-//
-//        if (authToken != null) {
-//
-//            /*2. Validate and check username security details in token and in system*/
-//            String username = tokenUtils.getUsernameFromToken(authToken);
-//            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-//                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-//
-//                if (tokenUtils.validateToken(authToken, userDetails)) {
-//
-//                    UsernamePasswordAuthenticationToken authentication =
-//                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
-//                    SecurityContextHolder.getContext().setAuthentication(authentication);
-//                }
-//            }
-//        }
-//        chain.doFilter(request, response);
-//    }
 }
