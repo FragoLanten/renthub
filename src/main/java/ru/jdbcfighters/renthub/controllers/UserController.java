@@ -1,6 +1,7 @@
 package ru.jdbcfighters.renthub.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,6 @@ import ru.jdbcfighters.renthub.domain.models.Estate;
 import ru.jdbcfighters.renthub.domain.models.Revenue;
 import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.domain.models.enums.Role;
-import ru.jdbcfighters.renthub.services.RevenueService;
 import ru.jdbcfighters.renthub.services.UserService;
 
 import javax.validation.Valid;
@@ -43,7 +43,6 @@ public class UserController {
         model.addAttribute("users", userService.getAll());
         return "userlist";
     }
-
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{user}")
     public String userEditForm(@PathVariable User user, Model model){
@@ -52,11 +51,13 @@ public class UserController {
         return "useredit";
     }
 
-    @PostMapping("/edit")
+
+
+    @PatchMapping("/edit/{id}")
     public String updateUser(@AuthenticationPrincipal UserDetails userDetails,
-                             @ModelAttribute("user") @Valid UserRequestDto userRequestDto) {
-        String login = userDetails.getUsername();
-        userService.updateUser(login, userRequestDto);
+                             @ModelAttribute("user") @Valid UserRequestDto userRequestDto,
+                             @PathVariable Long id) {
+        userService.updateUser(id, userRequestDto);
 
         return "redirect:/users/edit";
     }

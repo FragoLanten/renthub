@@ -127,8 +127,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(String login, UserRequestDto userRequestDto) {
+    public void updateUser(Long id, UserRequestDto userRequestDto) {
+        Optional<User> optUpdatedUser = userRepository.findById(id);
+        User updatedUser;
 
+        if (optUpdatedUser.isEmpty()){
+            throw new UsernameNotFoundException("");
+        }else{
+            updatedUser = optUpdatedUser.get();
+        }
+
+        updatedUser.setLogin(userRequestDto.login());
+        updatedUser.setFirstName(userRequestDto.firstName());
+        updatedUser.setLastName(userRequestDto.lastName());
+        updatedUser.setPhoneNumber(userRequestDto.phoneNumber());
+
+        userRepository.save(updatedUser);
+    }
+
+    @Override
+    @Transactional
+    public void banned(long id) {
+        Optional<User> updatedUser = userRepository.findById(id);
+        if (updatedUser.isEmpty()) {
+            throw new UsernameNotFoundException("User with id " + id + " not found");
+        }
+        updatedUser.get().setDeleted(true);
     }
 
     @Override
