@@ -10,36 +10,25 @@ import ru.jdbcfighters.renthub.domain.models.enums.Type;
 import ru.jdbcfighters.renthub.repositories.DealRepository;
 import ru.jdbcfighters.renthub.services.impl.DealServiceImpl;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static ru.jdbcfighters.renthub.domain.models.enums.Status.PROCESSING;
+import static ru.jdbcfighters.renthub.domain.models.enums.Type.RENT;
 import static ru.jdbcfighters.renthub.domain.models.enums.Type.SALE;
 
 @ExtendWith(MockitoExtension.class)
 public class DealServiceTest {
 
 
-    @Mock
     Deal deal;
 
     Type dealType_type = SALE;
-
-    LocalDate startDate = LocalDate.now();;
-    @Mock
-    Estate estate ;
-    ;
-    @Mock
-    DealStatus dealStatus;
-    @Mock
-    DealType dealType;
-    @Mock
-    User buyer;
 
     private static final Long DEAL_ID = 1L;
     @Mock
@@ -51,7 +40,6 @@ public class DealServiceTest {
 
     @Test
     void saveTest() {
-//        Deal deal = new Deal();
         dealService.saveDeal(deal);
         verify(dealRepository).save(eq(deal));
     }
@@ -80,38 +68,44 @@ public class DealServiceTest {
         List<Deal> actualresulList = dealService.getByDealType(dealType_type);
         assertEquals(dealList, actualresulList);
     }
+
     @Test
-    void changeStatusToFinishedAndEndDateOfDealById() {
-//        when(createDeal();
-//        )
-    }
-    @Test
-    void createDealThrowExceptionTest(){
+    void createDealTest() {
+        Set<Deal> dealSet = new HashSet<>();
+        LocalDate startDate = LocalDate.now();
+        DealStatus dealStatus = new DealStatus(1L, PROCESSING, dealSet);
+        User buyer = new User();
+        Estate estate;
+        Street street;
+        City city;
+        street = Street.builder()
+                .name("Ленинская")
+                .build();
+        city = City.builder()
+                .name("Волгоград")
+                .build();
+        estate = Estate.builder()
+                .number(1)
+                .square(50.2f)
+                .price(BigDecimal.valueOf(100))
+                .street(street)
+                .city(city)
+                .build();
+        DealType dealType = new DealType(1L, RENT, dealSet);
 
         Deal deal1 = new Deal();
-        deal.setStartDate(startDate);
-        deal.setEstate(estate);
-        deal.setDealStatus(dealStatus);
-        deal.setDealType(dealType);
-        deal.setBuyer(buyer);
-        dealService.createDeal(deal1.getStartDate(), deal1.getEstate(), deal1.getDealStatus(), deal1.getDealType(), deal1.getBuyer());
-        verify(dealService).saveDeal(eq(deal1));
-
+        buyer.setId(1L);
+        dealService.createDeal(startDate, estate, dealStatus, dealType, buyer);
+        deal1.setStartDate(startDate);
+        deal1.setEstate(estate);
+        deal1.setDealStatus(dealStatus);
+        deal1.setDealType(dealType);
+        deal1.setBuyer(buyer);
+        verify(dealRepository).save(any(Deal.class));
+        assertThat(startDate).isEqualTo(deal1.getStartDate());
+        assertThat(estate).isEqualTo(deal1.getEstate());
+        assertThat(dealStatus).isEqualTo(deal1.getDealStatus());
+        assertThat(dealType).isEqualTo(deal1.getDealType());
+        assertThat(buyer).isEqualTo(deal1.getBuyer());
     }
-    @Test
-    void createDealTest(){
-
-        Deal deal1 = new Deal();
-        deal.setStartDate(startDate);
-        deal.setEstate(estate);
-        deal.setDealStatus(dealStatus);
-        deal.setDealType(dealType);
-        deal.setBuyer(buyer);
-        dealService.createDeal(deal1.getStartDate(), deal1.getEstate(), deal1.getDealStatus(), deal1.getDealType(), deal1.getBuyer());
-//        @SuppressWarnings("unchecked")
-        verify(dealService).saveDeal(eq(deal1));
-        when(dealRepository.save(deal1)).thenReturn(Optional.of(deal1));
-
-    }
-
 }
