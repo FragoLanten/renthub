@@ -19,6 +19,7 @@ import ru.jdbcfighters.renthub.domain.models.Estate;
 import ru.jdbcfighters.renthub.domain.models.Revenue;
 import ru.jdbcfighters.renthub.domain.models.User;
 import ru.jdbcfighters.renthub.domain.models.enums.Role;
+import ru.jdbcfighters.renthub.services.RevenueService;
 import ru.jdbcfighters.renthub.services.UserService;
 
 import javax.validation.Valid;
@@ -43,6 +44,7 @@ public class UserController {
         model.addAttribute("users", userService.getAll());
         return "userlist";
     }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{user}")
     public String userEditForm(@PathVariable User user, Model model){
@@ -52,14 +54,14 @@ public class UserController {
     }
 
 
-
+    // TODO: 08.09.2023
     @PatchMapping("/edit/{id}")
     public String updateUser(@AuthenticationPrincipal UserDetails userDetails,
                              @ModelAttribute("user") @Valid UserRequestDto userRequestDto,
                              @PathVariable Long id) {
         userService.updateUser(id, userRequestDto);
 
-        return "redirect:/users/edit";
+        return "redirect:/user/" +  id;
     }
 
     @PatchMapping("/{id}")
@@ -67,6 +69,8 @@ public class UserController {
         userService.banned(id);
         return "redirect:/user";
     }
+
+
 
     @GetMapping("/profile")
     public String showProfile(Principal principal, Model model) {

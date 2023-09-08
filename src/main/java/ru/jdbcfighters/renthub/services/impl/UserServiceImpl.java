@@ -1,6 +1,7 @@
 package ru.jdbcfighters.renthub.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -143,16 +144,6 @@ public class UserServiceImpl implements UserService {
         updatedUser.setPhoneNumber(userRequestDto.phoneNumber());
 
         userRepository.save(updatedUser);
-    }
-
-    @Override
-    @Transactional
-    public void banned(long id) {
-        Optional<User> updatedUser = userRepository.findById(id);
-        if (updatedUser.isEmpty()) {
-            throw new UsernameNotFoundException("User with id " + id + " not found");
-        }
-        updatedUser.get().setDeleted(true);
     }
 
     @Override
