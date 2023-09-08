@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.jdbcfighters.renthub.controllers.utils.InjectModelAttribute;
+import ru.jdbcfighters.renthub.controllers.utils.InjectSbrModelAttribute;
 import ru.jdbcfighters.renthub.domain.dto.RegistrationUserRequestDto;
 import ru.jdbcfighters.renthub.services.UserService;
 
@@ -17,7 +17,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/registration")
 @RequiredArgsConstructor
-@InjectModelAttribute
+@InjectSbrModelAttribute
 public class RegistrationController {
 
     private final UserService userService;

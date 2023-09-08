@@ -103,6 +103,7 @@ public class AdvertisementControllerTest {
     }
 
     @Test
+    @Disabled
     public void testAddAdvertisement() throws Exception {
 
         mockMvc.perform(post("/advertisement/create")

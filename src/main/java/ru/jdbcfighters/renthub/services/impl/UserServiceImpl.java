@@ -17,6 +17,7 @@ import ru.jdbcfighters.renthub.services.UserService;
 
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -170,7 +171,8 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(encoderConfig.getPasswordEncoder()
                 .encode(newUser.getPassword()));
         newUser.setDeleted(false);
-        newUser.setBalance(BigDecimal.valueOf(Math.random() * 15_000_000 - 2_000_000));
+        newUser.setBalance(BigDecimal.valueOf(Math.random() * 15_000_000 - 2_000_000)
+                .setScale(0, RoundingMode.DOWN));
 
     }
 }

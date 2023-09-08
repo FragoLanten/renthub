@@ -35,6 +35,6 @@ public class Revenue {
     private LocalDate date;
 
     @Column(name = "sum")
-    private BigDecimal sum;
+    private BigDecimal balance;
 
 }

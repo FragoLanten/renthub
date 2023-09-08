@@ -10,16 +10,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/}">Домой</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" th:href="@{/advertisement}">Объявления</a>
             </li>
             <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                 <a class="nav-link" th:href="@{/user}">Пользователи</a>
             </li>
-            <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER', 'BUYER', 'SELLER')">
+            <li class="nav-item" sec:authorize="hasAnyAuthority('MANAGER', 'BUYER', 'SELLER')">
                 <a class="nav-link" th:href="@{/user/profile}">Профиль</a>
+            </li>
+            <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
+                <a class="nav-link" th:href="@{/user/profile/admin}">Профиль</a>
             </li>
             <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')">
                 <a class="nav-link" th:href="@{/advertisement/administrator}">Редактор объявлений</a>

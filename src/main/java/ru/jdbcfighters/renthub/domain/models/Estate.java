@@ -13,8 +13,6 @@ import java.util.List;
 @Getter
 @Entity
 @Builder
-@EqualsAndHashCode
-@ToString
 @NamedEntityGraph(
         name = "estate-entity-graph",
         attributeNodes = {
