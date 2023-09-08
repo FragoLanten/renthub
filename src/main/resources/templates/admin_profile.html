@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="ru">
+<th:block layout:fragment="content">
+
+    <h5>Баланс: <span th:text="${balance}"></span></h5>
+
+    <div class="card-columns" th:each="revenue : ${revenueList}">
+        <div class="card my-3" style="width: 80rem;">
+            <div class="m-2">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Пользователь</th>
+                        <th>Дата поступления</th>
+                        <th>Сумма</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${revenue.getUser().getFirstName()} + ' ' + ${revenue.getUser().getLastName()}"></td>
+                        <td th:text="${revenue.getDate()}"></td>
+                        <td th:text="${revenue.getBalance()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
