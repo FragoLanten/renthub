@@ -69,8 +69,8 @@ public class Estate {
     @ManyToMany
     @JoinTable(
             name = "wishlist",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "estate_id")
+            joinColumns = @JoinColumn(name = "estate_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     @JsonIgnore
     private List<User> users;

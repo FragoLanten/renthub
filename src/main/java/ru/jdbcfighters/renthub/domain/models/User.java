@@ -72,8 +72,8 @@ public class User implements UserDetails {
     @ManyToMany
     @JoinTable(
             name = "wishlist",
-            joinColumns = @JoinColumn(name = "estate_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "estate_id")
     )
     private List<Estate> wishlist;
 
