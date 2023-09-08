@@ -11,7 +11,7 @@
     <div>
         <a th:href="@{/advertisement/create}" type="button" class="btn btn-danger">Добавить объявление</a>
     </div>
-    <div class="card-columns" th:object="${user}" th:each="estate : ${user.getEstateList()}"
+    <div class="card-columns" th:each="estate : ${user.getEstateList()}"
          th:if="${#bools.isTrue(estate.getAdvertisement().getVisible())}">
         <div class="card my-3" style="width: 80rem;">
             <div class="m-2">
@@ -42,14 +42,26 @@
                     <div>
                         <div class="form-group row">
                             <div class="col-sm-4">
-                                <label>На сколько дней хотите продлить объявление
-                                    <input type="text" name="amountOfDays" class="form-control"/>
-                                </label>
+                                <label>На сколько дней хотите продлить объявление</label>
+                                <input type="text" name="amountOfDays" class="form-control"
+                                       th:classappend="${advertisementDto != null} ? 'is-invalid' : ''"/>
+                                <div class="invalid-feedback" th:if="${advertisementDto != null}"
+                                     th:object="${advertisementDto}" th:field="*{amountOfDays}">
+                                    <div th:if="${#fields.hasErrors('amountOfDays')}" th:errors="*{amountOfDays}">
+                                        Ошибка количества дней
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-sm-4">
-                                <label>На сколько позиций хотите поднять
-                                    <input type="text" name="rank" class="form-control"/>
-                                </label>
+                                <label>На сколько позиций хотите поднять</label>
+                                    <input type="text" name="rank" class="form-control"
+                                           th:classappend="${advertisementDto != null} ? 'is-invalid' : ''"/>
+                                <div class="invalid-feedback" th:if="${advertisementDto != null}"
+                                     th:object="${advertisementDto}" th:field="*{rank}">
+                                    <div th:if="${#fields.hasErrors('rank')}" th:errors="*{rank}">
+                                        Ошибка ранка
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-sm-3">
                                 <label>Стоимость продвижения составит 100 рублей
@@ -58,6 +70,7 @@
                             <div class="col-sm-1 pt-3">
                                 <button class="btn btn-primary" type="submit">Ок</button>
                             </div>
+                            <span class="pl-4 pt-2" th:text="${exception}"></span>
 
                         </div>
                     </div>
