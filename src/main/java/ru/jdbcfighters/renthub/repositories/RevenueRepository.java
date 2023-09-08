@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.jdbcfighters.renthub.domain.models.Revenue;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -18,5 +19,8 @@ public interface RevenueRepository extends JpaRepository<Revenue, Long> {
 
     @Query("SELECT rev From Revenue rev where rev.date = :localDate")
     Optional<List<Revenue>> findRevenueByDate(LocalDate localDate);
+
+    @Query("SELECT sum(rev.balance) From Revenue rev")
+    BigDecimal getBalance();
 
 }

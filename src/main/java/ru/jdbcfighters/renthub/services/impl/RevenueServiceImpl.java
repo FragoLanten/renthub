@@ -1,15 +1,15 @@
 package ru.jdbcfighters.renthub.services.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.jdbcfighters.renthub.domain.exception.EstateNotFoundException;
 import ru.jdbcfighters.renthub.domain.exception.RevenueByDateNotFoundException;
 import ru.jdbcfighters.renthub.domain.exception.RevenueNotFoundException;
 import ru.jdbcfighters.renthub.domain.models.Revenue;
 import ru.jdbcfighters.renthub.repositories.RevenueRepository;
+import ru.jdbcfighters.renthub.services.RevenueService;
 
-import javax.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -18,9 +18,10 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
-public class RevenueServiceImpl {
-    @Autowired
-    RevenueRepository revenueRepository;
+@RequiredArgsConstructor
+public class RevenueServiceImpl implements RevenueService {
+
+    private final RevenueRepository revenueRepository;
 
     @Transactional
     public Revenue save(Revenue revenue) {
@@ -57,4 +58,8 @@ public class RevenueServiceImpl {
         return revenueRepository.findAll();
     }
 
+    @Override
+    public BigDecimal getByBalance() {
+        return revenueRepository.getBalance();
+    }
 }

@@ -7,29 +7,28 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.jdbcfighters.renthub.controllers.utils.InjectModelAttribute;
+import ru.jdbcfighters.renthub.controllers.utils.InjectSbrModelAttribute;
 import ru.jdbcfighters.renthub.domain.dto.AdvertisementDto;
 import ru.jdbcfighters.renthub.services.AdvertisementService;
+import ru.jdbcfighters.renthub.services.PromoteService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/promote_advertisement")
 @RequiredArgsConstructor
-@InjectModelAttribute
+@InjectSbrModelAttribute
 public class PromoteAdvertisementController {
-    private final AdvertisementService advertisementService;
+
+    private final PromoteService promoteService;
 
     @PreAuthorize("hasAuthority('SELLER')")
     @PostMapping("/{advertisementId}")
-    public String promoteAdvertisement(@ModelAttribute("advertisement") @Valid AdvertisementDto advertisementDto,
-                                       @PathVariable("advertisementId") Long advertisementId){
-        Long amountOfDays = advertisementDto.amountOfDays();
-        Integer rankDto = advertisementDto.rank();
-        if (rankDto != null && amountOfDays != null && rankDto > 0 && amountOfDays > 0) {
-            int rank = rankDto + advertisementService.get(advertisementId).getRank();
-            advertisementService.startPromotion(advertisementService.get(advertisementId), amountOfDays, rank);
-        }
+    public String promoteAdvertisement(Principal principal,
+                                       @ModelAttribute("advertisement") @Valid AdvertisementDto advertisementDto,
+                                       @PathVariable("advertisementId") Long advertisementId) {
+        promoteService.promoteAdvertisement(principal, advertisementDto, advertisementId);
         return "redirect:/advertisement";
     }
 }

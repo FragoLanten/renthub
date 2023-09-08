@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.jdbcfighters.renthub.controllers.utils.InjectModelAttribute;
+import ru.jdbcfighters.renthub.controllers.utils.InjectSbrModelAttribute;
 import ru.jdbcfighters.renthub.domain.dto.EstateRequestDTO;
 import ru.jdbcfighters.renthub.domain.models.Estate;
 import ru.jdbcfighters.renthub.domain.models.User;
@@ -19,13 +19,13 @@ import ru.jdbcfighters.renthub.services.EstateService;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/advertisement")
 @RequiredArgsConstructor
-@InjectModelAttribute
+@InjectSbrModelAttribute
 public class AdvertisementController {
 
     private final EstateService estateService;
@@ -34,8 +34,12 @@ public class AdvertisementController {
 
     @GetMapping
     public String advertisementList(Model model) {
-        List<Estate> estate = estateService.getAll();
-        estate.sort(Comparator.comparing(e -> e.getAdvertisement().getRank()));
+        List<Estate> estateFromDb = estateService.getAll();
+
+        List<Estate> estate = estateFromDb.stream()
+                .sorted((e1, e2) -> Integer.compare(e2.getAdvertisement().getRank(), e1.getAdvertisement().getRank()))
+                .collect(Collectors.toList());
+
         model.addAttribute("estates", estate);
         return "advertisement";
     }

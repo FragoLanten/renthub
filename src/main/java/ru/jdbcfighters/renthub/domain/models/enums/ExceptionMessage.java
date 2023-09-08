@@ -1,9 +1,9 @@
 package ru.jdbcfighters.renthub.domain.models.enums;
 
-import lombok.Getter;
 
 public enum ExceptionMessage {
 
+    REVENUE_EXCEPTION("Ошибка продвижения, проверьте свой баланс"),
     DEAL_NOT_FOUND("Сделка с id %s не зарегистрирована"),
     TYPE_DEAL_NOT_FOUND("Тип сделки: %s не найден"),
     STATUS_DEAL_NOT_FOUND("Статус сделки: %s не найден"),

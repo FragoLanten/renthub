@@ -5,6 +5,8 @@
       lang="ru">
 <th:block layout:fragment="content">
     <h3> Привет, <span sec:authentication="name"></span></h3>
+    <br>
+    <p>Ваш баланс: <span th:text="${user.getBalance()}"></span></p>
     <h3>Мои объявления</h3>
     <div>
         <a th:href="@{/advertisement/create}" type="button" class="btn btn-danger">Добавить объявление</a>
@@ -49,7 +51,11 @@
                                     <input type="text" name="rank" class="form-control"/>
                                 </label>
                             </div>
-                            <div class="col-sm-4 pt-3">
+                            <div class="col-sm-3">
+                                <label>Стоимость продвижения составит 100 рублей
+                                    в день на одну позицию</label>
+                            </div>
+                            <div class="col-sm-1 pt-3">
                                 <button class="btn btn-primary" type="submit">Ок</button>
                             </div>
 

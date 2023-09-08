@@ -1,5 +1,6 @@
 package ru.jdbcfighters.renthub.controllers.utils;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -8,14 +9,11 @@ import ru.jdbcfighters.renthub.currency.service.SbrService;
 import java.math.BigDecimal;
 import java.util.List;
 
-@ControllerAdvice(annotations = InjectModelAttribute.class)
+@ControllerAdvice(annotations = InjectSbrModelAttribute.class)
+@RequiredArgsConstructor
 public class InjectModelAttributeControllerAdvice {
 
     private final SbrService currencyService;
-
-    public InjectModelAttributeControllerAdvice(SbrService currencyService) {
-        this.currencyService = currencyService;
-    }
 
     @ModelAttribute
     public void addAttributes(Model model) {
