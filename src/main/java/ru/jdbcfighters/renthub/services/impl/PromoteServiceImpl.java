@@ -28,7 +28,7 @@ public class PromoteServiceImpl implements PromoteService {
 
     @Override
     @Transactional
-    public void promoteAdvertisement(Principal principal, AdvertisementDto advertisementDto, Long advertisementId) {
+    public void promoteAdvertisement(Principal principal, AdvertisementDto advertisementDto, Long advertisementId) throws RevenueException{
         User userFromDb = userService.getByLogin(principal.getName());
         Long amountOfDays = Long.valueOf(advertisementDto.amountOfDays());
         Integer rankDto = Integer.valueOf(advertisementDto.rank());
